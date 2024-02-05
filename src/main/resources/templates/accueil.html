@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>Enchères.org</title>
+</head>
+
+<body>
+	
+	<ul>
+			<li sec:authentication="name"></li>
+		</ul>
+
+	<h1>Accueil</h1>
+
+	<h2>Connexion</h2>
+
+	<div>
+		<form th:action="@{/login}" method="post">
+			<!--Bloc d'affichage erreur-->
+			<!--			<ul>
+				<li th:if="${param.error}">Email ou mot de passe incorrecte</li>
+				<li th:if="${param.logout}">Vous êtes déconnecté !</li>
+			</ul>
+-->
+
+			<label for="idUsername"> Pseudo </label>
+			<input type="text" id="idUsername" name="username" />
+
+			<label for="idPassword">Mot de passe</label>
+			<input type="text" id="idPassword" name="password" />
+
+			<button type="submit">Connexion</button>
+		</form>
+	</div>
+
+</body>
+
+</html>
