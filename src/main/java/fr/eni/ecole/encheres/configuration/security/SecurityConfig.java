@@ -9,20 +9,22 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 public class SecurityConfig {
+	
 
+	
 	// Authentification des users depuis la bdd
 	@Bean
 	UserDetailsManager userDetailsManager(DataSource dataSource) {
 
 		JdbcUserDetailsManager jdbcUserDetailsManager = new JdbcUserDetailsManager(dataSource);
 		jdbcUserDetailsManager
-				.setUsersByUsernameQuery("SELECT pseudo, mot_de_passe from UTILISATEURS where pseudo = ?");
+				.setUsersByUsernameQuery("SELECT pseudo, mot_de_passe, 1 from UTILISATEURS where pseudo = ?");
 		jdbcUserDetailsManager
-				.setAuthoritiesByUsernameQuery("SELECT pseudo, administrateur from UTILISATEURS where pseudo = ?");
-
+				.setAuthoritiesByUsernameQuery("SELECT pseudo, administrateur as ROLE from UTILISATEURS where pseudo = ?");
 		return jdbcUserDetailsManager;
 	}
 
@@ -37,19 +39,19 @@ public class SecurityConfig {
 
 		// Paramétrage de la page de login
 		http.formLogin(form -> {
-			form.loginPage("/accueil").permitAll();
-			form.defaultSuccessUrl("/test");
+			form.loginPage("/login").permitAll();
+			form.defaultSuccessUrl("/accueil");
 		});
 
 		// Paramétrage page de logout
-//		http.logout(logout -> logout.invalidateHttpSession(true) // invalidation de la session http
-//				.deleteCookies("JSESSIONID") // supression cookie
-//				.clearAuthentication(true) // vide champ de saisie
-//				.logoutRequestMatcher(new AntPathRequestMatcher("/logout")) //
-//				.logoutSuccessUrl("/") // ce qui est fait après la déconnection (avec paramètre précisant qu'il d'agit
-//										// d'une deconnection
-//				.permitAll() // détermine qui a accès à la deconnection
-//		);
+		http.logout(logout -> logout.invalidateHttpSession(true) // invalidation de la session http
+				.deleteCookies("JSESSIONID") // supression cookie
+				.clearAuthentication(true) // vide champ de saisie
+				.logoutRequestMatcher(new AntPathRequestMatcher("/logout")) //
+				.logoutSuccessUrl("/") // ce qui est fait après la déconnection (avec paramètre précisant qu'il d'agit
+										// d'une deconnection
+				.permitAll() // détermine qui a accès à la deconnection
+		);
 
 		return http.build();
 	}

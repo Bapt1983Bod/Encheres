@@ -10,9 +10,15 @@ public class EncheresController {
 		}
 	
 	
+	
 	// affichage de la page d'accueil
 	@GetMapping ({"/","/accueil"})
 	public String accueil() {
+		return "accueil";
+	}
+	
+	@GetMapping ("/login")
+	String login() {
 		return "accueil";
 	}
 	
