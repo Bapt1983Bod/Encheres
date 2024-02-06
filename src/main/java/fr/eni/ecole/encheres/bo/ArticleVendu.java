@@ -1,6 +1,7 @@
 package fr.eni.ecole.encheres.bo;
 
 import java.io.Serializable;
+import java.sql.Date;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -13,8 +14,8 @@ public class ArticleVendu implements Serializable {
 	private int noArticle;
 	private String nomArticle;
 	private String description;
-	private LocalDateTime dateDebutEncheres;
-	private LocalDateTime dateFinEncheres;
+	private Date dateDebutEncheres;
+	private Date dateFinEncheres;
 	private int miseAPrix;
 	private int prixVente;
 	private String etatVente;
@@ -28,8 +29,20 @@ public class ArticleVendu implements Serializable {
 		super();
 	}
  
-	public ArticleVendu(int noArticle, String nomArticle, String description, LocalDateTime dateDebutEncheres,
-			LocalDateTime dateFinEncheres, int miseAPrix, int prixVente, String etatVente, List<Enchere> listeEnchere,
+	public ArticleVendu(int noArticle, String nomArticle, String description, Date dateDebutEncheres,
+			Date dateFinEncheres, int miseAPrix, int prixVente) {
+		super();
+		this.noArticle = noArticle;
+		this.nomArticle = nomArticle;
+		this.description = description;
+		this.dateDebutEncheres = dateDebutEncheres;
+		this.dateFinEncheres = dateFinEncheres;
+		this.miseAPrix = miseAPrix;
+		this.prixVente = prixVente;
+	}
+	
+	public ArticleVendu(int noArticle, String nomArticle, String description, Date dateDebutEncheres,
+			Date dateFinEncheres, int miseAPrix, int prixVente, String etatVente, List<Enchere> listeEnchere,
 			Retrait lieuRetrait, Utilisateur acheteur, Utilisateur vendeur, Categorie categorie) {
 		super();
 		this.noArticle = noArticle;
@@ -70,20 +83,20 @@ public class ArticleVendu implements Serializable {
 	public void setDescription(String description) {
 		this.description = description;
 	}
- 
-	public LocalDateTime getDateDebutEncheres() {
+
+	public Date getDateDebutEncheres() {
 		return dateDebutEncheres;
 	}
  
-	public void setDateDebutEncheres(LocalDateTime dateDebutEncheres) {
+	public void setDateDebutEncheres(Date dateDebutEncheres) {
 		this.dateDebutEncheres = dateDebutEncheres;
 	}
  
-	public LocalDateTime getDateFinEncheres() {
+	public Date getDateFinEncheres() {
 		return dateFinEncheres;
 	}
  
-	public void setDateFinEncheres(LocalDateTime dateFinEncheres) {
+	public void setDateFinEncheres(Date dateFinEncheres) {
 		this.dateFinEncheres = dateFinEncheres;
 	}
  

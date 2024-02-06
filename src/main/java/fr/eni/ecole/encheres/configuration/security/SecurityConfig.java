@@ -34,6 +34,8 @@ public class SecurityConfig {
 
 		http.authorizeHttpRequests(auth -> 
 			auth.requestMatchers(HttpMethod.GET, "/", "/accueil").permitAll()
+				.requestMatchers(HttpMethod.GET, "/inscription").permitAll()
+				.requestMatchers(HttpMethod.POST, "/inscription").permitAll()
 				.requestMatchers(HttpMethod.GET, "/test").authenticated()
 				.anyRequest().denyAll());
 
