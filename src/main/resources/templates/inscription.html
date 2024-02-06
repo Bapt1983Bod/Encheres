@@ -9,7 +9,7 @@
 		<h1>Mon profil</h1>
 
 
-	<form action="#" method="post">
+	<form th:action="@{/inscription}" th:object="${utilisateur}" method="post">
 	        <label for="pseudo">Pseudo:</label>
 	        <input type="text" id="pseudo" name="pseudo" required><br>
 	
