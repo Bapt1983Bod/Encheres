@@ -16,6 +16,10 @@ public class EncheresController {
 	@Autowired
 	private UtilisateurService utilisateurService;
 
+	public EncheresController(UtilisateurService utilisateurService) {
+		this.utilisateurService = utilisateurService;
+	}
+
 	@GetMapping("/inscription")
 	public String afficherFormulaireInscription(Model model) {
 		model.addAttribute("utilisateur", new Utilisateur());
@@ -25,6 +29,7 @@ public class EncheresController {
 	@PostMapping("/inscription")
 	public String traiterFormulaireInscription(@ModelAttribute Utilisateur utilisateur) {
 		utilisateurService.creerUtilisateur(utilisateur);
-		return "redirect:/accueil";
+
+		return "/accueil";
 	}
 }
