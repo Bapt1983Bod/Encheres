@@ -28,7 +28,7 @@ public class SecurityConfig {
 		return jdbcUserDetailsManager;
 	}
 
-	// Gestion des accès au page
+	// Gestion des accès aux pages
 	@Bean
 	SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
