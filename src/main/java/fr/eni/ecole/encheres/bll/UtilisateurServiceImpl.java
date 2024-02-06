@@ -1,3 +1,4 @@
+
 package fr.eni.ecole.encheres.bll;
 
 import org.springframework.stereotype.Service;
@@ -5,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import fr.eni.ecole.encheres.bo.Utilisateur;
 import fr.eni.ecole.encheres.dal.UtilisateurDAOImpl;
+import fr.eni.ecole.encheres.exception.BusinessException;
 
 @Service
 @Transactional
@@ -17,9 +19,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	}
 
 	@Override
-
-	public Utilisateur creerUtilisateur(Utilisateur utilisateur) {
-
+	public Utilisateur creerUtilisateur(Utilisateur utilisateur) throws BusinessException {
 		utilisateurDAO.creerUtilisateur(utilisateur);
 		return utilisateur;
 	}

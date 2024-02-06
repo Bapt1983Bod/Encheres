@@ -1,3 +1,4 @@
+
 package fr.eni.ecole.encheres.bo;
 
 import java.io.Serializable;
@@ -5,6 +6,9 @@ import java.util.List;
 
 public class Utilisateur implements Serializable {
 
+	/**
+	 * 
+	 */
 	private static final long serialVersionUID = 1L;
 	private int noUtilisateur;
 	private String pseudo;
@@ -164,5 +168,4 @@ public class Utilisateur implements Serializable {
 				+ ", administrateur=" + administrateur + ", listArticleVendu=" + listArticleVendu + ", listEncheres="
 				+ listEncheres + "]";
 	}
-
 }

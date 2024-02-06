@@ -8,6 +8,10 @@
 
 		<h1>Mon profil</h1>
 
+	
+	<!-- Afficher le message d'erreur -->
+	<p th:if="${erreur}" th:text="${erreur}"></p>
+
 
 	<form th:action="@{/inscription}" th:object="${utilisateur}" method="post">
 	        <label for="pseudo">Pseudo:</label>
@@ -43,6 +47,8 @@
 	        <button type="submit">Créer</button>
 	        <button type="reset">Annuler</button>
 	    </form>
+	    
+	    
 
 
 </body>
