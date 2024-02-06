@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+</head>
+
+<body>
+
+	<h1>Nouvelle Vente</h1>
+
+	<form action="/vendre" method="post">
+		<div>
+			<label for="name">Article</label>
+			<input type="text" name="name" />
+		</div>
+		<div>
+			<label for="description">Description</label>
+			<input type="text" name="description" />
+		</div>
+		<div>
+			<label for="categorie">Catégorie</label>
+			<select name="selectCategorie" id="selectCategorie">
+				<option th:each="c : ${listCategories}" th:text="${c.libelle}" th:value="${c.noCategorie}"></option>
+			</select>
+		</div>
+		<div>
+			<label for="prix">Mise à prix</label>
+			<input type="number" name="prix" min="0"/>
+		</div>
+		<div>
+			<label for="dateDebut">Début de l'enchère</label>
+			<input type="date" name="dateDebut" />
+		</div>
+		<div>
+			<label for="dateFin">Fin de l'enchère</label>
+			<input type="date" name="dateFin" />
+		</div>
+		<div>
+			<h3>Retrait</h3>
+			<div>
+				<label for="rue">Rue</label>
+				<input type="text" name="rue" />
+			</div>
+			<div>
+				<label for="codePostal">Code Postal</label>
+				<input type="text" name="codePostal" />
+			</div>
+			<div>
+				<label for="ville">Ville</label>
+				<input type="text" name="ville" />
+			</div>
+		</div>
+		<div>
+			<button type="submit">Enregistrer</button>
+			<button type="reset">Annuler</button>
+		</div>
+
+	</form>
+
+
+
+</body>
+
+</html>

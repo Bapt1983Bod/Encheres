@@ -7,7 +7,8 @@
 </head>
 
 <body>
-
+	<button type="button"><a href="/inscription">Inscription</a></button>
+	<button type="button"><a href="/vendre">Vendre un article</a></button>
 	<ul>
 		<li sec:authentication="name"></li>
 	</ul>
@@ -38,19 +39,37 @@
 
 			<button type="submit">Se connecter</button>
 			<button type="submit"><a href="/logout">Déconnection</a></button>
+			
 		</form>
 	</div>
-	
+
+<!--	<h2>Filtres</h2>-->
+<!--	<div id="filtre">-->
+<!--		<form th:action="/filtres" method="post">-->
+<!--		<input type="text" placeholder="Le nom de l'article contient" name="textFilter"/>-->
+<!--			<label for="selectCategorie" >Catégorie</label>-->
+<!--			<select name="selectCategorie" id="selectCategorie">-->
+<!--				<option th:each="c : ${listCategories}" th:text="${c.libelle}" th:value="${c.noCategorie}">-->
+<!--				</option>-->
+<!--			</select>-->
+<!--			<button type="submit">Appliquer les filtres</button>-->
+<!--			<button type="reset">Réinitialiser les filtres</button>-->
+<!--		</form>-->
+<!--	</div>-->
+
+
+<!--affichage de la liste des articles-->
+<h1>Liste des ventes en cours</h1>
 	<div th:each="a : ${listArticles}" id="article">
 		<div>
 			<h3 th:text="${'ARTICLE : '+a.nomArticle}"></h3>
 			<p th:text="${a.description}"></p>
 			<p th:text="${'Début des enchères : '+a.dateDebutEncheres +'  Fin des enchères : '+a.dateFinEncheres}"></p>
 			<p th:text="${'Mise à prix : ' + a.miseAPrix +' euros'}"></p>
-<!--			<p th:text="${a.categorie.libelle}"></p>-->
-			
+
+
 		</div>
-		 
+
 	</div>
 
 </body>

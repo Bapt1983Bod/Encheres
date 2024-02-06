@@ -36,7 +36,7 @@ public class SecurityConfig {
 			auth.requestMatchers(HttpMethod.GET, "/", "/accueil").permitAll()
 				.requestMatchers(HttpMethod.GET, "/inscription").permitAll()
 				.requestMatchers(HttpMethod.POST, "/inscription").permitAll()
-				.requestMatchers(HttpMethod.GET, "/test").authenticated()
+				.requestMatchers(HttpMethod.GET, "/vendre").permitAll()
 				.anyRequest().denyAll());
 
 		// Paramétrage de la page de login
