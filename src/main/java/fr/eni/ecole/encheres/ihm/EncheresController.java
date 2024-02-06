@@ -33,7 +33,7 @@ public class EncheresController {
 	}
 
 	// affichage de la page d'accueil
-	@GetMapping({ "/", "/accueil" ,"/login"})
+	@GetMapping({ "/", "/accueil", "/login" })
 	public String accueil(Model modele) {
 		// Récupération de la liste des articles
 		List<ArticleVendu> listArticles = articlesService.findAll();
@@ -46,8 +46,6 @@ public class EncheresController {
 
 		return "accueil";
 	}
-
-
 
 	// utilisation des filtres pages d'accueil
 //	@PostMapping ("/filtres")
@@ -80,30 +78,31 @@ public class EncheresController {
 		return "/accueil";
 	}
 
-	@GetMapping ("/vendre")
+	@GetMapping("/vendre")
 	public String afficherFormulaireVente(Model modele) {
 		// Création d'un article vide
 		ArticleVendu article = new ArticleVendu();
 		modele.addAttribute("article", article);
-				
+
 		// Récupération de la liste des catégories
 		List<Categorie> listCategories = categorieService.findAll();
 		modele.addAttribute("listCategories", listCategories);
 		return "vendre";
 	}
-	
-	@PostMapping ("/vendre")
-	public String ajouterArticle(@ModelAttribute ("article") ArticleVendu article, BindingResult bindingResult) {
+
+	@PostMapping("/vendre")
+	public String ajouterArticle(@ModelAttribute("article") ArticleVendu article, BindingResult bindingResult,
+			@RequestParam("rue") String rue, @RequestParam("codePostal") String codePostal,
+			@RequestParam("ville") String ville) {
 		System.out.println("méthode ajouter article");
 		if (bindingResult.hasErrors()) {
 			return "vendre";
 		} else {
+			
 			System.out.println(article);
 			return "redirect:/vendre";
 		}
-		
-		
-		
+
 	}
-	
+
 }

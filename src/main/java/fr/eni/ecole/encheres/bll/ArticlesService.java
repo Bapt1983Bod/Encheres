@@ -11,6 +11,6 @@ public interface ArticlesService {
 	
 	public List<ArticleVendu> findByCatAndString (int idCat, String string);
 	
-	
+	public void createArticle (ArticleVendu article);
 
 }

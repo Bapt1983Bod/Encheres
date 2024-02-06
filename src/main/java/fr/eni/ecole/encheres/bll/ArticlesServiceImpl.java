@@ -34,4 +34,10 @@ public class ArticlesServiceImpl implements ArticlesService {
 		return articlesDAO.findByCatAndString(date, idCat, string);
 	}
 
+	@Override
+	public void createArticle(ArticleVendu article) {
+		articlesDAO.createArticle(article);
+		
+	}
+
 }
