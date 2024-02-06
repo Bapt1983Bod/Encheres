@@ -29,6 +29,21 @@ public class ArticleVendu implements Serializable {
 		super();
 	}
  
+	
+	
+	public ArticleVendu(String nomArticle, String description, Date dateDebutEncheres, Date dateFinEncheres,
+			int miseAPrix, Categorie categorie) {
+		super();
+		this.nomArticle = nomArticle;
+		this.description = description;
+		this.dateDebutEncheres = dateDebutEncheres;
+		this.dateFinEncheres = dateFinEncheres;
+		this.miseAPrix = miseAPrix;
+		this.categorie = categorie;
+	}
+
+
+
 	public ArticleVendu(int noArticle, String nomArticle, String description, Date dateDebutEncheres,
 			Date dateFinEncheres, int miseAPrix, int prixVente) {
 		super();
@@ -40,6 +55,8 @@ public class ArticleVendu implements Serializable {
 		this.miseAPrix = miseAPrix;
 		this.prixVente = prixVente;
 	}
+	
+	
 	
 	public ArticleVendu(int noArticle, String nomArticle, String description, Date dateDebutEncheres,
 			Date dateFinEncheres, int miseAPrix, int prixVente, String etatVente, List<Enchere> listeEnchere,
@@ -163,13 +180,18 @@ public class ArticleVendu implements Serializable {
 	public void setCategorie(Categorie categorie) {
 		this.categorie = categorie;
 	}
- 
+
+
+
 	@Override
 	public String toString() {
-		return String.format(
-				"ArticleVendu [noArticle=%s, nomArticle=%s, description=%s, dateDebutEncheres=%s, dateFinEncheres=%s, miseAPrix=%s, prixVente=%s, etatVente=%s, listeEnchere=%s, lieuRetrait=%s, utilsateurA=%s, utilisateurV=%s, categorie=%s]",
-				noArticle, nomArticle, description, dateDebutEncheres, dateFinEncheres, miseAPrix, prixVente, etatVente,
-				listeEnchere, lieuRetrait, acheteur, vendeur, categorie);
+		return "ArticleVendu [noArticle=" + noArticle + ", nomArticle=" + nomArticle + ", description=" + description
+				+ ", dateDebutEncheres=" + dateDebutEncheres + ", dateFinEncheres=" + dateFinEncheres + ", miseAPrix="
+				+ miseAPrix + ", prixVente=" + prixVente + ", etatVente=" + etatVente + ", listeEnchere=" + listeEnchere
+				+ ", lieuRetrait=" + lieuRetrait + ", acheteur=" + acheteur + ", vendeur=" + vendeur + ", categorie="
+				+ categorie + "]";
 	}
+ 
+
  
 }

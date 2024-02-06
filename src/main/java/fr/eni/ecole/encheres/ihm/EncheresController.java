@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -81,10 +82,28 @@ public class EncheresController {
 
 	@GetMapping ("/vendre")
 	public String afficherFormulaireVente(Model modele) {
+		// Création d'un article vide
+		ArticleVendu article = new ArticleVendu();
+		modele.addAttribute("article", article);
+				
 		// Récupération de la liste des catégories
 		List<Categorie> listCategories = categorieService.findAll();
 		modele.addAttribute("listCategories", listCategories);
 		return "vendre";
+	}
+	
+	@PostMapping ("/vendre")
+	public String ajouterArticle(@ModelAttribute ("article") ArticleVendu article, BindingResult bindingResult) {
+		System.out.println("méthode ajouter article");
+		if (bindingResult.hasErrors()) {
+			return "vendre";
+		} else {
+			System.out.println(article);
+			return "redirect:/vendre";
+		}
+		
+		
+		
 	}
 	
 }

@@ -21,6 +21,11 @@ public class CategorieServiceImpl implements CategorieService {
 	public List<Categorie> findAll() {
 		return categorieDAO.findAll();
 	}
+
+	@Override
+	public Categorie findById(int id) {
+		return categorieDAO.findById(id);
+	}
 	
 	
 
