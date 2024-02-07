@@ -1,18 +1,23 @@
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
-		<h2>Mon profil</h2>
-		
 
-   
-   <a href="/modification-profil">Modifier mon profil</a>
-   
-   
-    <ul>
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<link rel="stylesheet" href="/css/stylesheet.css">
+</head>
+
+<body>
+	<div class="container">
+	
+	<h2>Mon profil</h2>
+
+
+
+	<a href="/modification-profil">Modifier mon profil</a>
+
+
+	<ul>
 		<li th:text="'Pseudo : ' + ${utilisateur.pseudo}"></li>
 		<li th:text="'Nom : ' + ${utilisateur.nom}"></li>
 		<li th:text="'Prénom : ' + ${utilisateur.prenom}"></li>
@@ -22,14 +27,14 @@
 		<li th:text="'Code postal : ' + ${utilisateur.codePostal}"></li>
 		<li th:text="'Ville : ' + ${utilisateur.ville}"></li>
 		<li th:text="'Mot de passe : ' + ${utilisateur.motDePasse}"></li>
-    </ul>
+	</ul>
 </body>
-		
-		 <form action="/accueil" method="get">
-   		 <button type="submit">Accueil</button>
-   		 
-   		 <form th:action="@{/supprimer-compte}" method="post">
-   		 <button type="submit">Supprimer mon compte</button>
-</form>
-	
+
+<form action="/accueil" method="get">
+	<button type="submit">Accueil</button>
+
+	<form th:action="@{/supprimer-compte}" method="post">
+		<button type="submit">Supprimer mon compte</button>
+	</form>
+</div>
 </html>

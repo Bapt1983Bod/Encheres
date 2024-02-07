@@ -8,22 +8,14 @@ body {
     align-items: center;
 }
 
-header, nav {
-    width: 100%;
-    position: fixed;
-    top: 0;
-    background-color: #ffffff;
-    z-index: 1000;
-}
-
 .container {
-    width: 80%;
-    max-width: 600px;
+    width: 80%; /* Largeur par défaut pour les écrans d'ordinateur */
+    max-width: 1200px;
     padding: 20px;
     background-color: #fff;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    margin-top: 200px; /* Ajustez la marge supérieure pour que le contenu ne soit pas masqué sous le header et la nav */
+    margin-top: 20px; 
 }
 
 h1 {
@@ -37,7 +29,7 @@ h2 {
 }
 
 form {
-    max-width: 300px; /* Réduire la largeur maximale */
+    max-width: 300px; 
     margin: 0 auto;
 }
 
@@ -142,14 +134,17 @@ a {
     text-decoration: none;
 }
 
-@media screen and (max-width: 768px) {
-    /* Styles à appliquer pour les écrans de petite taille */
-    header, nav {
-        height: 60px; /* Réduire la hauteur du header et de la nav */
-        line-height: 60px; /* Ajuster la hauteur de ligne pour centrer le texte vertical */
-    }
-
+@media screen and (max-width: 1024px) {
+    /* pour les écrans de taille moyenne (tablette) */
     .container {
-        margin-top: 80px; /* Ajustez la marge supérieure pour les écrans de petite taille */
+        width: 90%; 
+    }
+}
+
+@media screen and (max-width: 768px) {
+    /* les écrans de petite taille (téléphone portable) */
+    .container {
+        width: 100%; 
+        border-radius: 0; 
     }
 }
