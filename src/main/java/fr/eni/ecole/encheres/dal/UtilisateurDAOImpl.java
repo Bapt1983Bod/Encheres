@@ -2,6 +2,7 @@
 package fr.eni.ecole.encheres.dal;
 
 import java.util.Optional;
+import java.util.regex.Pattern;
 
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -32,6 +33,12 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 	}
 
 	public void creerUtilisateur(Utilisateur utilisateur) throws BusinessException {
+
+		// verifier si le pseudo ne contient que des caractères alphanumériques
+
+		if (!isValidPseudo(utilisateur.getPseudo())) {
+			throw new BusinessException("Le pseudo ne doit contenir que des caractères alphanumériques");
+		}
 
 		// verifier si pseudo déja existant dans la base
 		Optional<Utilisateur> existingUser = findByPseudo(utilisateur.getPseudo());
@@ -69,6 +76,11 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 			utilisateur.setNoUtilisateur(keyHolder.getKey().intValue());
 		}
 
+	}
+
+	private boolean isValidPseudo(String pseudo) {
+		String regex = "^[a-zA-Z0-9]+$";
+		return Pattern.matches(regex, pseudo);
 	}
 
 	@Override //

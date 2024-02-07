@@ -22,7 +22,7 @@ public class ArticlesDAOImpl implements ArticlesDAO {
 	private final static String FIND_ALL = "SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, ARTICLES_VENDUS.no_utilisateur, ARTICLES_VENDUS.no_categorie, pseudo, nom, prenom, email, telephone, libelle FROM ARTICLES_VENDUS INNER JOIN UTILISATEURS ON ARTICLES_VENDUS.no_utilisateur = UTILISATEURS.no_utilisateur INNER JOIN CATEGORIES ON ARTICLES_VENDUS.no_categorie = CATEGORIES.no_categorie where date_debut_encheres <= :dateDuJour and date_fin_encheres >= :dateDuJour;";
 	private final static String FIND_BY_CATEGORIE_AND_STRING = "SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, ARTICLES_VENDUS.no_utilisateur, ARTICLES_VENDUS.no_categorie, pseudo, nom, prenom, email, telephone, libelle FROM ARTICLES_VENDUS INNER JOIN UTILISATEURS ON ARTICLES_VENDUS.no_utilisateur = UTILISATEURS.no_utilisateur INNER JOIN CATEGORIES ON ARTICLES_VENDUS.no_categorie = CATEGORIES.no_categorie where date_debut_encheres <= :dateDuJour and date_fin_encheres >= :dateDuJour nom_article like '%:String%'and no_categorie= :id;";
 	private final static String CREATE_ARTICLE = "INSERT INTO ARTICLES_VENDUS (nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie) values (:nom,:description, :dateDebut, :dateFin, :prix, null, :idUtilisateur, :idCategorie)";
-	
+
 	private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
 	public ArticlesDAOImpl(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
@@ -58,17 +58,17 @@ public class ArticlesDAOImpl implements ArticlesDAO {
 		map.addValue("prix", article.getMiseAPrix());
 		map.addValue("idUtilisateur", article.getUtilisateurV().getNoUtilisateur());
 		map.addValue("idCategorie", article.getCategorie().getNoCategorie());
-		
-		//Récupération id generé par BDD
-				KeyHolder keyHolder = new GeneratedKeyHolder();
-		
-		this.namedParameterJdbcTemplate.update(CREATE_ARTICLE,map,keyHolder);
-		
-		if(keyHolder != null && keyHolder.getKey() != null) {
+
+		// Récupération id generé par BDD
+		KeyHolder keyHolder = new GeneratedKeyHolder();
+
+		this.namedParameterJdbcTemplate.update(CREATE_ARTICLE, map, keyHolder);
+
+		if (keyHolder != null && keyHolder.getKey() != null) {
 			// Mise à jour de l'instance Article avec l'id generé par la BDD
 			article.setNoArticle(keyHolder.getKey().intValue());
 		}
-		
+
 	}
 
 }
