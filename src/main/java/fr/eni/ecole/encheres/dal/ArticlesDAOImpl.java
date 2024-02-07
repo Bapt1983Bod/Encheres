@@ -49,14 +49,17 @@ public class ArticlesDAOImpl implements ArticlesDAO {
 	}
 
 	@Override
-	public void createArticle(ArticleVendu article) {
+	public void createArticle(int idVendeur, ArticleVendu article) {
+		System.out.println("DAO : "+ idVendeur);
+		System.out.println("DAO : "+ article);
+		
 		MapSqlParameterSource map = new MapSqlParameterSource();
 		map.addValue("nom", article.getNomArticle());
 		map.addValue("description", article.getDescription());
 		map.addValue("dateDebut", article.getDateDebutEncheres());
 		map.addValue("dateFin", article.getDateFinEncheres());
 		map.addValue("prix", article.getMiseAPrix());
-		map.addValue("idUtilisateur", article.getUtilisateurV().getNoUtilisateur());
+		map.addValue("idUtilisateur", idVendeur);
 		map.addValue("idCategorie", article.getCategorie().getNoCategorie());
 
 		// Récupération id generé par BDD

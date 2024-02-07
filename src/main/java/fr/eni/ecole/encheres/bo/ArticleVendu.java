@@ -5,6 +5,9 @@ import java.io.Serializable;
 import java.sql.Date;
 import java.util.List;
 
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+
 public class ArticleVendu implements Serializable {
 	 
 	/**
@@ -12,10 +15,15 @@ public class ArticleVendu implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	private int noArticle;
+	@NotBlank
 	private String nomArticle;
+	@NotBlank
 	private String description;
+	@NotBlank
 	private Date dateDebutEncheres;
+	@NotBlank
 	private Date dateFinEncheres;
+	@Min (value=0)
 	private int miseAPrix;
 	private int prixVente;
 	private String etatVente;

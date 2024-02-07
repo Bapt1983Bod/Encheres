@@ -11,6 +11,6 @@ public interface ArticlesDAO {
 	
 	public List<ArticleVendu> findByCatAndString (LocalDate date, int idCat, String string);
 	
-	public void createArticle (ArticleVendu article);
+	public void createArticle (int idVendeur, ArticleVendu article);
 
 }
