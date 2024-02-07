@@ -17,7 +17,7 @@ import fr.eni.ecole.encheres.bll.UtilisateurService;
 import fr.eni.ecole.encheres.bo.ArticleVendu;
 import fr.eni.ecole.encheres.bo.Categorie;
 import fr.eni.ecole.encheres.bo.Utilisateur;
-import fr.eni.ecole.encheres.dal.CategorieDAO;
+import fr.eni.ecole.encheres.exception.BusinessException;
 
 @Controller
 public class EncheresController {
@@ -73,10 +73,17 @@ public class EncheresController {
 	}
 
 	@PostMapping("/inscription")
-	public String traiterFormulaireInscription(@ModelAttribute Utilisateur utilisateur) {
-		utilisateurService.creerUtilisateur(utilisateur);
+	public String traiterFormulaireInscription(@ModelAttribute Utilisateur utilisateur, Model model)
+			throws BusinessException {
+		try {
+			utilisateurService.creerUtilisateur(utilisateur);
+			return "redirect:/inscription";
+		} catch (BusinessException e) {
 
-		return "/accueil";
+			model.addAttribute("erreur", e.getMessages()); // ajouter le message d'erreur au modèle
+			System.out.println(model);
+			return "inscription";
+		}
 	}
 
 	@GetMapping("/vendre")
@@ -99,7 +106,7 @@ public class EncheresController {
 		if (bindingResult.hasErrors()) {
 			return "vendre";
 		} else {
-			
+
 			System.out.println(article);
 			return "redirect:/vendre";
 		}
@@ -107,4 +114,3 @@ public class EncheresController {
 	}
 
 }
-
