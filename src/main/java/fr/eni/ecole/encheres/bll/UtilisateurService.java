@@ -13,4 +13,6 @@ public interface UtilisateurService {
 	Utilisateur getIdUtilisateurConnecte();
 
 	public void modifierUtilisateur(Utilisateur utilisateur);
+
+	void supprimerUtilisateur(Utilisateur utilisateur);
 }

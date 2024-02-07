@@ -3,6 +3,7 @@ package fr.eni.ecole.encheres.ihm;
 
 import java.util.List;
 
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -75,6 +76,17 @@ public class EncheresController {
 	public String modifierUtilisateur(@ModelAttribute Utilisateur utilisateurModifie, Model model) {
 		utilisateurService.modifierUtilisateur(utilisateurModifie);
 		return "redirect:/profil"; // Redirige l'utilisateur vers sa page de profil après la modification
+	}
+
+	// suppression du profil
+
+	@PostMapping("/supprimer-compte")
+	public String supprimerUtilisateur(@ModelAttribute Utilisateur utilisateur, Model model) {
+
+		SecurityContextHolder.clearContext();
+
+		utilisateurService.supprimerUtilisateur(utilisateur);
+		return "redirect:/accueil"; // Redirige l'utilisateur vers la page d'accueil après la suppression du compte
 	}
 
 	// utilisation des filtres pages d'accueil

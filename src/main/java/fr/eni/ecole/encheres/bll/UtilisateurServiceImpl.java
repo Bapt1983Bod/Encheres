@@ -52,4 +52,10 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		utilisateurDAO.modifierUtilisateur(utilisateur);
 	}
 
+	@Override
+	public void supprimerUtilisateur(Utilisateur utilisateur) {
+		utilisateurDAO.supprimerUtilisateur(utilisateur);
+
+	}
+
 }

@@ -22,6 +22,7 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 	private static final String SELECT_BY_PSEUDO = "SELECT * FROM UTILISATEURS WHERE pseudo = :pseudo";
 	private static final String SELECT_BY_EMAIL = "SELECT * FROM UTILISATEURS WHERE email = :email";
 	private static final String UPDATE = "UPDATE UTILISATEURS SET nom = :nom, prenom = :prenom, email = :email, telephone = :telephone, rue = :rue, code_postal = :codePostal, ville = :ville WHERE pseudo = :pseudo";
+	private static final String DELETE = "DELETE FROM UTILISATEURS WHERE pseudo = :pseudo";
 
 	private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
@@ -146,9 +147,11 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 
 	}
 
-//	@Override
-//	public Utilisateur save(Utilisateur utilisateur) {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
+	@Override
+	public void supprimerUtilisateur(Utilisateur utilisateur) {
+		MapSqlParameterSource params = new MapSqlParameterSource().addValue("pseudo", utilisateur.getPseudo());
+		namedParameterJdbcTemplate.update(DELETE, params);
+
+	}
+
 }
