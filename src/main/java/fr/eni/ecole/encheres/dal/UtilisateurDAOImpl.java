@@ -8,6 +8,7 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 import fr.eni.ecole.encheres.bo.Utilisateur;
@@ -22,9 +23,12 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 
 	private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
-	public UtilisateurDAOImpl(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
+	private PasswordEncoder passwordEncoder;
+
+	public UtilisateurDAOImpl(NamedParameterJdbcTemplate namedParameterJdbcTemplate, PasswordEncoder passwordEncoder) {
 		super();
 		this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
+		this.passwordEncoder = passwordEncoder;
 	}
 
 	public void creerUtilisateur(Utilisateur utilisateur) throws BusinessException {
@@ -51,7 +55,7 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 		map.addValue("rue", utilisateur.getRue());
 		map.addValue("codePostal", utilisateur.getCodePostal());
 		map.addValue("ville", utilisateur.getVille());
-		map.addValue("motDePasse", utilisateur.getMotDePasse());
+		map.addValue("motDePasse", passwordEncoder.encode(utilisateur.getMotDePasse()));
 		map.addValue("credit", utilisateur.getCredit());
 		map.addValue("administrateur", utilisateur.getAdministrateur());
 
