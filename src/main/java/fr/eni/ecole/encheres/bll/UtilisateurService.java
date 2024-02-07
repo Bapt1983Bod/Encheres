@@ -10,6 +10,6 @@ public interface UtilisateurService {
 
 	Utilisateur findByPseudo(String pseudo);
 
-	Utilisateur getUtilisateurConnecte();
+//	Utilisateur getUtilisateurConnecte();
 
 }
