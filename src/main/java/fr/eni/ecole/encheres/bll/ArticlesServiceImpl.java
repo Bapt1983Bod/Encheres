@@ -35,7 +35,7 @@ public class ArticlesServiceImpl implements ArticlesService {
 	}
 
 	@Override
-	public void createArticle(ArticleVendu article) {
+	public void createArticle(int idVendeur, ArticleVendu article) {
 		articlesDAO.createArticle(article);
 		
 	}

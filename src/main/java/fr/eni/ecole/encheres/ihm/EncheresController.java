@@ -106,6 +106,8 @@ public class EncheresController {
 		// Création d'un article vide
 		ArticleVendu article = new ArticleVendu();
 		modele.addAttribute("article", article);
+		
+		System.out.println("id utilisateur : "+utilisateurService.getIdUtilisateurConnecte());
 
 		// Récupération de la liste des catégories
 		List<Categorie> listCategories = categorieService.findAll();
@@ -121,8 +123,10 @@ public class EncheresController {
 		if (bindingResult.hasErrors()) {
 			return "vendre";
 		} else {
-			System.out.println(article);
-			articlesService.createArticle(article);
+			
+			int idVendeur = utilisateurService.getIdUtilisateurConnecte().getNoUtilisateur();
+			
+			articlesService.createArticle(idVendeur, article);
 			return "redirect:/vendre";
 		}
 

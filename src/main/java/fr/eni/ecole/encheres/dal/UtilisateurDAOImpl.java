@@ -91,9 +91,21 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 			Utilisateur utilisateur = namedParameterJdbcTemplate.queryForObject(SELECT_BY_PSEUDO, params,
 					(rs, rowNum) -> {
 						Utilisateur user = new Utilisateur();
-						user.setPseudo(rs.getString("pseudo"));
+						user.setNoUtilisateur(rs.getInt("no_utilisateur"));
+	                    user.setPseudo(rs.getString("pseudo"));
+	                    user.setNom(rs.getString("nom"));
+	                    user.setPrenom(rs.getString("prenom"));
+	                    user.setEmail(rs.getString("email"));
+	                    user.setTelephone(rs.getString("telephone"));
+	                    user.setRue(rs.getString("rue"));
+	                    user.setCodePostal(rs.getString("code_postal"));
+	                    user.setVille(rs.getString("ville"));
+	                    user.setMotDePasse(rs.getString("mot_de_passe"));
+	                    user.setCredit(rs.getInt("credit"));
+	                    user.setAdministrateur(rs.getInt("administrateur"));
 						return user;
 					});
+			System.out.println("DAO : "+ utilisateur);
 			return Optional.ofNullable(utilisateur);
 		} catch (EmptyResultDataAccessException e) {
 			return Optional.empty();
