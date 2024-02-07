@@ -27,9 +27,10 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	}
 
 	@Override
-	public Optional<Utilisateur> findByPseudo(String pseudo) {
-		return utilisateurDAO.findByPseudo(pseudo);
-
+	public Utilisateur findByPseudo(String pseudo) {
+		Optional<Utilisateur> utilisateurOptional = utilisateurDAO.findByPseudo(pseudo);
+		Utilisateur utilisateur = utilisateurOptional.get();
+		return utilisateur;
 	}
 
 //	@Override
