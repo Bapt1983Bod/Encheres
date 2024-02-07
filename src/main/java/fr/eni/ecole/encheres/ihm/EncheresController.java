@@ -1,3 +1,4 @@
+
 package fr.eni.ecole.encheres.ihm;
 
 import org.springframework.stereotype.Controller;

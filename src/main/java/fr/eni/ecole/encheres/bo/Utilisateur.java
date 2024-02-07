@@ -28,6 +28,16 @@ public class Utilisateur implements Serializable {
 	public Utilisateur() {
 	}
 
+	public Utilisateur(int noUtilisateur, String pseudo, String nom, String prenom, String email, String telephone) {
+		super();
+		this.noUtilisateur = noUtilisateur;
+		this.pseudo = pseudo;
+		this.nom = nom;
+		this.prenom = prenom;
+		this.email = email;
+		this.telephone = telephone;
+	}
+
 	public Utilisateur(int noUtilisateur, String pseudo, String nom, String prenom, String email, String telephone,
 			String rue, String codePostal, String ville, String motDePasse, int credit, int administrateur,
 			List<ArticleVendu> listArticleVendu, List<Enchere> listEncheres) {
@@ -168,4 +178,5 @@ public class Utilisateur implements Serializable {
 				+ ", administrateur=" + administrateur + ", listArticleVendu=" + listArticleVendu + ", listEncheres="
 				+ listEncheres + "]";
 	}
+
 }

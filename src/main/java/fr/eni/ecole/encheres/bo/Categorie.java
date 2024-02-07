@@ -1,3 +1,4 @@
+
 package fr.eni.ecole.encheres.bo;
 
 import java.io.Serializable;
@@ -14,6 +15,11 @@ public class Categorie implements Serializable {
 	private List<ArticleVendu> listArticleVendu;
 
 	public Categorie() {
+	}
+
+	public Categorie(int noCategorie, String libelle) {
+		this.noCategorie = noCategorie;
+		this.libelle = libelle;
 	}
 
 	public Categorie(int noCategorie, String libelle, List<ArticleVendu> listArticleVendu) {
@@ -51,5 +57,4 @@ public class Categorie implements Serializable {
 		return "Categorie [noCategorie=" + noCategorie + ", libelle=" + libelle + ", listArticleVendu="
 				+ listArticleVendu + "]";
 	}
-
 }
