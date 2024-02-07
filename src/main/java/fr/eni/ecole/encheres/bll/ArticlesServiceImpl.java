@@ -10,22 +10,34 @@ import fr.eni.ecole.encheres.dal.ArticlesDAO;
 
 @Service
 public class ArticlesServiceImpl implements ArticlesService {
-	
+
 	private ArticlesDAO articlesDAO;
-	
-	
 
 	public ArticlesServiceImpl(ArticlesDAO articlesDAO) {
 		this.articlesDAO = articlesDAO;
 	}
 
-
-
+	// Récupère la liste des articles en vente à la date du jour
 	@Override
 	public List<ArticleVendu> findAll() {
 		LocalDate date = LocalDate.now();
-		System.out.println("service : "+ date);
+
 		return articlesDAO.findAll(date);
+	}
+
+	// Récupère la liste des articles dans la bdd dont la vente est en cours en
+	// appliquant le filtre
+	@Override
+	public List<ArticleVendu> findByCatAndString(int idCat, String string) {
+		LocalDate date = LocalDate.now();
+
+		return articlesDAO.findByCatAndString(date, idCat, string);
+	}
+
+	@Override
+	public void createArticle(ArticleVendu article) {
+		articlesDAO.createArticle(article);
+		
 	}
 
 }

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>Nouvelle vente</title>
+</head>
+
+<body>
+
+	<h1>Nouvelle Vente</h1>
+
+	<form th:object="${article}" th:action="@{/vendre}" method="post">
+		<div>
+			<label for="nom">Article</label>
+			<input type="text" name="nomArticle" th:field="*{nomArticle}"/>
+		</div>
+		<div>
+			<label for="description">Description</label>
+			<input type="text" name="description" th:field="*{description}" />
+		</div>
+		<div>
+			<label for="categorie">Catégorie</label>
+			<select name="noCategorie" id="selectCategorie" th:field="*{categorie}">
+				<option th:each="c : ${listCategories}" th:text="${c.libelle}" th:value="${c.noCategorie}"></option>
+			</select>
+		</div>
+		<div>
+			<label for="prix">Mise à prix</label>
+			<input type="number" name="prix" min="0" th:field="*{miseAPrix}"/>
+		</div>
+		<div>
+			<label for="dateDebut">Début de l'enchère</label>
+			<input type="date" name="dateDebut" th:field="*{dateDebutEncheres}"/>
+		</div>
+		<div>
+			<label for="dateFin">Fin de l'enchère</label>
+			<input type="date" name="dateFin" th:field="*{dateFinEncheres}"/>
+		</div>
+		<div>
+		
+			<h3>Retrait</h3>
+			<div>
+				<label for="rue">Rue</label>
+				<input type="text" name="rue" />
+			</div>
+			<div>
+				<label for="codePostal">Code Postal</label>
+				<input type="text" name="codePostal" />
+			</div>
+			<div>
+				<label for="ville">Ville</label>
+				<input type="text" name="ville" />
+			</div>
+		</div>
+		<div>
+			<button type="submit">Enregistrer</button>
+			<button type="reset">Annuler</button>
+		</div>
+
+	</form>
+
+
+
+</body>
+
+</html>
