@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import fr.eni.ecole.encheres.bll.ArticlesService;
 import fr.eni.ecole.encheres.bll.CategorieService;
+import fr.eni.ecole.encheres.bll.RetraitService;
 import fr.eni.ecole.encheres.bll.UtilisateurService;
 import fr.eni.ecole.encheres.bo.ArticleVendu;
 import fr.eni.ecole.encheres.bo.Categorie;
@@ -25,12 +26,14 @@ public class EncheresController {
 	private UtilisateurService utilisateurService;
 	private ArticlesService articlesService;
 	private CategorieService categorieService;
+	private RetraitService retraitService;
 
 	public EncheresController(UtilisateurService utilisateurService, ArticlesService articlesService,
-			CategorieService categorieService) {
+			CategorieService categorieService, RetraitService retraitService) {
 		this.utilisateurService = utilisateurService;
 		this.articlesService = articlesService;
 		this.categorieService = categorieService;
+		this.retraitService = retraitService;
 	}
 
 	// affichage de la page d'accueil
@@ -77,7 +80,7 @@ public class EncheresController {
 			throws BusinessException {
 		try {
 			utilisateurService.creerUtilisateur(utilisateur);
-			return "redirect:/inscription";
+			return "redirect:/accueil";
 		} catch (BusinessException e) {
 
 			model.addAttribute("erreur", e.getMessages()); // ajouter le message d'erreur au modèle
@@ -106,8 +109,8 @@ public class EncheresController {
 		if (bindingResult.hasErrors()) {
 			return "vendre";
 		} else {
-
 			System.out.println(article);
+			articlesService.createArticle(article);
 			return "redirect:/vendre";
 		}
 

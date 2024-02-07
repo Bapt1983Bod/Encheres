@@ -3,7 +3,6 @@ package fr.eni.ecole.encheres.bo;
 
 import java.io.Serializable;
 import java.sql.Date;
-import java.time.LocalDateTime;
 import java.util.List;
 
 public class ArticleVendu implements Serializable {
