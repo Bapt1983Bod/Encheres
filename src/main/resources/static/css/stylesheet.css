@@ -1,12 +1,5 @@
 @charset "UTF-8";
 
-header {
-	background-color: dimgray;
-	
-}
-
-body {
-	background-color: lightslategray}
 
 header {
 	background-color: dimgray;
@@ -55,4 +48,19 @@ button:active {
 
 .error {
 	background-color: indianred;
+}
+
+/*vendre*/
+
+#retraitform {
+	border: #000 solid 1px;
+	background-color: brown;
+	margin: 1vw;
+	
+	padding: 1vw;
+	width: fit-content;
+}
+
+#retraitform input {
+	width: 10vw;
 }
