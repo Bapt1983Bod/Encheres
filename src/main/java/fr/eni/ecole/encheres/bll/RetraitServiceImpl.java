@@ -2,6 +2,7 @@ package fr.eni.ecole.encheres.bll;
 
 import org.springframework.stereotype.Service;
 
+import fr.eni.ecole.encheres.bo.Utilisateur;
 import fr.eni.ecole.encheres.dal.RetraitDAO;
 
 @Service
@@ -18,8 +19,16 @@ public class RetraitServiceImpl implements RetraitService {
 
 	// Création d'un retrait
 	@Override
-	public void createRetrait(int idArticle, String rue, String codePostal, String ville) {
-		retraitDAO.createRetrait(idArticle, rue, codePostal, ville);
+	public void createRetrait(int idArticle, Utilisateur vendeur, String rue, String codePostal, String ville) {
+		
+		// Vérification si retrait renseigné dans le formulaire (si un des champs vides => utilisation adresse du vendeur)
+				if (rue.isBlank() || codePostal.isBlank() || ville.isBlank()) {
+					// création point de retrait avec adresse du vendeur
+					retraitDAO.createRetrait(idArticle, vendeur.getRue(), vendeur.getCodePostal(), vendeur.getVille());
+				} else {
+					// création point de retrait avec adresse du formulaire
+					retraitDAO.createRetrait(idArticle, rue, codePostal, ville);
+				}
 	}
 
 }

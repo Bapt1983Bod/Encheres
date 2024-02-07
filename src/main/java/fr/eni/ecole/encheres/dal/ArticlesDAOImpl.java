@@ -3,6 +3,7 @@ package fr.eni.ecole.encheres.dal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.jdbc.core.RowMapper;
@@ -48,8 +49,9 @@ public class ArticlesDAOImpl implements ArticlesDAO {
 		return this.namedParameterJdbcTemplate.query(FIND_BY_CATEGORIE_AND_STRING, map, new ArticlesRowMapper());
 	}
 
+	// creation d'un article et retourne le noArticle pour création du retrait
 	@Override
-	public void createArticle(int idVendeur, ArticleVendu article) {
+	public int createArticle(int idVendeur, ArticleVendu article) {
 		System.out.println("DAO : "+ idVendeur);
 		System.out.println("DAO : "+ article);
 		
@@ -71,8 +73,10 @@ public class ArticlesDAOImpl implements ArticlesDAO {
 			// Mise à jour de l'instance Article avec l'id generé par la BDD
 			article.setNoArticle(keyHolder.getKey().intValue());
 		}
-
+		return article.getNoArticle();
 	}
+
+	
 
 }
 

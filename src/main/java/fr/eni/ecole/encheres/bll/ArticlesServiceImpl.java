@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import fr.eni.ecole.encheres.bo.ArticleVendu;
+import fr.eni.ecole.encheres.bo.Utilisateur;
 import fr.eni.ecole.encheres.dal.ArticlesDAO;
 
 @Service
@@ -35,8 +36,10 @@ public class ArticlesServiceImpl implements ArticlesService {
 	}
 
 	@Override
-	public void createArticle(int idVendeur, ArticleVendu article) {
-		articlesDAO.createArticle(idVendeur, article);
+	public int createArticle(Utilisateur vendeur, ArticleVendu article) {
+		
+		// crée l'article avec le noUtilisateur du vendeur  et retourne le no de l'article
+		return articlesDAO.createArticle(vendeur.getNoUtilisateur(), article);
 		
 	}
 

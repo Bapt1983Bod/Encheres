@@ -1,9 +1,9 @@
 package fr.eni.ecole.encheres.bll;
 
-import java.time.LocalDate;
 import java.util.List;
 
 import fr.eni.ecole.encheres.bo.ArticleVendu;
+import fr.eni.ecole.encheres.bo.Utilisateur;
 
 public interface ArticlesService {
 	
@@ -11,6 +11,6 @@ public interface ArticlesService {
 	
 	public List<ArticleVendu> findByCatAndString (int idCat, String string);
 	
-	public void createArticle (int idVendeur, ArticleVendu article);
+	public int createArticle (Utilisateur vendeur, ArticleVendu article);
 
 }
