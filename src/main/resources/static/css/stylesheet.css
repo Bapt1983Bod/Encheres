@@ -1,66 +1,155 @@
-@charset "UTF-8";
-
-
-header {
-	background-color: dimgray;
-
-}
-
 body {
-	background-color: lightslategray
+    font-family: Arial, sans-serif;
+    background-color: dimgrey;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
+header, nav {
+    width: 100%;
+    position: fixed;
+    top: 0;
+    background-color: #ffffff;
+    z-index: 1000;
+}
+
+.container {
+    width: 80%;
+    max-width: 600px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-top: 200px; /* Ajustez la marge supérieure pour que le contenu ne soit pas masqué sous le header et la nav */
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+}
+
+h2 {
+    color: #007bff;
+    margin-top: 20px;
+}
+
+form {
+    max-width: 300px; /* Réduire la largeur maximale */
+    margin: 0 auto;
+}
+
+form div {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: rgb(0, 0, 0);
+}
+
+input[type="text"],
+input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
 
 button {
-	display: inline-block;
-	cursor: pointer;
-	border: 0;
-	line-height: 2.5;
-	padding: 0 20px;
-	font-size: 1rem;
-	text-align: center;
-	color: #fff;
-	text-shadow: 1px 1px 1px #000;
-	border-radius: 10px;
-	background-color: rgba(220, 0, 0, 1);
-	background-image: linear-gradient(to top left,
-			rgba(0, 0, 0, 0.2),
-			rgba(0, 0, 0, 0.2) 30%,
-			rgba(0, 0, 0, 0));
-	box-shadow:
-		inset 2px 2px 3px rgba(255, 255, 255, 0.6),
-		inset -2px -2px 3px rgba(0, 0, 0, 0.6);
+    width: 100%;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: rgb(0, 128, 192);
+    color: rgb(0, 0, 0);
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
-button a {
-	color: #000;
+button[type="submit"] {
+    margin-bottom: 10px;
+    margin-right: 10px;
 }
 
-button:hover {
-	background-color: rgba(255, 0, 0, 1);
+button[type="submit"]:hover {
+    background-color: #0056b3;
 }
 
-button:active {
-	box-shadow:
-		inset -2px -2px 3px rgba(255, 255, 255, 0.6),
-		inset 2px 2px 3px rgba(0, 0, 0, 0.6);
+.article {
+    background-color: #f0f0f0;
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 20px;
 }
 
-.error {
-	background-color: indianred;
+.article h3 {
+    color: #007bff;
+    margin-bottom: 10px;
 }
 
-/*vendre*/
-
-#retraitform {
-	border: #000 solid 1px;
-	background-color: brown;
-	margin: 1vw;
-	
-	padding: 1vw;
-	width: fit-content;
+.article p {
+    color: #333;
+    margin-bottom: 5px;
 }
 
-#retraitform input {
-	width: 10vw;
+nav {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+nav button {
+    margin: 0 5px;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.input-group {
+    margin-bottom: 15px;
+    width: 100%;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.button-group {
+    display: flex;
+    justify-content: center;
+}
+
+a {
+    color: black;
+    text-decoration: none;
+}
+
+@media screen and (max-width: 768px) {
+    /* Styles à appliquer pour les écrans de petite taille */
+    header, nav {
+        height: 60px; /* Réduire la hauteur du header et de la nav */
+        line-height: 60px; /* Ajuster la hauteur de ligne pour centrer le texte vertical */
+    }
+
+    .container {
+        margin-top: 80px; /* Ajustez la marge supérieure pour les écrans de petite taille */
+    }
 }

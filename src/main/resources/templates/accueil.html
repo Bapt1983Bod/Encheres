@@ -2,77 +2,56 @@
 <html>
 
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+    <meta charset="UTF-8">
+    <title>Accueil</title>
+    <link rel="stylesheet" href="/css/stylesheet.css">
 </head>
+
 <body>
 
-	<button type="button"><a href="/inscription">Inscription</a></button>
-	<button type="button"><a href="/vendre">Vendre un article</a></button>
-	<button type="button"><a href="/profil">Mon profil</a></button> 
+    <header>
+        <h1>Accueil</h1>
+        Utilisateur connecté : <span sec:authentication="name"></span>
+    </header>
 
-	<ul>
-		<li sec:authentication="name"></li>
-	</ul>
+    <nav>
+        <button type="button"><a href="/inscription">Inscription</a></button>
+        <button type="button"><a href="/vendre">Vendre un article</a></button>
+        <button type="button"><a href="/profil">Mon profil</a></button>
+        
+    </nav>
 
-	<h1>Accueil</h1>
+    <section class="container">
+        <h2>Connexion</h2>
 
-	<h2>Connexion</h2>
+        <form th:action="@{/login}" method="post" class="login-form">
+            <div class="input-group">
+                <label for="idUsername">Pseudo</label>
+                <input type="text" id="idUsername" name="username" />
+            </div>
 
-	<div>
-		<form th:action="@{/login}" method="post">
-			<!--Bloc d'affichage erreur-->
-			<ul>
-				<li th:if="${param.error}">Email ou mot de passe incorrecte</li>
-				<li th:if="${param.logout}">Vous êtes déconnecté !</li>
-			</ul>
+            <div class="input-group">
+                <label for="idPassword">Mot de Passe</label>
+                <input type="password" id="idPassword" name="password" />
+            </div>
 
+            <div class="button-group">
+                <button type="submit">Se connecter</button>
+                <button type="submit"><a href="/logout">Déconnexion</a></button>
+            </div>
+        </form>
+    </section>
 
-
-			<label for="idUsername">Pseudo</label>
-			<input type="text" id="idUsername" name="username" />
-
-
-			<label for="idPassword">Mot de Passe</label>
-			<input type="password" id="idPassword" name="password" />
-
-
-
-
-			<button type="submit">Se connecter</button>
-			<button type="submit"><a href="/logout">Déconnection</a></button>
-			
-		</form>
-	</div>
-
-<!--	<h2>Filtres</h2>-->
-<!--	<div id="filtre">-->
-<!--		<form th:action="/filtres" method="post">-->
-<!--		<input type="text" placeholder="Le nom de l'article contient" name="textFilter"/>-->
-<!--			<label for="selectCategorie" >Catégorie</label>-->
-<!--			<select name="selectCategorie" id="selectCategorie">-->
-<!--				<option th:each="c : ${listCategories}" th:text="${c.libelle}" th:value="${c.noCategorie}">-->
-<!--				</option>-->
-<!--			</select>-->
-<!--			<button type="submit">Appliquer les filtres</button>-->
-<!--			<button type="reset">Réinitialiser les filtres</button>-->
-<!--		</form>-->
-<!--	</div>-->
-
-
-<!--affichage de la liste des articles-->
-<h1>Liste des ventes en cours</h1>
-	<div th:each="a : ${listArticles}" id="article">
-		<div>
-			<h3 th:text="${'ARTICLE : '+a.nomArticle}"></h3>
-			<p th:text="${a.description}"></p>
-			<p th:text="${'Début des enchères : '+a.dateDebutEncheres +'  Fin des enchères : '+a.dateFinEncheres}"></p>
-			<p th:text="${'Mise à prix : ' + a.miseAPrix +' euros'}"></p>
-
-
-		</div>
-
-	</div>
-
+    <section class="container">
+        <h2>Liste des ventes en cours</h2>
+        <div th:each="a : ${listArticles}" class="article">
+            <h3 th:text="${'ARTICLE : '+a.nomArticle}"></h3>
+            <p th:text="${a.description}"></p>
+            <p th:text="${'Début des enchères : '+a.dateDebutEncheres +'  Fin des enchères : '+a.dateFinEncheres}"></p>
+            <p th:text="${'Mise à prix : ' + a.miseAPrix +' euros'}"></p>
+        </div>
+    </section>
 
 </body>
+
+</html>
