@@ -51,6 +51,18 @@ public class EncheresController {
 		return "accueil";
 	}
 
+//	// affichage du profil
+//	@GetMapping("/profil")
+//	public String afficherProfil(Model modele) {
+//		// Récupérer l'utilisateur connecté
+//		Utilisateur utilisateurConnecte = utilisateurService.getUtilisateurConnecte();
+//
+//		// Ajouter l'utilisateur au modèle
+//		modele.addAttribute("utilisateur", utilisateurConnecte);
+//
+//		return "profil";
+//	}
+
 	// utilisation des filtres pages d'accueil
 //	@PostMapping ("/filtres")
 //	public String accueilFiltre (@RequestParam ("textFilter") String string, @RequestParam ("selectCategorie") int id, Model modele) {
