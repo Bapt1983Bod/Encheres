@@ -51,17 +51,17 @@ public class EncheresController {
 		return "accueil";
 	}
 
-//	// affichage du profil
-//	@GetMapping("/profil")
-//	public String afficherProfil(Model modele) {
-//		// Récupérer l'utilisateur connecté
-//		Utilisateur utilisateurConnecte = utilisateurService.getUtilisateurConnecte();
-//
-//		// Ajouter l'utilisateur au modèle
-//		modele.addAttribute("utilisateur", utilisateurConnecte);
-//
-//		return "profil";
-//	}
+	// affichage du profil
+	@GetMapping("/profil")
+	public String afficherProfil(Model modele) {
+		// Récupérer l'utilisateur connecté
+		Utilisateur utilisateurConnecte = utilisateurService.getIdUtilisateurConnecte();
+
+		// Ajouter l'utilisateur au modèle
+		modele.addAttribute("utilisateur", utilisateurConnecte);
+
+		return "profil";
+	}
 
 	// utilisation des filtres pages d'accueil
 //	@PostMapping ("/filtres")
@@ -106,8 +106,8 @@ public class EncheresController {
 		// Création d'un article vide
 		ArticleVendu article = new ArticleVendu();
 		modele.addAttribute("article", article);
-		
-		System.out.println("id utilisateur : "+utilisateurService.getIdUtilisateurConnecte());
+
+		System.out.println("id utilisateur : " + utilisateurService.getIdUtilisateurConnecte());
 
 		// Récupération de la liste des catégories
 		List<Categorie> listCategories = categorieService.findAll();
@@ -123,9 +123,9 @@ public class EncheresController {
 		if (bindingResult.hasErrors()) {
 			return "vendre";
 		} else {
-			
+
 			int idVendeur = utilisateurService.getIdUtilisateurConnecte().getNoUtilisateur();
-			
+
 			articlesService.createArticle(idVendeur, article);
 			return "redirect:/vendre";
 		}

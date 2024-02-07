@@ -6,5 +6,22 @@
 </head>
 <body>
 		<h2>Mon profil</h2>
+		
+<body>
+   
+    <ul>
+		<li th:text="'Pseudo : ' + ${utilisateur.pseudo}"></li>
+		<li th:text="'Nom : ' + ${utilisateur.nom}"></li>
+		<li th:text="'Prénom : ' + ${utilisateur.prenom}"></li>
+		<li th:text="'email : ' + ${utilisateur.email}"></li>
+		<li th:text="'Téléphone : ' + ${utilisateur.telephone}"></li>
+		<li th:text="'Rue : ' + ${utilisateur.rue}"></li>
+		<li th:text="'Code postal : ' + ${utilisateur.codePostal}"></li>
+		<li th:text="'Ville : ' + ${utilisateur.ville}"></li>
+		<li th:text="'Mot de passe : ' + ${utilisateur.motDePasse}"></li>
+    </ul>
+</body>
+		
+		
 </body>
 </html>
