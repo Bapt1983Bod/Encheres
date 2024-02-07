@@ -5,11 +5,9 @@ import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import fr.eni.ecole.encheres.bll.ArticlesService;
 import fr.eni.ecole.encheres.bll.CategorieService;
@@ -59,8 +57,24 @@ public class EncheresController {
 
 		// Ajouter l'utilisateur au modèle
 		modele.addAttribute("utilisateur", utilisateurConnecte);
-
 		return "profil";
+	}
+
+	// afficher page de modification de profil
+
+	@GetMapping("/modification-profil")
+	public String afficherPageModificationProfil(Model model) {
+		Utilisateur utilisateurConnecte = utilisateurService.getIdUtilisateurConnecte();
+		model.addAttribute("utilisateur", utilisateurConnecte);
+		return "modification-profil";
+	}
+
+	// modification du profil
+
+	@PostMapping("/modification-profil")
+	public String modifierUtilisateur(@ModelAttribute Utilisateur utilisateurModifie, Model model) {
+		utilisateurService.modifierUtilisateur(utilisateurModifie);
+		return "redirect:/profil"; // Redirige l'utilisateur vers sa page de profil après la modification
 	}
 
 	// utilisation des filtres pages d'accueil

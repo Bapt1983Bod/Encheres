@@ -21,6 +21,7 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 	private static final String INSERT = "INSERT INTO UTILISATEURS (pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur) VALUES (:pseudo, :nom, :prenom, :email, :telephone, :rue, :codePostal, :ville, :motDePasse, :credit, :administrateur)";
 	private static final String SELECT_BY_PSEUDO = "SELECT * FROM UTILISATEURS WHERE pseudo = :pseudo";
 	private static final String SELECT_BY_EMAIL = "SELECT * FROM UTILISATEURS WHERE email = :email";
+	private static final String UPDATE = "UPDATE UTILISATEURS SET nom = :nom, prenom = :prenom, email = :email, telephone = :telephone, rue = :rue, code_postal = :codePostal, ville = :ville WHERE pseudo = :pseudo";
 
 	private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
@@ -92,20 +93,20 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 					(rs, rowNum) -> {
 						Utilisateur user = new Utilisateur();
 						user.setNoUtilisateur(rs.getInt("no_utilisateur"));
-	                    user.setPseudo(rs.getString("pseudo"));
-	                    user.setNom(rs.getString("nom"));
-	                    user.setPrenom(rs.getString("prenom"));
-	                    user.setEmail(rs.getString("email"));
-	                    user.setTelephone(rs.getString("telephone"));
-	                    user.setRue(rs.getString("rue"));
-	                    user.setCodePostal(rs.getString("code_postal"));
-	                    user.setVille(rs.getString("ville"));
-	                    user.setMotDePasse(rs.getString("mot_de_passe"));
-	                    user.setCredit(rs.getInt("credit"));
-	                    user.setAdministrateur(rs.getInt("administrateur"));
+						user.setPseudo(rs.getString("pseudo"));
+						user.setNom(rs.getString("nom"));
+						user.setPrenom(rs.getString("prenom"));
+						user.setEmail(rs.getString("email"));
+						user.setTelephone(rs.getString("telephone"));
+						user.setRue(rs.getString("rue"));
+						user.setCodePostal(rs.getString("code_postal"));
+						user.setVille(rs.getString("ville"));
+						user.setMotDePasse(rs.getString("mot_de_passe"));
+						user.setCredit(rs.getInt("credit"));
+						user.setAdministrateur(rs.getInt("administrateur"));
 						return user;
 					});
-			System.out.println("DAO : "+ utilisateur);
+			System.out.println("DAO : " + utilisateur);
 			return Optional.ofNullable(utilisateur);
 		} catch (EmptyResultDataAccessException e) {
 			return Optional.empty();
@@ -127,6 +128,22 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 		} catch (EmptyResultDataAccessException e) {
 			return Optional.empty();
 		}
+	}
+
+	@Override
+	public void modifierUtilisateur(Utilisateur utilisateur) {
+		MapSqlParameterSource params = new MapSqlParameterSource();
+		params.addValue("nom", utilisateur.getNom());
+		params.addValue("prenom", utilisateur.getPrenom());
+		params.addValue("email", utilisateur.getEmail());
+		params.addValue("telephone", utilisateur.getTelephone());
+		params.addValue("rue", utilisateur.getRue());
+		params.addValue("codePostal", utilisateur.getCodePostal());
+		params.addValue("ville", utilisateur.getVille());
+		params.addValue("pseudo", utilisateur.getPseudo());
+
+		namedParameterJdbcTemplate.update(UPDATE, params);
+
 	}
 
 //	@Override

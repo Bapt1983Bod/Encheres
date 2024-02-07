@@ -10,6 +10,7 @@ public interface UtilisateurService {
 
 	Utilisateur findByPseudo(String pseudo);
 
-	Utilisateur getIdUtilisateurConnecte ();
+	Utilisateur getIdUtilisateurConnecte();
 
+	public void modifierUtilisateur(Utilisateur utilisateur);
 }

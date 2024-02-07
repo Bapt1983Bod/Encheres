@@ -34,22 +34,22 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		return utilisateur;
 	}
 
-	
-	
 	@Override
 	public Utilisateur getIdUtilisateurConnecte() {
 		System.out.println("méthode getIdUtilisateur");
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
 		System.out.println("user: " + username);
-        Utilisateur utilisateur = utilisateurDAO.findByPseudo(username).get();
-        if (utilisateur != null) {
-        	System.out.println("utilisateur" + utilisateur);
-            return utilisateur;
-        }
-        return null;
+		Utilisateur utilisateur = utilisateurDAO.findByPseudo(username).get();
+		if (utilisateur != null) {
+			System.out.println("utilisateur" + utilisateur);
+			return utilisateur;
+		}
+		return null;
 	}
 
-	
-
+	@Override
+	public void modifierUtilisateur(Utilisateur utilisateur) {
+		utilisateurDAO.modifierUtilisateur(utilisateur);
+	}
 
 }

@@ -11,5 +11,7 @@ public interface UtilisateurDAO {
 
 	Optional<Utilisateur> findByEmail(String email);
 
+	void modifierUtilisateur(Utilisateur utilisateur);
+
 //	Utilisateur save(Utilisateur utilisateur);
 }
