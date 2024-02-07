@@ -115,21 +115,21 @@ public class EncheresController {
 		return "vendre";
 	}
 
-	@PostMapping("/vendre")
-	public String ajouterArticle(@ModelAttribute("article") ArticleVendu article, BindingResult bindingResult,
-			@RequestParam("rue") String rue, @RequestParam("codePostal") String codePostal,
-			@RequestParam("ville") String ville) {
-		System.out.println("méthode ajouter article");
-		if (bindingResult.hasErrors()) {
-			return "vendre";
-		} else {
-
-			int idVendeur = utilisateurService.getIdUtilisateurConnecte().getNoUtilisateur();
-
-			articlesService.createArticle(idVendeur, article);
-			return "redirect:/vendre";
-		}
-
-	}
+//	@PostMapping("/vendre")
+//	public String ajouterArticle(@ModelAttribute("article") ArticleVendu article, BindingResult bindingResult,
+//			@RequestParam("rue") String rue, @RequestParam("codePostal") String codePostal,
+//			@RequestParam("ville") String ville) {
+//		System.out.println("méthode ajouter article");
+//		if (bindingResult.hasErrors()) {
+//			return "vendre";
+//		} else {
+//
+//			int idVendeur = utilisateurService.getIdUtilisateurConnecte().getNoUtilisateur();
+//
+//			articlesService.createArticle(idVendeur, article);
+//			return "redirect:/vendre";
+//		}
+//
+//	}
 
 }
