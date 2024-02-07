@@ -39,13 +39,11 @@ public class SecurityConfig {
 	@Bean
 	SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
-		http.authorizeHttpRequests(auth -> 
-			auth.requestMatchers(HttpMethod.GET, "/", "/accueil").permitAll()
+		http.authorizeHttpRequests(auth -> auth.requestMatchers(HttpMethod.GET, "/", "/accueil").permitAll()
+				.requestMatchers(HttpMethod.GET, "/profil").authenticated()
 				.requestMatchers(HttpMethod.GET, "/inscription").permitAll()
-				.requestMatchers(HttpMethod.POST, "/inscription").permitAll()
-				.requestMatchers(HttpMethod.GET, "/vendre")
-				.permitAll().requestMatchers(HttpMethod.POST, "/vendre").permitAll()
-				.anyRequest().denyAll());
+				.requestMatchers(HttpMethod.POST, "/inscription").permitAll().requestMatchers(HttpMethod.GET, "/vendre")
+				.permitAll().requestMatchers(HttpMethod.POST, "/vendre").permitAll().anyRequest().denyAll());
 
 		// Paramétrage de la page de login
 		http.formLogin(form -> {
