@@ -1,6 +1,5 @@
 package fr.eni.ecole.encheres.ihm;
 
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -54,12 +53,11 @@ public class ProfilController {
 	// suppression du profil
 
 	@PostMapping("/supprimer-compte")
-	public String supprimerUtilisateur(@ModelAttribute Utilisateur utilisateur, Model model) {
+	public String supprimerUtilisateur() {
 
-		SecurityContextHolder.clearContext();
-
+		Utilisateur utilisateur = utilisateurService.getIdUtilisateurConnecte();
 		utilisateurService.supprimerUtilisateur(utilisateur);
-		return "redirect:/accueil";
+		return "redirect:/logout";
 	}
 
 }

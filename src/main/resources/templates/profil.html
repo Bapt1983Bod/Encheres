@@ -30,10 +30,13 @@
 	</ul>
 </body>
 
-<form action="/accueil" method="get">
-	<button type="submit">Accueil</button>
-
+	<form action="/accueil" method="get">
+		<button type="submit">Accueil</button>
+	</form>
+	
 	<form th:action="@{/supprimer-compte}" method="post">
+
+		
 		<button type="submit">Supprimer mon compte</button>
 	</form>
 </div>

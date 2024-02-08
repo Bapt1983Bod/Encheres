@@ -43,6 +43,7 @@ public class SecurityConfig {
 				.requestMatchers(HttpMethod.GET, "/profil").authenticated().requestMatchers(HttpMethod.POST, "/profil")
 				.authenticated().requestMatchers(HttpMethod.GET, "/modification-profil").authenticated()
 				.requestMatchers(HttpMethod.POST, "/modification-profil").authenticated()
+				.requestMatchers(HttpMethod.POST, "/supprimer-compte").authenticated()
 				.requestMatchers(HttpMethod.GET, "/inscription").permitAll()
 				.requestMatchers(HttpMethod.POST, "/inscription").permitAll()
 				.requestMatchers(HttpMethod.POST, "/filtres").permitAll().requestMatchers(HttpMethod.GET, "/vendre")
