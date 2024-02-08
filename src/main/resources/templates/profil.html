@@ -9,35 +9,36 @@
 
 <body>
 	<div class="container">
-	
-	<h2>Mon profil</h2>
+
+		<h2>Mon profil</h2>
+		<div id="accueil">
+			<button type="button"><a href="/accueil">Accueil</a></button>
+		</div>
 
 
 
-	<a href="/modification-profil">Modifier mon profil</a>
-
-
-	<ul>
-		<li th:text="'Pseudo : ' + ${utilisateur.pseudo}"></li>
-		<li th:text="'Nom : ' + ${utilisateur.nom}"></li>
-		<li th:text="'Prénom : ' + ${utilisateur.prenom}"></li>
-		<li th:text="'email : ' + ${utilisateur.email}"></li>
-		<li th:text="'Téléphone : ' + ${utilisateur.telephone}"></li>
-		<li th:text="'Rue : ' + ${utilisateur.rue}"></li>
-		<li th:text="'Code postal : ' + ${utilisateur.codePostal}"></li>
-		<li th:text="'Ville : ' + ${utilisateur.ville}"></li>
-		<li th:text="'Mot de passe : ' + ${utilisateur.motDePasse}"></li>
-	</ul>
+		<ul>
+			<li th:text="'Pseudo : ' + ${utilisateur.pseudo}"></li>
+			<li th:text="'Nom : ' + ${utilisateur.nom}"></li>
+			<li th:text="'Prénom : ' + ${utilisateur.prenom}"></li>
+			<li th:text="'email : ' + ${utilisateur.email}"></li>
+			<li th:text="'Téléphone : ' + ${utilisateur.telephone}"></li>
+			<li th:text="'Rue : ' + ${utilisateur.rue}"></li>
+			<li th:text="'Code postal : ' + ${utilisateur.codePostal}"></li>
+			<li th:text="'Ville : ' + ${utilisateur.ville}"></li>
+		</ul>
 </body>
 
-	<form action="/accueil" method="get">
-		<button type="submit">Accueil</button>
-	</form>
-	
-	<form th:action="@{/supprimer-compte}" method="post">
 
-		
-		<button type="submit">Supprimer mon compte</button>
-	</form>
+<form action="">
+	<button type="button"><a href="/modification-profil">Modifier mon profil</a></button>
+</form>
+<form th:action="@{/supprimer-compte}" method="post">
+
+
+	<button type="submit">Supprimer mon compte</button>
+</form>
+
 </div>
+
 </html>

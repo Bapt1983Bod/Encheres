@@ -17,6 +17,7 @@ import fr.eni.ecole.encheres.bll.UtilisateurService;
 import fr.eni.ecole.encheres.bo.ArticleVendu;
 import fr.eni.ecole.encheres.bo.Categorie;
 import fr.eni.ecole.encheres.bo.Utilisateur;
+import jakarta.validation.Valid;
 
 @Controller
 public class VendreController {
@@ -49,7 +50,7 @@ public class VendreController {
 	}
 
 	@PostMapping("/vendre")
-	public String ajouterArticle(@ModelAttribute("article") ArticleVendu article, BindingResult bindingResult,
+	public String ajouterArticle(@Valid @ModelAttribute("article") ArticleVendu article, BindingResult bindingResult,
 			@RequestParam("rue") String rue, @RequestParam("codePostal") String codePostal,
 			@RequestParam("ville") String ville) {
 

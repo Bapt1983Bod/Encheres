@@ -48,7 +48,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	}
 
 	@Override
-	public void modifierUtilisateur(Utilisateur utilisateur) {
+	public void modifierUtilisateur(Utilisateur utilisateur) throws BusinessException {
 		utilisateurDAO.modifierUtilisateur(utilisateur);
 	}
 

@@ -7,6 +7,7 @@ import java.util.List;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 public class ArticleVendu implements Serializable {
 	 
@@ -19,9 +20,9 @@ public class ArticleVendu implements Serializable {
 	private String nomArticle;
 	@NotBlank
 	private String description;
-	@NotBlank
+	@NotNull
 	private Date dateDebutEncheres;
-	@NotBlank
+	@NotNull
 	private Date dateFinEncheres;
 	@Min (value=0)
 	private int miseAPrix;

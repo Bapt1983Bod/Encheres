@@ -12,6 +12,7 @@ import fr.eni.ecole.encheres.bll.RetraitService;
 import fr.eni.ecole.encheres.bll.UtilisateurService;
 import fr.eni.ecole.encheres.bo.Utilisateur;
 import fr.eni.ecole.encheres.exception.BusinessException;
+import jakarta.validation.Valid;
 
 @Controller
 public class InscriptionController {
@@ -31,7 +32,7 @@ public class InscriptionController {
 	}
 
 	@PostMapping("/inscription")
-	public String traiterFormulaireInscription(@ModelAttribute Utilisateur utilisateur, Model model)
+	public String traiterFormulaireInscription(@Valid @ModelAttribute Utilisateur utilisateur, Model model)
 			throws BusinessException {
 		try {
 			utilisateurService.creerUtilisateur(utilisateur);

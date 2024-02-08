@@ -12,7 +12,7 @@ public interface UtilisateurService {
 
 	Utilisateur getIdUtilisateurConnecte();
 
-	public void modifierUtilisateur(Utilisateur utilisateur);
+	public void modifierUtilisateur(Utilisateur utilisateur) throws BusinessException;
 
 	void supprimerUtilisateur(Utilisateur utilisateur);
 }

@@ -12,6 +12,10 @@
 
     <div class="container">
         <h1>Nouvelle Vente</h1>
+        
+        <div id="accueil">
+			<button type="button"><a href="/accueil">Accueil</a></button>
+		</div>
 
         <form th:object="${article}" th:action="@{/vendre}" method="post">
             <div>

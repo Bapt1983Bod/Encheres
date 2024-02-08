@@ -4,6 +4,8 @@ package fr.eni.ecole.encheres.bo;
 import java.io.Serializable;
 import java.util.List;
 
+import jakarta.validation.constraints.NotBlank;
+
 public class Utilisateur implements Serializable {
 
 	/**
@@ -11,14 +13,23 @@ public class Utilisateur implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	private int noUtilisateur;
+	@NotBlank
 	private String pseudo;
+	@NotBlank
 	private String nom;
+	@NotBlank
 	private String prenom;
+	@NotBlank
 	private String email;
+	@NotBlank
 	private String telephone;
+	@NotBlank
 	private String rue;
+	@NotBlank
 	private String codePostal;
+	@NotBlank
 	private String ville;
+	@NotBlank
 	private String motDePasse;
 	private int credit;
 	private int administrateur;

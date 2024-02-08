@@ -21,7 +21,7 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 	private static final String INSERT = "INSERT INTO UTILISATEURS (pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur) VALUES (:pseudo, :nom, :prenom, :email, :telephone, :rue, :codePostal, :ville, :motDePasse, :credit, :administrateur)";
 	private static final String SELECT_BY_PSEUDO = "SELECT * FROM UTILISATEURS WHERE pseudo = :pseudo";
 	private static final String SELECT_BY_EMAIL = "SELECT * FROM UTILISATEURS WHERE email = :email";
-	private static final String UPDATE = "UPDATE UTILISATEURS SET nom = :nom, prenom = :prenom, email = :email, telephone = :telephone, rue = :rue, code_postal = :codePostal, ville = :ville WHERE pseudo = :pseudo";
+	private static final String UPDATE = "UPDATE UTILISATEURS SET nom = :nom, prenom = :prenom, email = :email, telephone = :telephone, rue = :rue, code_postal = :codePostal, ville = :ville, mot_de_passe = :mdp WHERE pseudo = :pseudo";
 	private static final String DELETE = "DELETE FROM UTILISATEURS WHERE pseudo = :pseudo";
 
 	private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
@@ -51,7 +51,6 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 
 		Optional<Utilisateur> existingUserMail = findByEmail(utilisateur.getEmail());
 		if (existingUserMail.isPresent()) {
-			System.out.println("email verif");
 			throw new BusinessException("L'adresse mail est déja utilisée");
 		}
 
@@ -68,8 +67,7 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 		map.addValue("credit", utilisateur.getCredit());
 		map.addValue("administrateur", utilisateur.getAdministrateur());
 
-		System.out.println(utilisateur);
-
+		
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 		this.namedParameterJdbcTemplate.update(INSERT, map, keyHolder);
 
@@ -107,7 +105,7 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 						user.setAdministrateur(rs.getInt("administrateur"));
 						return user;
 					});
-			System.out.println("DAO : " + utilisateur);
+			
 			return Optional.ofNullable(utilisateur);
 		} catch (EmptyResultDataAccessException e) {
 			return Optional.empty();
@@ -132,7 +130,16 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 	}
 
 	@Override
-	public void modifierUtilisateur(Utilisateur utilisateur) {
+	public void modifierUtilisateur(Utilisateur utilisateur) throws BusinessException {
+		
+		// verifier si le pseudo ne contient que des caractères alphanumériques
+
+
+				Optional<Utilisateur> existingUserMail = findByEmail(utilisateur.getEmail());
+				if (existingUserMail.isPresent()) {
+					throw new BusinessException("L'adresse mail est déja utilisée");
+				}
+		
 		MapSqlParameterSource params = new MapSqlParameterSource();
 		params.addValue("nom", utilisateur.getNom());
 		params.addValue("prenom", utilisateur.getPrenom());
@@ -142,6 +149,7 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 		params.addValue("codePostal", utilisateur.getCodePostal());
 		params.addValue("ville", utilisateur.getVille());
 		params.addValue("pseudo", utilisateur.getPseudo());
+		params.addValue("mdp",passwordEncoder.encode(utilisateur.getMotDePasse()) );
 
 		namedParameterJdbcTemplate.update(UPDATE, params);
 
@@ -149,7 +157,6 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 
 	@Override
 	public void supprimerUtilisateur(Utilisateur utilisateur) {
-		System.out.println("DAOPSEUDO" + utilisateur.getPseudo());
 		MapSqlParameterSource params = new MapSqlParameterSource().addValue("pseudo", utilisateur.getPseudo());
 		namedParameterJdbcTemplate.update(DELETE, params);
 
