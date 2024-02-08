@@ -10,10 +10,13 @@ public class EncheresServiceImpl implements EncheresService {
 
 	private EncheresDAO encheresDAO;
 
-	@Override
-	public ArticleVendu findArticleByNoArticle(Integer noArticle) {
-
-		return encheresDAO.findArticleByNoArticle(noArticle);
+	public EncheresServiceImpl(EncheresDAO encheresDAO) {
+		super();
+		this.encheresDAO = encheresDAO;
 	}
 
+	@Override
+	public ArticleVendu findArticleByNoArticle(int noArticle) {
+		return encheresDAO.findArticleByNoArticle(noArticle);
+	}
 }
