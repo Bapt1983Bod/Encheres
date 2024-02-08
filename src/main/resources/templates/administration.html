@@ -38,11 +38,11 @@
 
 						<td>
 							<form th:action="@{/desactivationAdmin}" method="post">
-								<input type="text" name="noUtilisateur" th:value="${u.noUtilisateur}" hidden/>
+								<input type="text" name="noUtilisateur" th:value="${u.pseudo}" hidden/>
 								<button type="submit">Désactiver Compte</button>
 							</form>
 							<form th:action="@{/suppressionAdmin}" method="post">
-								<input type="text" name="noUtilisateur" th:value="${u.noUtilisateur}" hidden/>
+								<input type="text" th:name="pseudoUtilisateur" th:value="${u.pseudo}" hidden/>
 								<button type="submit">Supprimer Compte</button>
 							</form>
 						</td>

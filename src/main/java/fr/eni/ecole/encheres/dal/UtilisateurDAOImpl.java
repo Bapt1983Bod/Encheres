@@ -156,7 +156,6 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 	public void supprimerUtilisateur(Utilisateur utilisateur) {
 		MapSqlParameterSource params = new MapSqlParameterSource().addValue("pseudo", utilisateur.getPseudo());
 		namedParameterJdbcTemplate.update(DELETE, params);
-
 	}
 
 	@Override
