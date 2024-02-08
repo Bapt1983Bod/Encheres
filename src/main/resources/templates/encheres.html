@@ -15,7 +15,11 @@
     <li><span>Mise à prix :</span> <span th:text="${article.miseAPrix}"></span></li>
 </ul>
 
-  
+  <form th:action="@{/encherir}" method="post">
+    	<label for="montantEnchere">Montant de l'enchère (en points) :</label>
+    	<input type="number" id="montantEnchere" name="montantEnchere" required>
+    	<button type="submit">Enchérir</button>
+	</form>
   
 </body>
 </html>
