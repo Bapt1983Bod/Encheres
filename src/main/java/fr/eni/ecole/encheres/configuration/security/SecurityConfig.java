@@ -40,11 +40,12 @@ public class SecurityConfig {
 	SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
 		http.authorizeHttpRequests(auth -> auth.requestMatchers(HttpMethod.GET, "/", "/accueil").permitAll()
-				.requestMatchers(HttpMethod.GET, "/profil").authenticated()
-				.requestMatchers(HttpMethod.GET, "/modification-profil").authenticated()
+				.requestMatchers(HttpMethod.GET, "/profil").authenticated().requestMatchers(HttpMethod.POST, "/profil")
+				.authenticated().requestMatchers(HttpMethod.GET, "/modification-profil").authenticated()
 				.requestMatchers(HttpMethod.POST, "/modification-profil").authenticated()
 				.requestMatchers(HttpMethod.GET, "/inscription").permitAll()
-				.requestMatchers(HttpMethod.POST, "/inscription").permitAll().requestMatchers(HttpMethod.GET, "/vendre")
+				.requestMatchers(HttpMethod.POST, "/inscription").permitAll()
+				.requestMatchers(HttpMethod.POST, "/filtres").permitAll().requestMatchers(HttpMethod.GET, "/vendre")
 				.authenticated().requestMatchers(HttpMethod.POST, "/vendre").authenticated().requestMatchers("/css/*")
 				.permitAll().anyRequest().denyAll());
 

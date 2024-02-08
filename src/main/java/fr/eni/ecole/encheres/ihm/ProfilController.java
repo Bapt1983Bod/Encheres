@@ -59,7 +59,7 @@ public class ProfilController {
 		SecurityContextHolder.clearContext();
 
 		utilisateurService.supprimerUtilisateur(utilisateur);
-		return "redirect:/accueil"; // Redirige l'utilisateur vers la page d'accueil après la suppression du compte
+		return "redirect:/accueil";
 	}
 
 }
