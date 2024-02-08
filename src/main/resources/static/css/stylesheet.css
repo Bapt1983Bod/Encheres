@@ -139,6 +139,21 @@ a {
 	max-width: 300px;
 }
 
+table{
+	border-collapse: collapse;
+	border: black 1px solid;
+}
+
+table td, table th {
+	padding: 8px;
+	border: black 1px solid;
+}
+
+table th {
+	background-color: black;
+	color: white;
+}
+
 @media screen and (max-width: 1024px) {
     /* pour les écrans de taille moyenne (tablette) */
     .container {

@@ -1,10 +1,12 @@
 
 package fr.eni.ecole.encheres.dal;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -23,6 +25,7 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 	private static final String SELECT_BY_EMAIL = "SELECT * FROM UTILISATEURS WHERE email = :email";
 	private static final String UPDATE = "UPDATE UTILISATEURS SET nom = :nom, prenom = :prenom, email = :email, telephone = :telephone, rue = :rue, code_postal = :codePostal, ville = :ville, mot_de_passe = :mdp WHERE pseudo = :pseudo";
 	private static final String DELETE = "DELETE FROM UTILISATEURS WHERE pseudo = :pseudo";
+	private static final String FIND_ALL = "SELECT * FROM UTILISATEURS";
 
 	private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
@@ -130,15 +133,9 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 	}
 
 	@Override
-	public void modifierUtilisateur(Utilisateur utilisateur) throws BusinessException {
+	public void modifierUtilisateur(Utilisateur utilisateur) {
 		
-		// verifier si le pseudo ne contient que des caractères alphanumériques
-
-
-				Optional<Utilisateur> existingUserMail = findByEmail(utilisateur.getEmail());
-				if (existingUserMail.isPresent()) {
-					throw new BusinessException("L'adresse mail est déja utilisée");
-				}
+		
 		
 		MapSqlParameterSource params = new MapSqlParameterSource();
 		params.addValue("nom", utilisateur.getNom());
@@ -160,6 +157,11 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 		MapSqlParameterSource params = new MapSqlParameterSource().addValue("pseudo", utilisateur.getPseudo());
 		namedParameterJdbcTemplate.update(DELETE, params);
 
+	}
+
+	@Override
+	public List<Utilisateur> findAll() {
+		return this.namedParameterJdbcTemplate.query(FIND_ALL, new BeanPropertyRowMapper<>(Utilisateur.class));
 	}
 
 }

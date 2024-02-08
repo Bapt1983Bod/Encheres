@@ -1,6 +1,7 @@
 
 package fr.eni.ecole.encheres.bll;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -48,7 +49,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	}
 
 	@Override
-	public void modifierUtilisateur(Utilisateur utilisateur) throws BusinessException {
+	public void modifierUtilisateur(Utilisateur utilisateur){
 		utilisateurDAO.modifierUtilisateur(utilisateur);
 	}
 
@@ -56,6 +57,11 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	public void supprimerUtilisateur(Utilisateur utilisateur) {
 		utilisateurDAO.supprimerUtilisateur(utilisateur);
 
+	}
+
+	@Override
+	public List<Utilisateur> findAll() {
+		return utilisateurDAO.findAll();
 	}
 
 }

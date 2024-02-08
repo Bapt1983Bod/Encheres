@@ -1,6 +1,8 @@
 
 package fr.eni.ecole.encheres.bll;
 
+import java.util.List;
+
 import fr.eni.ecole.encheres.bo.Utilisateur;
 import fr.eni.ecole.encheres.exception.BusinessException;
 
@@ -12,7 +14,9 @@ public interface UtilisateurService {
 
 	Utilisateur getIdUtilisateurConnecte();
 
-	public void modifierUtilisateur(Utilisateur utilisateur) throws BusinessException;
+	public void modifierUtilisateur(Utilisateur utilisateur);
 
 	void supprimerUtilisateur(Utilisateur utilisateur);
+	
+	List<Utilisateur> findAll();
 }

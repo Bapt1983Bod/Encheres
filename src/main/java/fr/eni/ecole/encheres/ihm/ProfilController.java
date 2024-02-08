@@ -55,15 +55,10 @@ public class ProfilController {
 			utilisateurModifie.setMotDePasse(pwd);
 		}
 		
-		try {
+		
 			utilisateurService.modifierUtilisateur(utilisateurModifie);
 			return "redirect:/profil"; // Redirige l'utilisateur vers sa page de profil après la modification
-		} catch (BusinessException e) {
-			model.addAttribute("erreur", e.getMessages()); // ajouter le message d'erreur au modèle
-			return "modification-profil";
 		}
-		
-	}
 
 	// suppression du profil
 

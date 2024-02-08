@@ -31,7 +31,7 @@ public class SecurityConfig {
 		jdbcUserDetailsManager
 				.setUsersByUsernameQuery("SELECT pseudo, mot_de_passe, 1 from UTILISATEURS where pseudo = ?");
 		jdbcUserDetailsManager.setAuthoritiesByUsernameQuery(
-				"SELECT pseudo, administrateur as ROLE from UTILISATEURS where pseudo = ?");
+				"SELECT UTILISATEURS.pseudo, ROLES.ROLE FROM UTILISATEURS INNER JOIN ROLES ON UTILISATEURS.administrateur = ROLES.IS_ADMIN where pseudo= ?");
 		return jdbcUserDetailsManager;
 	}
 
@@ -47,9 +47,14 @@ public class SecurityConfig {
 				.requestMatchers(HttpMethod.GET, "/inscription").permitAll()
 				.requestMatchers(HttpMethod.POST, "/inscription").permitAll()
 				.requestMatchers(HttpMethod.GET, "/acheter").authenticated()
-				.requestMatchers(HttpMethod.POST, "/filtres").permitAll().requestMatchers(HttpMethod.GET, "/vendre")
-				.authenticated().requestMatchers(HttpMethod.POST, "/vendre").authenticated().requestMatchers("/css/*")
-				.permitAll().anyRequest().denyAll());
+				.requestMatchers(HttpMethod.POST, "/filtres").permitAll()
+				.requestMatchers(HttpMethod.GET, "/vendre").authenticated()
+				.requestMatchers(HttpMethod.POST, "/vendre").authenticated()
+				.requestMatchers(HttpMethod.GET, "/administration").hasRole("ADMIN")
+				.requestMatchers(HttpMethod.POST, "/suppressionAdmin").hasRole("ADMIN")
+				.requestMatchers(HttpMethod.POST, "/desactivationAdmin").hasRole("ADMIN")
+				.requestMatchers("/css/*").permitAll()
+				.anyRequest().denyAll());
 
 		// Paramétrage de la page de login
 		http.formLogin(form -> {

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>Administration</title>
+	<link rel="stylesheet" href="/css/stylesheet.css">
+</head>
+
+<body>
+	<h1>Administration des comptes utilisateurs</h1>
+
+	<section class="container">
+		<h2>Liste des comptes utilisateurs</h2>
+		<div>
+			<table>
+				<thead>
+					<tr>
+						<th>Numéro Utilisateur</th>
+						<th>Pseudo</th>
+						<th>Nom</th>
+						<th>Prénom</th>
+						<th>Téléphone</th>
+						<th>Email</th>
+						<th>Adresse</th>
+						<th>Actions</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="u : ${listUtilisateurs}">
+						<td th:text="${u.noUtilisateur}"></td>
+						<td th:text="${u.pseudo}"></td>
+						<td th:text="${u.nom}"></td>
+						<td th:text="${u.prenom}"></td>
+						<td th:text="${u.telephone}"></td>
+						<td th:text="${u.email}"></td>
+						<td th:text="${u.rue + ' ' + u.codePostal + ' ' + u.ville}"></td>
+
+						<td>
+							<form th:action="@{/desactivationAdmin}" method="post">
+								<input type="text" name="noUtilisateur" th:value="${u.noUtilisateur}" hidden/>
+								<button type="submit">Désactiver Compte</button>
+							</form>
+							<form th:action="@{/suppressionAdmin}" method="post">
+								<input type="text" name="noUtilisateur" th:value="${u.noUtilisateur}" hidden/>
+								<button type="submit">Supprimer Compte</button>
+							</form>
+						</td>
+					</tr>
+
+
+				</tbody>
+		</div>
+</body>
+
+</html>
