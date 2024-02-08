@@ -2,56 +2,71 @@
 <html>
 
 <head>
-    <meta charset="UTF-8">
-    <title>Accueil</title>
-    <link rel="stylesheet" href="/css/stylesheet.css">
+	<meta charset="UTF-8">
+	<title>Accueil</title>
+	<link rel="stylesheet" href="/css/stylesheet.css">
 </head>
 
 <body>
 
-    <header>
-        <h1>Accueil</h1>
-        Utilisateur connecté : <span sec:authentication="name"></span>
-    </header>
+	<header>
+		<h1>Accueil</h1>
+		Utilisateur connecté : <span sec:authentication="name"></span>
+	</header>
 
-    <nav>
-        <button type="button"><a href="/inscription">Inscription</a></button>
-        <button type="button"><a href="/vendre">Vendre un article</a></button>
-        <button type="button"><a href="/profil">Mon profil</a></button>
-    </nav>
+	<nav>
+		<button type="button"><a href="/inscription">Inscription</a></button>
+		<button type="button"><a href="/vendre">Vendre un article</a></button>
+		<button type="button"><a href="/profil">Mon profil</a></button>
+	</nav>
 
-    <section class="container">
-        <h2>Connexion</h2>
+	<section class="container">
+		<h2>Connexion</h2>
 
-        <form th:action="@{/login}" method="post" class="login-form">
-            <div class="input-group">
-                <label for="idUsername">Pseudo</label>
-                <input type="text" id="idUsername" name="username" />
-            </div>
+		<form th:action="@{/login}" method="post" class="login-form">
+			<div class="input-group">
+				<label for="idUsername">Pseudo</label>
+				<input type="text" id="idUsername" name="username" />
+			</div>
 
-            <div class="input-group">
-                <label for="idPassword">Mot de Passe</label>
-                <input type="password" id="idPassword" name="password" />
-            </div>
+			<div class="input-group">
+				<label for="idPassword">Mot de Passe</label>
+				<input type="password" id="idPassword" name="password" />
+			</div>
 
-            <div class="button-group">
-                <button type="submit">Se connecter</button>
-                <button type="submit"><a href="/logout">Déconnexion</a></button>
-            </div>
-        </form>
-    </section>
+			<div class="button-group">
+				<button type="submit">Se connecter</button>
+				<button type="submit"><a href="/logout">Déconnexion</a></button>
+			</div>
+		</form>
+	</section>
 
-    <section class="container">
-        <h2>Liste des ventes en cours</h2>
-        <div th:each="a : ${listArticles}" class="article">
-            <h3 th:text="${'ARTICLE : '+a.nomArticle}"></h3>
-            <p th:text="${a.description}"></p>
-            <p th:text="${'Début des enchères : '+a.dateDebutEncheres +'  Fin des enchères : '+a.dateFinEncheres}"></p>
-            <p th:text="${'Mise à prix : ' + a.miseAPrix +' euros'}"></p>
-        </div>
-    </section>
+	<section class="container">
+		<h2>Filtres</h2>
+		<form action="">
+			<div class="input-group">
+				<label for=""></label>
+				<input type="text" id="" />
+			</div>
+			<div class="input-group">
+				<label for="categorie">Catégorie</label>
+                <select name="noCategorie" id="selectCategorie" >
+                    <option th:each="c : ${listCategories}" th:text="${c.libelle}" th:value="${c.noCategorie}"></option>
+                </select>
+			</div>
+		</form>
+	</section>
+
+	<section class="container">
+		<h2>Liste des ventes en cours</h2>
+		<div th:each="a : ${listArticles}" class="article">
+			<h3 th:text="${'ARTICLE : '+a.nomArticle}"></h3>
+			<p th:text="${a.description}"></p>
+			<p th:text="${'Début des enchères : '+a.dateDebutEncheres +'  Fin des enchères : '+a.dateFinEncheres}"></p>
+			<p th:text="${'Mise à prix : ' + a.miseAPrix +' euros'}"></p>
+		</div>
+	</section>
 
 </body>
 
 </html>
-
