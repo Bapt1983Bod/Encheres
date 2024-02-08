@@ -46,6 +46,7 @@ public class SecurityConfig {
 				.requestMatchers(HttpMethod.POST, "/supprimer-compte").authenticated()
 				.requestMatchers(HttpMethod.GET, "/inscription").permitAll()
 				.requestMatchers(HttpMethod.POST, "/inscription").permitAll()
+				.requestMatchers(HttpMethod.GET, "/acheter").authenticated()
 				.requestMatchers(HttpMethod.POST, "/filtres").permitAll().requestMatchers(HttpMethod.GET, "/vendre")
 				.authenticated().requestMatchers(HttpMethod.POST, "/vendre").authenticated().requestMatchers("/css/*")
 				.permitAll().anyRequest().denyAll());
