@@ -6,11 +6,13 @@ import fr.eni.ecole.encheres.bo.ArticleVendu;
 import fr.eni.ecole.encheres.bo.Utilisateur;
 
 public interface ArticlesService {
-	
+
 	public List<ArticleVendu> findAll();
-	
-	public List<ArticleVendu> findByCatAndString (int idCat, String string);
-	
-	public int createArticle (Utilisateur vendeur, ArticleVendu article);
+
+	public List<ArticleVendu> findByCatAndString(int idCat, String string);
+
+	public int createArticle(Utilisateur vendeur, ArticleVendu article);
+
+	ArticleVendu findArticleByNoArticle(int noArticle);
 
 }

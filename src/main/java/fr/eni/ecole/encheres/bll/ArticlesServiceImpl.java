@@ -37,10 +37,17 @@ public class ArticlesServiceImpl implements ArticlesService {
 
 	@Override
 	public int createArticle(Utilisateur vendeur, ArticleVendu article) {
-		
-		// crée l'article avec le noUtilisateur du vendeur  et retourne le no de l'article
+
+		// crée l'article avec le noUtilisateur du vendeur et retourne le no de
+		// l'article
 		return articlesDAO.createArticle(vendeur.getNoUtilisateur(), article);
-		
+
+	}
+
+	@Override
+	public ArticleVendu findArticleByNoArticle(int noArticle) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

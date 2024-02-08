@@ -5,7 +5,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import fr.eni.ecole.encheres.bll.EncheresService;
-import fr.eni.ecole.encheres.bo.ArticleVendu;
 
 @Controller
 public class AchatController {
@@ -18,9 +17,9 @@ public class AchatController {
 
 	@GetMapping("/acheter")
 	public String AfficherDetailsVente(Model model) {
-		ArticleVendu articleVendu = encheresService.findArticleByNoArticle();
-
-		model.addAttribute("article", articleVendu);
+//		ArticleVendu articleVendu = encheresService.findArticleByNoArticle(null);
+//
+//		model.addAttribute("article", articleVendu);
 
 		return "encheres";
 

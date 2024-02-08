@@ -3,7 +3,6 @@ package fr.eni.ecole.encheres.dal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.jdbc.core.RowMapper;
@@ -42,24 +41,23 @@ public class ArticlesDAOImpl implements ArticlesDAO {
 	// appliquant le filtre
 	@Override
 	public List<ArticleVendu> findByCatAndString(LocalDate date, int idCat, String string) {
-		
-		String stringSQL = "%"+string+"%";
-		
-		
+
+		String stringSQL = "%" + string + "%";
+
 		MapSqlParameterSource map = new MapSqlParameterSource();
 		map.addValue("dateDuJour", date);
 		map.addValue("string", stringSQL);
 		map.addValue("id", idCat);
-		
+
 		return this.namedParameterJdbcTemplate.query(FIND_BY_CATEGORIE_AND_STRING, map, new ArticlesRowMapper());
 	}
 
 	// creation d'un article et retourne le noArticle pour création du retrait
 	@Override
 	public int createArticle(int idVendeur, ArticleVendu article) {
-		System.out.println("DAO : "+ idVendeur);
-		System.out.println("DAO : "+ article);
-		
+		System.out.println("DAO : " + idVendeur);
+		System.out.println("DAO : " + article);
+
 		MapSqlParameterSource map = new MapSqlParameterSource();
 		map.addValue("nom", article.getNomArticle());
 		map.addValue("description", article.getDescription());
@@ -81,7 +79,11 @@ public class ArticlesDAOImpl implements ArticlesDAO {
 		return article.getNoArticle();
 	}
 
-	
+	@Override
+	public ArticleVendu findArticleByNoArticle(int noArticle) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }
 
