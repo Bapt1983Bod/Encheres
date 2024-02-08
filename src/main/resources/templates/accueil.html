@@ -43,16 +43,19 @@
 
 	<section class="container">
 		<h2>Filtres</h2>
-		<form action="">
+		<form th:action="@{/filtres}" method="post">
 			<div class="input-group">
-				<label for=""></label>
-				<input type="text" id="" />
+				<input name="textFilter" type="text" id="textFilter" placeholder="Le nom de l'article contient"/>
 			</div>
 			<div class="input-group">
-				<label for="categorie">Catégorie</label>
-                <select name="noCategorie" id="selectCategorie" >
+				<label for="selectCategorie">Catégorie</label>
+                <select name="selectCategorie" id="noCategorie" >
                     <option th:each="c : ${listCategories}" th:text="${c.libelle}" th:value="${c.noCategorie}"></option>
                 </select>
+			</div>
+			<div>
+				<button type="submit">Filtrer</button>
+				<button type="reset">Annuler</button>
 			</div>
 		</form>
 	</section>
@@ -64,6 +67,7 @@
 			<p th:text="${a.description}"></p>
 			<p th:text="${'Début des enchères : '+a.dateDebutEncheres +'  Fin des enchères : '+a.dateFinEncheres}"></p>
 			<p th:text="${'Mise à prix : ' + a.miseAPrix +' euros'}"></p>
+			<button type="button"><a href="/acheter">Détails de la vente</a></button>
 		</div>
 	</section>
 

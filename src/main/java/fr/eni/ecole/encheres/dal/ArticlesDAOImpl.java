@@ -21,7 +21,7 @@ import fr.eni.ecole.encheres.bo.Utilisateur;
 public class ArticlesDAOImpl implements ArticlesDAO {
 
 	private final static String FIND_ALL = "SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, ARTICLES_VENDUS.no_utilisateur, ARTICLES_VENDUS.no_categorie, pseudo, nom, prenom, email, telephone, libelle FROM ARTICLES_VENDUS INNER JOIN UTILISATEURS ON ARTICLES_VENDUS.no_utilisateur = UTILISATEURS.no_utilisateur INNER JOIN CATEGORIES ON ARTICLES_VENDUS.no_categorie = CATEGORIES.no_categorie where date_debut_encheres <= :dateDuJour and date_fin_encheres >= :dateDuJour;";
-	private final static String FIND_BY_CATEGORIE_AND_STRING = "SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, ARTICLES_VENDUS.no_utilisateur, ARTICLES_VENDUS.no_categorie, pseudo, nom, prenom, email, telephone, libelle FROM ARTICLES_VENDUS INNER JOIN UTILISATEURS ON ARTICLES_VENDUS.no_utilisateur = UTILISATEURS.no_utilisateur INNER JOIN CATEGORIES ON ARTICLES_VENDUS.no_categorie = CATEGORIES.no_categorie where date_debut_encheres <= :dateDuJour and date_fin_encheres >= :dateDuJour nom_article like '%:String%'and no_categorie= :id;";
+	private final static String FIND_BY_CATEGORIE_AND_STRING = "SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, ARTICLES_VENDUS.no_utilisateur, ARTICLES_VENDUS.no_categorie, pseudo, nom, prenom, email, telephone, libelle FROM ARTICLES_VENDUS INNER JOIN UTILISATEURS ON ARTICLES_VENDUS.no_utilisateur = UTILISATEURS.no_utilisateur INNER JOIN CATEGORIES ON ARTICLES_VENDUS.no_categorie = CATEGORIES.no_categorie where date_debut_encheres <= :dateDuJour and date_fin_encheres >= :dateDuJour and nom_article like :string and ARTICLES_VENDUS.no_categorie= :id;";
 	private final static String CREATE_ARTICLE = "INSERT INTO ARTICLES_VENDUS (nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie) values (:nom,:description, :dateDebut, :dateFin, :prix, null, :idUtilisateur, :idCategorie)";
 
 	private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
@@ -42,9 +42,13 @@ public class ArticlesDAOImpl implements ArticlesDAO {
 	// appliquant le filtre
 	@Override
 	public List<ArticleVendu> findByCatAndString(LocalDate date, int idCat, String string) {
+		
+		String stringSQL = "%"+string+"%";
+		System.out.println(stringSQL);
+		
 		MapSqlParameterSource map = new MapSqlParameterSource();
 		map.addValue("dateDuJour", date);
-		map.addValue("String", string);
+		map.addValue("string", stringSQL);
 		map.addValue("id", idCat);
 		return this.namedParameterJdbcTemplate.query(FIND_BY_CATEGORIE_AND_STRING, map, new ArticlesRowMapper());
 	}

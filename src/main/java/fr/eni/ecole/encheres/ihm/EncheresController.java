@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import fr.eni.ecole.encheres.bll.ArticlesService;
 import fr.eni.ecole.encheres.bll.CategorieService;
@@ -50,6 +51,21 @@ public class EncheresController {
 		return "accueil";
 	}
 
-
+	 //utilisation des filtres pages d'accueil
+		@PostMapping ("/filtres")
+		public String accueilFiltre (@RequestParam ("textFilter") String string, @RequestParam ("selectCategorie") int id, Model modele) {
+			
+			// Récupération de la liste des articles
+			List<ArticleVendu>listArticles=articlesService.findByCatAndString(id, string );
+			// Récupération de la liste des catégories
+			List<Categorie> listCategories = categorieService.findAll();
+	
+			// Ajout des listes au modèle
+			modele.addAttribute("listArticles",listArticles);
+			modele.addAttribute("listCategories",listCategories);
+			System.out.println(modele);
+			
+			return "accueil";
+		}
 
 }
