@@ -22,6 +22,7 @@ public class ArticlesDAOImpl implements ArticlesDAO {
 	private final static String FIND_ALL = "SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, ARTICLES_VENDUS.no_utilisateur, ARTICLES_VENDUS.no_categorie, pseudo, nom, prenom, email, telephone, libelle FROM ARTICLES_VENDUS INNER JOIN UTILISATEURS ON ARTICLES_VENDUS.no_utilisateur = UTILISATEURS.no_utilisateur INNER JOIN CATEGORIES ON ARTICLES_VENDUS.no_categorie = CATEGORIES.no_categorie where date_fin_encheres >= :dateDuJour;";
 	private final static String FIND_BY_CATEGORIE_AND_STRING = "SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, ARTICLES_VENDUS.no_utilisateur, ARTICLES_VENDUS.no_categorie, pseudo, nom, prenom, email, telephone, libelle FROM ARTICLES_VENDUS INNER JOIN UTILISATEURS ON ARTICLES_VENDUS.no_utilisateur = UTILISATEURS.no_utilisateur INNER JOIN CATEGORIES ON ARTICLES_VENDUS.no_categorie = CATEGORIES.no_categorie where date_debut_encheres <= :dateDuJour and date_fin_encheres >= :dateDuJour and nom_article like :string and ARTICLES_VENDUS.no_categorie= :id;";
 	private final static String CREATE_ARTICLE = "INSERT INTO ARTICLES_VENDUS (nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie) values (:nom,:description, :dateDebut, :dateFin, :prix, null, :idUtilisateur, :idCategorie)";
+	private final static String FIND_BY_NO_ARTICLE = "SELECT * FROM ARTICLES_VENDUS WHERE no_article = :noArticle";
 
 	private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
@@ -81,8 +82,10 @@ public class ArticlesDAOImpl implements ArticlesDAO {
 
 	@Override
 	public ArticleVendu findArticleByNoArticle(int noArticle) {
-		// TODO Auto-generated method stub
-		return null;
+		MapSqlParameterSource map = new MapSqlParameterSource();
+		map.addValue("noArticle", noArticle);
+
+		return this.namedParameterJdbcTemplate.queryForObject(FIND_BY_NO_ARTICLE, map, new ArticlesRowMapper2());
 	}
 
 }
@@ -99,6 +102,19 @@ class ArticlesRowMapper implements RowMapper<ArticleVendu> {
 				rs.getInt("prix_initial"), rs.getInt("prix_vente"));
 		article.setCategorie(categorie);
 		article.setUtilisateurV(utilisateur);
+		return article;
+	}
+}
+
+class ArticlesRowMapper2 implements RowMapper<ArticleVendu> {
+
+	@Override
+	public ArticleVendu mapRow(ResultSet rs, int rowNum) throws SQLException {
+
+		ArticleVendu article = new ArticleVendu(rs.getInt("no_article"), rs.getString("nom_article"),
+				rs.getString("description"), rs.getDate("date_debut_encheres"), rs.getDate("date_fin_encheres"),
+				rs.getInt("prix_initial"));
+
 		return article;
 	}
 

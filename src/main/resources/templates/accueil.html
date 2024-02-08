@@ -73,7 +73,7 @@
 			<p th:text="${a.description}"></p>
 			<p th:text="${'Début des enchères : '+a.dateDebutEncheres +'  Fin des enchères : '+a.dateFinEncheres}"></p>
 			<p th:text="${'Mise à prix : ' + a.miseAPrix +' euros'}"></p>
-			<button type="button"><a href="/acheter">Faire une enchère</a></button>
+   			 <button type="button"><a th:href="@{'/acheter?noArticle=' + ${a.noArticle}}">Faire une enchère</a></button>
 			
 		</div>
 	</section>

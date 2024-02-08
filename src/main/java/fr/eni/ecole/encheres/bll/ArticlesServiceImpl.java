@@ -46,8 +46,7 @@ public class ArticlesServiceImpl implements ArticlesService {
 
 	@Override
 	public ArticleVendu findArticleByNoArticle(int noArticle) {
-		// TODO Auto-generated method stub
-		return null;
+		return articlesDAO.findArticleByNoArticle(noArticle);
 	}
 
 }
