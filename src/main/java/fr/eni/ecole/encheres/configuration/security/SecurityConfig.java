@@ -47,6 +47,7 @@ public class SecurityConfig {
 				.requestMatchers(HttpMethod.GET, "/inscription").permitAll()
 				.requestMatchers(HttpMethod.POST, "/inscription").permitAll()
 				.requestMatchers(HttpMethod.GET, "/acheter").authenticated()
+				.requestMatchers(HttpMethod.POST, "/encherir").authenticated()
 				.requestMatchers(HttpMethod.POST, "/filtres").permitAll().requestMatchers(HttpMethod.GET, "/vendre")
 				.authenticated().requestMatchers(HttpMethod.POST, "/vendre").authenticated()
 				.requestMatchers(HttpMethod.GET, "/administration").hasRole("ADMIN")
