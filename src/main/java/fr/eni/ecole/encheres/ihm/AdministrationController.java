@@ -23,13 +23,22 @@ public class AdministrationController {
 	// Affichage de la page d'administration des comptes
 	@GetMapping("/administration")
 	public String affichagePageAdmin(Model modele) {
-		// Récupération de la liste de tous les utilisateurs
-		List<Utilisateur> listUtilisateurs = utilisateurService.findAll();
+		// Récupération de l'utilisateur connecté
+		Utilisateur utilisateur = utilisateurService.getIdUtilisateurConnecte();
+		
+		// liste des utilisateurs sans l'utilisateur connecté (pour admin)
+		List<Utilisateur> listUtilisateurs = utilisateurService.findUtilisateurs(utilisateur);
 		modele.addAttribute("listUtilisateurs", listUtilisateurs);
 
 		return "administration";
 	}
-
+	// Désactivation d'un compte
+	@PostMapping("/desactivation")
+	public String desactivationCompteUtilisateur (@RequestParam("noUtilisateur") int noUtilisateur) {
+		return null;
+	}
+	
+	
 	// Suppression d'un compte par l'administrateur
 	@PostMapping("/suppressionAdmin")
 	public String suppresionCompteUtilisateur(@RequestParam("pseudoUtilisateur") String pseudo) {

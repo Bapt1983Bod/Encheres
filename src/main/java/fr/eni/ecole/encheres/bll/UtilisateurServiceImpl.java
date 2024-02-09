@@ -49,7 +49,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	}
 
 	@Override
-	public void modifierUtilisateur(Utilisateur utilisateur){
+	public void modifierUtilisateur(Utilisateur utilisateur) {
 		utilisateurDAO.modifierUtilisateur(utilisateur);
 	}
 
@@ -62,6 +62,17 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	@Override
 	public List<Utilisateur> findAll() {
 		return utilisateurDAO.findAll();
+	}
+
+	// liste des utilisateurs sans l'utilisateur connecté (pour admin)
+	@Override
+	public List<Utilisateur> findUtilisateurs(Utilisateur utilisateurConnecte) {
+		return utilisateurDAO.findUtilisateurs(utilisateurConnecte);
+	}
+
+	@Override
+	public void desactiverUtilisateur(int noUtilisateur) {
+		utilisateurDAO.desactiverUtilisateur(noUtilisateur);
 	}
 
 }

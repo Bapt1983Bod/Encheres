@@ -33,6 +33,7 @@ public class VendreController {
 		this.articlesService = articlesService;
 		this.retraitService = retraitService;
 		this.categorieService = categorieService;
+		
 	}
 
 	@GetMapping("/vendre")

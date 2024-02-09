@@ -18,5 +18,10 @@ public interface UtilisateurDAO {
 	void supprimerUtilisateur(Utilisateur utilisateur);
 	
 	List<Utilisateur> findAll();
+	
+	// liste des utilisateurs sans l'utilisateur connecté (pour admin)
+	List<Utilisateur> findUtilisateurs (Utilisateur utilisateurConnecte);
+	
+	void desactiverUtilisateur (int noUtilisateur);
 
 }

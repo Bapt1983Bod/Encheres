@@ -26,6 +26,10 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 	private static final String UPDATE = "UPDATE UTILISATEURS SET nom = :nom, prenom = :prenom, email = :email, telephone = :telephone, rue = :rue, code_postal = :codePostal, ville = :ville, mot_de_passe = :mdp WHERE pseudo = :pseudo";
 	private static final String DELETE = "DELETE FROM UTILISATEURS WHERE pseudo = :pseudo";
 	private static final String FIND_ALL = "SELECT * FROM UTILISATEURS";
+	// liste des utilisateurs sans l'utilisateur connecté (pour admin)
+	private static final String FIND_UTILISATEURS = "SELECT * FROM UTILISATEURS WHERE no_utilisateur != :noUtilisateur";
+	// desactivation utilisateur
+	private static final String DESACTIVATION ="UPDATE UTILISATEURS SET  administrateur = -1 WHERE no_utilisateur = noUtilisateur";
 
 	private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
@@ -161,6 +165,24 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 	@Override
 	public List<Utilisateur> findAll() {
 		return this.namedParameterJdbcTemplate.query(FIND_ALL, new BeanPropertyRowMapper<>(Utilisateur.class));
+	}
+
+	// liste des utilisateurs sans l'utilisateur connecté (pour admin)
+	@Override
+	public List<Utilisateur> findUtilisateurs(Utilisateur utilisateurConnecte) {
+		MapSqlParameterSource map = new MapSqlParameterSource();
+		map.addValue("noUtilisateur", utilisateurConnecte.getNoUtilisateur());
+		
+		return this.namedParameterJdbcTemplate.query(FIND_UTILISATEURS,map,  new BeanPropertyRowMapper<>(Utilisateur.class));
+	}
+
+	@Override
+	public void desactiverUtilisateur(int noUtilisateur) {
+		MapSqlParameterSource map = new MapSqlParameterSource();
+		map.addValue("noUtilisateur", noUtilisateur);
+		
+		this.namedParameterJdbcTemplate.update(DESACTIVATION,map);
+		
 	}
 
 }

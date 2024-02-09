@@ -10,6 +10,10 @@
 <body>
 	<h1>Administration des comptes utilisateurs</h1>
 
+	<div id="accueil">
+		<button type="button"><a href="/profil">Profil</a></button>
+	</div>
+
 	<section class="container">
 		<h2>Liste des comptes utilisateurs</h2>
 		<div>
@@ -23,6 +27,7 @@
 						<th>Téléphone</th>
 						<th>Email</th>
 						<th>Adresse</th>
+						<th>Statut (0 : Membre, 1 : Admin, -1 : Suspendu)</th>
 						<th>Actions</th>
 					</tr>
 				</thead>
@@ -35,14 +40,15 @@
 						<td th:text="${u.telephone}"></td>
 						<td th:text="${u.email}"></td>
 						<td th:text="${u.rue + ' ' + u.codePostal + ' ' + u.ville}"></td>
+						<td th:text="${u.administrateur}"></td>
 
 						<td>
-							<form th:action="@{/desactivationAdmin}" method="post">
-								<input type="text" name="noUtilisateur" th:value="${u.pseudo}" hidden/>
+							<form th:action="@{/desactivation}" method="post">
+								<input type="text" name="noUtilisateur" th:value="${u.pseudo}" hidden />
 								<button type="submit">Désactiver Compte</button>
 							</form>
 							<form th:action="@{/suppressionAdmin}" method="post">
-								<input type="text" th:name="pseudoUtilisateur" th:value="${u.pseudo}" hidden/>
+								<input type="text" th:name="pseudoUtilisateur" th:value="${u.pseudo}" hidden />
 								<button type="submit">Supprimer Compte</button>
 							</form>
 						</td>
