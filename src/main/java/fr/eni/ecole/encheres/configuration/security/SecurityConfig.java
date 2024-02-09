@@ -48,11 +48,13 @@ public class SecurityConfig {
 				.requestMatchers(HttpMethod.POST, "/inscription").permitAll()
 				.requestMatchers(HttpMethod.GET, "/acheter").authenticated()
 				.requestMatchers(HttpMethod.POST, "/encherir").authenticated()
-				.requestMatchers(HttpMethod.POST, "/filtres").permitAll().requestMatchers(HttpMethod.GET, "/vendre")
-				.authenticated().requestMatchers(HttpMethod.POST, "/vendre").authenticated()
+				.requestMatchers(HttpMethod.POST, "/filtres").permitAll()
+				.requestMatchers(HttpMethod.GET, "/vendre").authenticated()
+				.requestMatchers(HttpMethod.POST, "/vendre").authenticated()
 				.requestMatchers(HttpMethod.GET, "/administration").hasRole("ADMIN")
 				.requestMatchers(HttpMethod.POST, "/suppressionAdmin").hasRole("ADMIN")
-				.requestMatchers(HttpMethod.POST, "/desactivationAdmin").hasRole("ADMIN").requestMatchers("/css/*")
+				.requestMatchers(HttpMethod.POST, "/desactivation").hasRole("ADMIN")
+				.requestMatchers("/css/*")
 				.permitAll().anyRequest().denyAll());
 
 		// Paramétrage de la page de login

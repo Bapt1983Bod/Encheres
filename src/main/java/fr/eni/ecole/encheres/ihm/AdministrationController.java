@@ -35,7 +35,9 @@ public class AdministrationController {
 	// Désactivation d'un compte
 	@PostMapping("/desactivation")
 	public String desactivationCompteUtilisateur (@RequestParam("noUtilisateur") int noUtilisateur) {
-		return null;
+		System.out.println("On passe içi");
+		utilisateurService.desactiverUtilisateur(noUtilisateur);
+		return "redirect:/administration";
 	}
 	
 	

@@ -10,9 +10,12 @@
 <body>
 	<h1>Administration des comptes utilisateurs</h1>
 
-	<div id="accueil">
-		<button type="button"><a href="/profil">Profil</a></button>
-	</div>
+	<nav>
+		<button type="button" sec:authorize="!isAuthenticated()"><a href="/inscription">Inscription</a></button>
+		<button type="button" sec:authorize="isAuthenticated()"><a href="/vendre">Vendre un article</a></button>
+		<button type="button" sec:authorize="isAuthenticated()"><a href="/profil">Mon profil</a></button>
+		<button type="button" sec:authorize="hasRole('ADMIN')"><a href="/administration">Administration</a></button>
+	</nav>
 
 	<section class="container">
 		<h2>Liste des comptes utilisateurs</h2>
@@ -44,7 +47,7 @@
 
 						<td>
 							<form th:action="@{/desactivation}" method="post">
-								<input type="text" name="noUtilisateur" th:value="${u.pseudo}" hidden />
+								<input type="text" name="noUtilisateur" th:value="${u.noUtilisateur}" hidden />
 								<button type="submit">Désactiver Compte</button>
 							</form>
 							<form th:action="@{/suppressionAdmin}" method="post">

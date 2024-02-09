@@ -29,7 +29,7 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 	// liste des utilisateurs sans l'utilisateur connecté (pour admin)
 	private static final String FIND_UTILISATEURS = "SELECT * FROM UTILISATEURS WHERE no_utilisateur != :noUtilisateur";
 	// desactivation utilisateur
-	private static final String DESACTIVATION ="UPDATE UTILISATEURS SET  administrateur = -1 WHERE no_utilisateur = noUtilisateur";
+	private static final String DESACTIVATION ="UPDATE UTILISATEURS SET  administrateur = 0 WHERE no_utilisateur = :noUtilisateur";
 
 	private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
