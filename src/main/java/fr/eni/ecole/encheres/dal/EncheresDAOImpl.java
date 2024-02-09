@@ -1,19 +1,18 @@
 package fr.eni.ecole.encheres.dal;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.sql.DataSource;
 
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import fr.eni.ecole.encheres.bo.Utilisateur;
+
 @Repository
 public class EncheresDAOImpl implements EncheresDAO {
 
 	private static final String INSERT_ENCHERE = "INSERT INTO ENCHERES (no_utilisateur, no_article, date_enchere, montant_enchere) VALUES (:noUtilisateur, :noArticle, GETDATE(), :montantEnchere)";
-	private static final String UPDATE_CREDIT = "UPDATE UTILISATEURS SET credit = credit - :montantEnchere WHERE no_utilisateur = :noUtilisateur";
+	private static final String UPDATE_CREDIT = "UPDATE UTILISATEURS SET credit = :credit - :montantEnchere WHERE no_utilisateur = :noUtilisateur";
 
 	private final NamedParameterJdbcTemplate jdbcTemplate;
 
@@ -22,23 +21,23 @@ public class EncheresDAOImpl implements EncheresDAO {
 		this.jdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
 	}
 
+	// prevoir try catch dans le cas ou une enchere est déja en cours
+
 	@Override
+	public void encherir(int noArticle, long montantEnchere, Utilisateur utilisateur) {
+		if (utilisateur.getCredit() < montantEnchere) {
+			throw new IllegalArgumentException(
+					"Le crédit de l'utilisateur est insuffisant pour enchérir avec ce montant.");
+		}
 
-	public void encherir(int noArticle, long montantEnchere, long creditUtilisateur) {
+		MapSqlParameterSource parameters = new MapSqlParameterSource()
+				.addValue("noUtilisateur", utilisateur.getNoUtilisateur()).addValue("noArticle", noArticle)
+				.addValue("montantEnchere", montantEnchere);
 
-		// map avec les valeurs des paramètres pour insérer l'enchère
-		Map<String, Object> parameters = new HashMap<>();
-		parameters.put("creditUtilisateur", creditUtilisateur);
-		parameters.put("noArticle", noArticle);
-		parameters.put("montantEnchere", montantEnchere);
-
-		// execute la requete SQL d'insertion
 		jdbcTemplate.update(INSERT_ENCHERE, parameters);
 
-		// Mettre à jour le crédit de l'utilisateur
-		MapSqlParameterSource creditParameters = new MapSqlParameterSource();
-		creditParameters.addValue("montantEnchere", montantEnchere);
-		creditParameters.addValue("creditUtilisateur", creditUtilisateur);
+		MapSqlParameterSource creditParameters = new MapSqlParameterSource().addValue("montantEnchere", montantEnchere)
+				.addValue("credit", utilisateur.getCredit()).addValue("noUtilisateur", utilisateur.getNoUtilisateur());
 
 		jdbcTemplate.update(UPDATE_CREDIT, creditParameters);
 	}

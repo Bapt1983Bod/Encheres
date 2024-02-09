@@ -1,6 +1,5 @@
 package fr.eni.ecole.encheres.ihm;
 
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import fr.eni.ecole.encheres.bll.ArticlesService;
 import fr.eni.ecole.encheres.bll.EncheresService;
+import fr.eni.ecole.encheres.bll.UtilisateurService;
 import fr.eni.ecole.encheres.bo.ArticleVendu;
 import fr.eni.ecole.encheres.bo.Utilisateur;
 
@@ -17,10 +17,13 @@ public class AchatController {
 
 	private ArticlesService articlesService;
 	private EncheresService encheresService;
+	private UtilisateurService utilisateurService;
 
-	public AchatController(ArticlesService articlesService, EncheresService encheresService) {
+	public AchatController(ArticlesService articlesService, EncheresService encheresService,
+			UtilisateurService utilisateurService) {
 		this.articlesService = articlesService;
 		this.encheresService = encheresService;
+		this.utilisateurService = utilisateurService;
 	}
 
 	@GetMapping("/acheter")
@@ -34,18 +37,11 @@ public class AchatController {
 
 	@PostMapping("/encherir")
 	public String encherir(@RequestParam("noArticle") int noArticle,
-			@RequestParam("montantEnchere") long montantEnchere, @AuthenticationPrincipal Utilisateur utilisateur, // cherche
-																													// à
-																													// récupérer
-																													// l'utilisateur
-																													// connecté
-																													// avec
-																													// @Authentification
-			Model model) {
+			@RequestParam("montantEnchere") long montantEnchere, Model model) {
 
-		long creditUtilisateur = utilisateur.getCredit(); // récupére le crédit de l'utilisateur et stocke dans la
-															// variabel creditUtilisateur
-		encheresService.encherir(noArticle, montantEnchere, creditUtilisateur); // appel de la methode encherir
+		Utilisateur acheteur = utilisateurService.getIdUtilisateurConnecte();
+
+		encheresService.encherir(noArticle, montantEnchere, acheteur); // appel de la methode encherir
 		return "redirect:/acheter?noArticle=" + noArticle;
 
 	}
