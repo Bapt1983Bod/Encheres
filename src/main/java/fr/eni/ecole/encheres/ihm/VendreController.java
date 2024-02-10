@@ -42,7 +42,7 @@ public class VendreController {
 		ArticleVendu article = new ArticleVendu();
 		modele.addAttribute("article", article);
 
-		System.out.println("id utilisateur : " + utilisateurService.getIdUtilisateurConnecte());
+		System.out.println("id utilisateur : " + utilisateurService.getUtilisateurConnecte());
 
 		// Récupération de la liste des catégories
 		List<Categorie> listCategories = categorieService.findAll();
@@ -59,7 +59,7 @@ public class VendreController {
 			return "vendre";
 		} else {
 			// Récupération de l'id de l'utilisateur connecté
-			Utilisateur vendeur = utilisateurService.getIdUtilisateurConnecte();
+			Utilisateur vendeur = utilisateurService.getUtilisateurConnecte();
 
 			// Création de l'article en bdd et récupération du no d'article
 			int idArticle = articlesService.createArticle(vendeur, article);

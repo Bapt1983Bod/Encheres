@@ -39,7 +39,7 @@ public class AchatController {
 	public String encherir(@RequestParam("noArticle") int noArticle,
 			@RequestParam("montantEnchere") long montantEnchere, Model model) {
 
-		Utilisateur acheteur = utilisateurService.getIdUtilisateurConnecte();
+		Utilisateur acheteur = utilisateurService.getUtilisateurConnecte();
 
 		encheresService.encherir(noArticle, montantEnchere, acheteur); // appel de la methode encherir
 		return "redirect:/acheter?noArticle=" + noArticle;

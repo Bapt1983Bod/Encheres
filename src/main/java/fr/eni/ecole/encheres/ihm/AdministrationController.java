@@ -24,7 +24,7 @@ public class AdministrationController {
 	@GetMapping("/administration")
 	public String affichagePageAdmin(Model modele) {
 		// Récupération de l'utilisateur connecté
-		Utilisateur utilisateur = utilisateurService.getIdUtilisateurConnecte();
+		Utilisateur utilisateur = utilisateurService.getUtilisateurConnecte();
 		
 		// liste des utilisateurs sans l'utilisateur connecté (pour admin)
 		List<Utilisateur> listUtilisateurs = utilisateurService.findUtilisateurs(utilisateur);

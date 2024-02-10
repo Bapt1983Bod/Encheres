@@ -36,7 +36,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	}
 
 	@Override
-	public Utilisateur getIdUtilisateurConnecte() {
+	public Utilisateur getUtilisateurConnecte() {
 		System.out.println("méthode getIdUtilisateur");
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
 		System.out.println("user: " + username);

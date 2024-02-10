@@ -12,7 +12,7 @@ public interface UtilisateurService {
 
 	Utilisateur findByPseudo(String pseudo);
 
-	Utilisateur getIdUtilisateurConnecte();
+	Utilisateur getUtilisateurConnecte();
 
 	public void modifierUtilisateur(Utilisateur utilisateur);
 

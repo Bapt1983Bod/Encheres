@@ -29,7 +29,7 @@ public class ProfilController {
 	@GetMapping("/profil")
 	public String afficherProfil(Model modele) {
 		// Récupérer l'utilisateur connecté
-		Utilisateur utilisateurConnecte = utilisateurService.getIdUtilisateurConnecte();
+		Utilisateur utilisateurConnecte = utilisateurService.getUtilisateurConnecte();
 
 		// Ajouter l'utilisateur au modèle
 		modele.addAttribute("utilisateur", utilisateurConnecte);
@@ -40,7 +40,7 @@ public class ProfilController {
 
 	@GetMapping("/modification-profil")
 	public String afficherPageModificationProfil(Model model) {
-		Utilisateur utilisateurConnecte = utilisateurService.getIdUtilisateurConnecte();
+		Utilisateur utilisateurConnecte = utilisateurService.getUtilisateurConnecte();
 		
 		model.addAttribute("utilisateur", utilisateurConnecte);
 		return "modification-profil";
@@ -65,7 +65,7 @@ public class ProfilController {
 	@PostMapping("/supprimer-compte")
 	public String supprimerUtilisateur() {
 
-		Utilisateur utilisateur = utilisateurService.getIdUtilisateurConnecte();
+		Utilisateur utilisateur = utilisateurService.getUtilisateurConnecte();
 		utilisateurService.supprimerUtilisateur(utilisateur);
 		return "redirect:/logout";
 	}
