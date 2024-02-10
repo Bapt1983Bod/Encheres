@@ -8,17 +8,22 @@
 </head>
 
 <body>
-<div class="container">
+<header>
 	<h1>Créer mon profil</h1>
+</header>
 	
-	<div id="accueil">
-			<button type="button"><a href="/accueil">Accueil</a></button>
-		</div>
-
+<nav>
+		<button type="button"><a href="/accueil">Accueil</a></button>
+		<button type="button" sec:authorize="!isAuthenticated()" hidden><a href="/inscription">Inscription</a></button>	
+		<button type="button" sec:authorize="isAuthenticated()"><a href="/vendre">Vendre un article</a></button>
+		<button type="button" sec:authorize="isAuthenticated()"><a href="/profil">Mon profil</a></button>
+		<button type="button" sec:authorize="hasRole('ADMIN')"><a href="/administration">Administration</a></button>
+	</nav>
 
 	<!-- Afficher le message d'erreur -->
 	<p th:if="${erreur}" th:text="${erreur}"></p>
 
+<section class="container">
 
 	<form th:action="@{/inscription}" th:object="${utilisateur}" method="post">
 		<label for="pseudo">Pseudo:</label>
@@ -55,7 +60,7 @@
 		<button type="reset">Annuler</button>
 	</form>
 
+</section>
 
 
-</div>
 </body>

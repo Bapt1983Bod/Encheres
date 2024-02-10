@@ -8,13 +8,14 @@
 </head>
 
 <body>
-	<h1>Administration des comptes utilisateurs</h1>
-
+	<header>
+		<h1>Administration des comptes utilisateurs</h1>
+	</header>
 	<nav>
+		<button type="button"><a href="/accueil">Accueil</a></button>
 		<button type="button" sec:authorize="!isAuthenticated()"><a href="/inscription">Inscription</a></button>
 		<button type="button" sec:authorize="isAuthenticated()"><a href="/vendre">Vendre un article</a></button>
 		<button type="button" sec:authorize="isAuthenticated()"><a href="/profil">Mon profil</a></button>
-		<button type="button" sec:authorize="hasRole('ADMIN')"><a href="/administration">Administration</a></button>
 	</nav>
 
 	<section class="container">
@@ -60,6 +61,7 @@
 
 				</tbody>
 		</div>
+</section>
 </body>
 
 </html>

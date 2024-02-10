@@ -8,12 +8,18 @@
 </head>
 
 <body>
-	<div class="container">
-		<h3>Modifier profil</h3>
+	<header>
+		<h1>Modification du profil</h1>
+	</header>
+	<nav>
+		<button type="button"><a href="/accueil">Accueil</a></button>
+		<button type="button" sec:authorize="!isAuthenticated()"><a href="/inscription">Inscription</a></button>
+		<button type="button" sec:authorize="isAuthenticated()"><a href="/vendre">Vendre un article</a></button>
+		<button type="button" sec:authorize="isAuthenticated()"><a href="/profil">Mon profil</a></button>
+		<button type="button" sec:authorize="hasRole('ADMIN')"><a href="/administration">Administration</a></button>
+	</nav>
 
-		<div id="accueil">
-			<button type="button"><a href="/profil">Profil</a></button>
-		</div>
+	<section class="container">
 
 		<!-- Afficher le message d'erreur -->
 		<p th:if="${erreur}" th:text="${erreur}"></p>
@@ -61,7 +67,8 @@
 			</div>
 		</form>
 
-	</div>
+		</div>
+	</section>
 </body>
 
 </html>

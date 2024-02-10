@@ -9,13 +9,21 @@
 </head>
 
 <body>
+	<header>
+		<h1>Vendre un article</h1>
+	</header>
+	<nav>
+		<button type="button"><a href="/accueil">Accueil</a></button>
+		<button type="button" sec:authorize="!isAuthenticated()"><a href="/inscription">Inscription</a></button>
+		<button type="button" sec:authorize="isAuthenticated()" hidden><a href="/vendre">Vendre un article</a></button>
+		<button type="button" sec:authorize="isAuthenticated()"><a href="/profil">Mon profil</a></button>
+		<button type="button" sec:authorize="hasRole('ADMIN')"><a href="/administration">Administration</a></button>
+	</nav>
 
-    <div class="container">
-        <h1>Nouvelle Vente</h1>
+    <section class="container">
         
-        <div id="accueil">
-			<button type="button"><a href="/accueil">Accueil</a></button>
-		</div>
+        
+        
 
         <form th:object="${article}" th:action="@{/vendre}" method="post">
             <div>
@@ -67,7 +75,7 @@
             </div>
 
         </form>
-    </div>
+    </section>
 
 </body>
 

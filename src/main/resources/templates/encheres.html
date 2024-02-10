@@ -1,29 +1,46 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<link rel="stylesheet" href="/css/stylesheet.css">
 </head>
+
 <body>
-		 <h1>Détails de la vente</h1>
+	<header>
+		<h1>Détails de la vente</h1>
+	</header>
+	<nav>
+		<button type="button"><a href="/accueil">Accueil</a></button>
+		<button type="button" sec:authorize="!isAuthenticated()"><a href="/inscription">Inscription</a></button>
+		<button type="button" sec:authorize="isAuthenticated()"><a href="/vendre">Vendre un article</a></button>
+		<button type="button" sec:authorize="isAuthenticated()"><a href="/profil">Mon profil</a></button>
+		<button type="button" sec:authorize="hasRole('ADMIN')"><a href="/administration">Administration</a></button>
+	</nav>
 
- <ul>
-    <li><span>Titre :</span> <span th:text="${article.nomArticle}"></span></li>
-    <li><span>Description :</span> <span th:text="${article.description}"></span></li>
-    <li><span>Début des enchères :</span> <span th:text="${article.dateDebutEncheres}"></span></li>
-    <li><span>Fin des enchères :</span> <span th:text="${article.dateFinEncheres}"></span></li>
-    <li><span>Mise à prix :</span> <span th:text="${article.miseAPrix}"></span></li>
-</ul>
+	<section class="container">
+		<ul>
+			<li><span>Titre :</span> <span th:text="${article.nomArticle}"></span></li>
+			<li><span>Description :</span> <span th:text="${article.description}"></span></li>
+			<li><span>Début des enchères :</span> <span th:text="${article.dateDebutEncheres}"></span></li>
+			<li><span>Fin des enchères :</span> <span th:text="${article.dateFinEncheres}"></span></li>
+			<li><span>Mise à prix :</span> <span th:text="${article.miseAPrix}"></span></li>
+		</ul>
 
 
-  
-  <form th:action="@{/encherir}" method="post">
-	      <input type="hidden" name="noArticle" th:value="${article.noArticle}" />
 
-    <label for="montantEnchere">Montant de l'enchère (en points) :</label>
-    <input type="number" id="montantEnchere" name="montantEnchere" required>   <!--ajouter attribut minimum =0 -->
-    <button type="submit">Enchérir</button>
-</form>
-  
+		<form th:action="@{/encherir}" method="post">
+			<input type="hidden" name="noArticle" th:value="${article.noArticle}" />
+			<div>
+				<label for="montantEnchere">Montant de l'enchère (en points) :</label>
+				<input type="number" id="montantEnchere" name="montantEnchere" required> <!--ajouter attribut minimum =0 -->
+			</div>
+			<div>
+				<button type="submit">Enchérir</button>
+			</div>
+		</form>
+	</section>
 </body>
+
 </html>

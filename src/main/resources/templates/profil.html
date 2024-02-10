@@ -8,15 +8,19 @@
 </head>
 
 <body>
-	<div class="container">
+	<header>
+		<h1>Mon profil</h1>
+	</header>
 
-		<h2>Mon profil</h2>
-		<div id="accueil">
-			<button type="button"><a href="/accueil">Accueil</a></button>
-		</div>
+	<nav>
+		<button type="button"><a href="/accueil">Accueil</a></button>
+		<button type="button" sec:authorize="!isAuthenticated()"><a href="/inscription">Inscription</a></button>
+		<button type="button" sec:authorize="isAuthenticated()"><a href="/vendre">Vendre un article</a></button>
+		<button type="button" sec:authorize="isAuthenticated()" hidden><a href="/profil">Mon profil</a></button>
+		<button type="button" sec:authorize="hasRole('ADMIN')"><a href="/administration">Administration</a></button>
+	</nav>
 
-
-
+	<section class="container">
 		<ul>
 			<li th:text="'Pseudo : ' + ${utilisateur.pseudo}"></li>
 			<li th:text="'Nom : ' + ${utilisateur.nom}"></li>
@@ -27,18 +31,20 @@
 			<li th:text="'Code postal : ' + ${utilisateur.codePostal}"></li>
 			<li th:text="'Ville : ' + ${utilisateur.ville}"></li>
 		</ul>
+
+
+
+		<form action="">
+			<button type="button"><a href="/modification-profil">Modifier mon profil</a></button>
+		</form>
+		<form th:action="@{/supprimer-compte}" method="post">
+
+
+			<button type="submit">Supprimer mon compte</button>
+		</form>
+
+		</div>
+		<section>
 </body>
-
-
-<form action="">
-	<button type="button"><a href="/modification-profil">Modifier mon profil</a></button>
-</form>
-<form th:action="@{/supprimer-compte}" method="post">
-
-
-	<button type="submit">Supprimer mon compte</button>
-</form>
-
-</div>
 
 </html>
