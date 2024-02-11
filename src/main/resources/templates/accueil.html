@@ -14,45 +14,49 @@
 
 	<section class="container">
 		<h2>Connexion</h2>
+		<div class="article">
+			<form th:action="@{/login}" method="post" class="login-form">
+				<div class="input-group" sec:authorize="!isAuthenticated()">
+					<label for="idUsername">Pseudo</label>
+					<input type="text" id="idUsername" name="username" />
+				</div>
 
-		<form th:action="@{/login}" method="post" class="login-form">
-			<div class="input-group" sec:authorize="!isAuthenticated()">
-				<label for="idUsername">Pseudo</label>
-				<input type="text" id="idUsername" name="username" />
-			</div>
+				<div class="input-group" sec:authorize="!isAuthenticated()">
+					<label for="idPassword">Mot de Passe</label>
+					<input type="password" id="idPassword" name="password" />
+				</div>
 
-			<div class="input-group" sec:authorize="!isAuthenticated()">
-				<label for="idPassword">Mot de Passe</label>
-				<input type="password" id="idPassword" name="password" />
-			</div>
-
-			<div class="button-group">
-				<button type="submit" sec:authorize="!isAuthenticated()">Se connecter</button>
-				<button type="submit" sec:authorize="isAuthenticated()"><a href="/logout">Déconnexion</a></button>
-			</div>
-		</form>
+				<div class="button-group">
+					<button type="submit" sec:authorize="!isAuthenticated()">Se connecter</button>
+					<button type="submit" sec:authorize="isAuthenticated()"><a href="/logout">Déconnexion</a></button>
+				</div>
+			</form>
+		</div>
 	</section>
 
 	<section class="container">
 		<h2>Filtres</h2>
-		<form th:action="@{/filtres}" method="post">
-			<div class="input-group">
-				<input name="textFilter" type="text" id="textFilter" placeholder="Le nom de l'article contient" />
-			</div>
-			<div class="input-group">
-				<label for="selectCategorie">Catégorie</label>
-				<select name="selectCategorie" id="noCategorie">
-					<option th:each="c : ${listCategories}" th:text="${c.libelle}" th:value="${c.noCategorie}"></option>
-				</select>
-			</div>
-			<div>
-				<button type="submit">Filtrer</button>
-			</div>
-		</form>
-		<div>
-			<form action="/accueil" method="get">
-				<button type="submit">Annuler</button>
+		<div class="article">
+			<form th:action="@{/filtres}" method="post">
+				<div class="input-group">
+					<input name="textFilter" type="text" id="textFilter" placeholder="Le nom de l'article contient" />
+				</div>
+				<div class="input-group">
+					<label for="selectCategorie">Catégorie</label>
+					<select name="selectCategorie" id="noCategorie">
+						<option th:each="c : ${listCategories}" th:text="${c.libelle}" th:value="${c.noCategorie}">
+						</option>
+					</select>
+				</div>
+				<div>
+					<button type="submit">Filtrer</button>
+				</div>
 			</form>
+			<div>
+				<form action="/accueil" method="get">
+					<button type="submit">Annuler</button>
+				</form>
+			</div>
 		</div>
 	</section>
 

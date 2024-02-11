@@ -1,15 +1,16 @@
 <header xmlns:th="http:\\www.thymeleaf.org" th:fragment="frag-entete(titre)">
 	<h1 th:text="${titre}">titre page</h1>
-	
-	<ul>
-			<li sec:authentication="name"></li>
-		</ul>
 
-<nav>
-	<button type="button"><a href="/accueil">Accueil</a></button>
-	<button type="button" sec:authorize="!isAuthenticated()"><a href="/inscription">Inscription</a></button>
-	<button type="button" sec:authorize="isAuthenticated()"><a href="/vendre">Vendre un article</a></button>
-	<button type="button" sec:authorize="isAuthenticated()"><a href="/profil">Mon profil</a></button>
-	<button type="button" sec:authorize="hasRole('ADMIN')"><a href="/administration">Administration</a></button>
-</nav>
+	<ul>
+		Utilisateur connecté : 
+		<li sec:authentication="name"></li>
+	</ul>
+
+	<nav>
+		<button type="button"><a href="/accueil">Accueil</a></button>
+		<button type="button" sec:authorize="!isAuthenticated()"><a href="/inscription">Inscription</a></button>
+		<button type="button" sec:authorize="isAuthenticated()"><a href="/vendre">Vendre un article</a></button>
+		<button type="button" sec:authorize="isAuthenticated()"><a href="/profil">Mon profil</a></button>
+		<button type="button" sec:authorize="hasRole('ADMIN')"><a href="/administration">Administration</a></button>
+	</nav>
 </header>

@@ -154,6 +154,10 @@ table th {
 	color: white;
 }
 
+li {
+	margin-bottom: 5px;
+}
+
 @media screen and (max-width: 1024px) {
     /* pour les écrans de taille moyenne (tablette) */
     .container {

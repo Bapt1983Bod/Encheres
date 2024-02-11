@@ -3,7 +3,7 @@
 
 <head>
 	<meta charset="UTF-8">
-	<title>Insert title here</title>
+	<title>Mon profil</title>
 	<link rel="stylesheet" href="/css/stylesheet.css">
 </head>
 
@@ -11,26 +11,28 @@
 	<div th:replace="~{fragments/entete :: frag-entete('Mon profil')}"></div>
 
 	<section class="container">
-		<ul>
-			<li th:text="'Pseudo : ' + ${utilisateur.pseudo}"></li>
-			<li th:text="'Nom : ' + ${utilisateur.nom}"></li>
-			<li th:text="'Prénom : ' + ${utilisateur.prenom}"></li>
-			<li th:text="'email : ' + ${utilisateur.email}"></li>
-			<li th:text="'Téléphone : ' + ${utilisateur.telephone}"></li>
-			<li th:text="'Rue : ' + ${utilisateur.rue}"></li>
-			<li th:text="'Code postal : ' + ${utilisateur.codePostal}"></li>
-			<li th:text="'Ville : ' + ${utilisateur.ville}"></li>
-		</ul>
+		<div class="article">
+			<ul>
+				<li th:text="'Pseudo : ' + ${utilisateur.pseudo}"></li>
+				<li th:text="'Nom : ' + ${utilisateur.nom}"></li>
+				<li th:text="'Prénom : ' + ${utilisateur.prenom}"></li>
+				<li th:text="'email : ' + ${utilisateur.email}"></li>
+				<li th:text="'Téléphone : ' + ${utilisateur.telephone}"></li>
+				<li th:text="'Rue : ' + ${utilisateur.rue}"></li>
+				<li th:text="'Code postal : ' + ${utilisateur.codePostal}"></li>
+				<li th:text="'Ville : ' + ${utilisateur.ville}"></li>
+			</ul>
 
-		<form action="">
-			<button type="button"><a href="/modification-profil">Modifier mon profil</a></button>
-		</form>
-		<form th:action="@{/supprimer-compte}" method="post">
+			<form action="">
+				<button type="button"><a href="/modification-profil">Modifier mon profil</a></button>
+			</form>
+			<form th:action="@{/supprimer-compte}" method="post">
 
 
-			<button type="submit">Supprimer mon compte</button>
-		</form>
+				<button type="submit">Supprimer mon compte</button>
+			</form>
 
+		</div>
 		</div>
 		<section>
 </body>
