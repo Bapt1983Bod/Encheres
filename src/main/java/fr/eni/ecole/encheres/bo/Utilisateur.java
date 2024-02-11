@@ -5,6 +5,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 
 public class Utilisateur implements Serializable {
 
@@ -14,20 +15,27 @@ public class Utilisateur implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private int noUtilisateur;
 	@NotBlank
+	@Pattern(regexp = "^[a-zA-Z0-9]+$", message = "Le pseudo ne doit contenir que des caractères alphanumériques")
 	private String pseudo;
 	@NotBlank
+	@Pattern(regexp = "^[a-zA-Z-' ]+$", message = "Le nom ne doit contenir que des lettres, des tirets (-) et des apostrophes (')")
 	private String nom;
 	@NotBlank
+	@Pattern(regexp = "^[a-zA-Z-' ]+$", message = "Le nom ne doit contenir que des lettres, des tirets (-) et des apostrophes (')")
 	private String prenom;
 	@NotBlank
 	private String email;
 	@NotBlank
+	@Pattern(regexp = "\\d+", message = "Le code postal ne doit contenir que des chiffres")
 	private String telephone;
 	@NotBlank
+	@Pattern(regexp = "^[a-zA-Z-' ]+$", message = "Le nom de la rue ne doit contenir que des lettres, des tirets (-) et des apostrophes (')")
 	private String rue;
 	@NotBlank
+	@Pattern(regexp = "\\d+", message = "Le code postal ne doit contenir que des chiffres")
 	private String codePostal;
 	@NotBlank
+	@Pattern(regexp = "^[a-zA-Z-' ]+$", message = "Le nom de la ville ne doit contenir que des lettres, des tirets (-) et des apostrophes (')")
 	private String ville;
 	@NotBlank
 	private String motDePasse;
