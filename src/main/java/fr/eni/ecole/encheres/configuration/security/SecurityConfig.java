@@ -54,6 +54,8 @@ public class SecurityConfig {
 				.requestMatchers(HttpMethod.GET, "/administration").hasRole("ADMIN")
 				.requestMatchers(HttpMethod.POST, "/suppressionAdmin").hasRole("ADMIN")
 				.requestMatchers(HttpMethod.POST, "/desactivation").hasRole("ADMIN")
+				.requestMatchers(HttpMethod.POST, "/activation").hasRole("ADMIN")
+				.requestMatchers(HttpMethod.POST, "/admin").hasRole("ADMIN")
 				.requestMatchers("/css/*")
 				.permitAll().anyRequest().denyAll());
 

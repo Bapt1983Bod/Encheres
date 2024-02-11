@@ -71,8 +71,10 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	}
 
 	@Override
-	public void desactiverUtilisateur(int noUtilisateur) {
-		utilisateurDAO.desactiverUtilisateur(noUtilisateur);
+	public void statutUtilisateur(int noUtilisateur, int statut) {
+		utilisateurDAO.statutUtilisateur(noUtilisateur, statut);
 	}
+
+	
 
 }

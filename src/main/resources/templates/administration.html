@@ -8,15 +8,7 @@
 </head>
 
 <body>
-	<header>
-		<h1>Administration des comptes utilisateurs</h1>
-	</header>
-	<nav>
-		<button type="button"><a href="/accueil">Accueil</a></button>
-		<button type="button" sec:authorize="!isAuthenticated()"><a href="/inscription">Inscription</a></button>
-		<button type="button" sec:authorize="isAuthenticated()"><a href="/vendre">Vendre un article</a></button>
-		<button type="button" sec:authorize="isAuthenticated()"><a href="/profil">Mon profil</a></button>
-	</nav>
+	<div th:replace="~{fragments/entete :: frag-entete('Administration du site')}"></div>
 
 	<section class="container">
 		<h2>Liste des comptes utilisateurs</h2>
@@ -44,12 +36,25 @@
 						<td th:text="${u.telephone}"></td>
 						<td th:text="${u.email}"></td>
 						<td th:text="${u.rue + ' ' + u.codePostal + ' ' + u.ville}"></td>
-						<td th:text="${u.administrateur}"></td>
+						<td th:text="${u.administrateur }"></td>
 
 						<td>
-							<form th:action="@{/desactivation}" method="post">
+							
+							<form th:if="${u.administrateur == (0) || u.administrateur == (1) }" th:action="@{/desactivation}" method="post">
 								<input type="text" name="noUtilisateur" th:value="${u.noUtilisateur}" hidden />
 								<button type="submit">Désactiver Compte</button>
+							</form>
+							<form th:if="${u.administrateur == (-1)}" th:action="@{/activation}" method="post">
+								<input type="text" name="noUtilisateur" th:value="${u.noUtilisateur}" hidden />
+								<button type="submit">Activer Compte</button>
+							</form>
+							<form th:if="${u.administrateur == (0)}" th:action="@{/admin}" method="post">
+								<input type="text" name="noUtilisateur" th:value="${u.noUtilisateur}" hidden />
+								<button type="submit">Passage en ADMIN</button>
+							</form>
+							<form th:if="${u.administrateur == (1)}" th:action="@{/activation}" method="post">
+								<input type="text" name="noUtilisateur" th:value="${u.noUtilisateur}" hidden />
+								<button type="submit">Passage en MEMBRE</button>
 							</form>
 							<form th:action="@{/suppressionAdmin}" method="post">
 								<input type="text" th:name="pseudoUtilisateur" th:value="${u.pseudo}" hidden />
@@ -57,11 +62,9 @@
 							</form>
 						</td>
 					</tr>
-
-
 				</tbody>
 		</div>
-</section>
+	</section>
 </body>
 
 </html>

@@ -9,17 +9,8 @@
 
 <body>
 
-	<header>
-		<h1>Accueil</h1>
-		Utilisateur connecté : <span sec:authentication="name"></span>
-	</header>
+	<div th:replace="~{fragments/entete :: frag-entete('Accueil')}"></div>
 
-	<nav>
-		<button type="button" sec:authorize="!isAuthenticated()"><a href="/inscription">Inscription</a></button>
-		<button type="button" sec:authorize="isAuthenticated()"><a href="/vendre">Vendre un article</a></button>
-		<button type="button" sec:authorize="isAuthenticated()"><a href="/profil">Mon profil</a></button>
-		<button type="button" sec:authorize="hasRole('ADMIN')"><a href="/administration">Administration</a></button>
-	</nav>
 
 	<section class="container">
 		<h2>Connexion</h2>
@@ -56,7 +47,6 @@
 			</div>
 			<div>
 				<button type="submit">Filtrer</button>
-
 			</div>
 		</form>
 		<div>
@@ -73,8 +63,7 @@
 			<p th:text="${a.description}"></p>
 			<p th:text="${'Début des enchères : '+a.dateDebutEncheres +'  Fin des enchères : '+a.dateFinEncheres}"></p>
 			<p th:text="${'Mise à prix : ' + a.miseAPrix +' euros'}"></p>
-   			 <button type="button"><a th:href="@{'/acheter?noArticle=' + ${a.noArticle}}">Faire une enchère</a></button>
-			
+			<button type="button"><a th:href="@{'/acheter?noArticle=' + ${a.noArticle}}">Faire une enchère</a></button>
 		</div>
 	</section>
 

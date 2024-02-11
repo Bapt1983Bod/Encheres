@@ -8,16 +8,7 @@
 </head>
 
 <body>
-	<header>
-		<h1>Détails de la vente</h1>
-	</header>
-	<nav>
-		<button type="button"><a href="/accueil">Accueil</a></button>
-		<button type="button" sec:authorize="!isAuthenticated()"><a href="/inscription">Inscription</a></button>
-		<button type="button" sec:authorize="isAuthenticated()"><a href="/vendre">Vendre un article</a></button>
-		<button type="button" sec:authorize="isAuthenticated()"><a href="/profil">Mon profil</a></button>
-		<button type="button" sec:authorize="hasRole('ADMIN')"><a href="/administration">Administration</a></button>
-	</nav>
+	<div th:replace="~{fragments/entete :: frag-entete('Détails de la vente')}"></div>
 
 	<section class="container">
 		<ul>
@@ -28,13 +19,12 @@
 			<li><span>Mise à prix :</span> <span th:text="${article.miseAPrix}"></span></li>
 		</ul>
 
-
-
 		<form th:action="@{/encherir}" method="post">
 			<input type="hidden" name="noArticle" th:value="${article.noArticle}" />
 			<div>
 				<label for="montantEnchere">Montant de l'enchère (en points) :</label>
-				<input type="number" id="montantEnchere" name="montantEnchere" required> <!--ajouter attribut minimum =0 -->
+				<input type="number" id="montantEnchere" name="montantEnchere" required>
+				<!--ajouter attribut minimum =0 -->
 			</div>
 			<div>
 				<button type="submit">Enchérir</button>

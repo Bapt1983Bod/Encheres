@@ -20,7 +20,8 @@ public class EncheresServiceImpl implements EncheresService {
 	}
 
 	@Override
-	public void encherir(int noArticle, long montantEnchere) {
-
+	public void deleteByIdUtilisateurAndIdArticle(int noArticle, Utilisateur utilisateur) {
+		encheresDAO.deleteByIdUtilisateurAndIdArticle(noArticle, utilisateur);
 	}
+
 }

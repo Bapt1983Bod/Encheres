@@ -2,80 +2,67 @@
 <html>
 
 <head>
-    <meta charset="UTF-8">
-    <title>Nouvelle vente</title>
-    <link rel="stylesheet" th:href="@{/css/stylesheet.css}" />
-    
+	<meta charset="UTF-8">
+	<title>Nouvelle vente</title>
+	<link rel="stylesheet" th:href="@{/css/stylesheet.css}" />
+
 </head>
 
 <body>
-	<header>
-		<h1>Vendre un article</h1>
-	</header>
-	<nav>
-		<button type="button"><a href="/accueil">Accueil</a></button>
-		<button type="button" sec:authorize="!isAuthenticated()"><a href="/inscription">Inscription</a></button>
-		<button type="button" sec:authorize="isAuthenticated()" hidden><a href="/vendre">Vendre un article</a></button>
-		<button type="button" sec:authorize="isAuthenticated()"><a href="/profil">Mon profil</a></button>
-		<button type="button" sec:authorize="hasRole('ADMIN')"><a href="/administration">Administration</a></button>
-	</nav>
+	<div th:replace="~{fragments/entete :: frag-entete('Vendre un article')}"></div>
 
-    <section class="container">
-        
-        
-        
+	<section class="container">
+		<form th:object="${article}" th:action="@{/vendre}" method="post">
+			<div>
+				<label for="nom">Article</label>
+				<input type="text" name="nomArticle" th:field="*{nomArticle}" required />
+			</div>
+			<div>
+				<label for="description">Description</label>
+				<input type="text" name="description" th:field="*{description}" required />
+			</div>
+			<div>
+				<label for="categorie">Catégorie</label>
+				<select name="noCategorie" id="selectCategorie" th:field="*{categorie}" required>
+					<option th:each="c : ${listCategories}" th:text="${c.libelle}" th:value="${c.noCategorie}"></option>
+				</select>
+			</div>
+			<div>
+				<label for="prix">Mise à prix</label>
+				<input type="number" name="prix" min="0" th:field="*{miseAPrix}" required />
+			</div>
+			<div>
+				<label for="dateDebut">Début de l'enchère</label>
+				<input type="date" name="dateDebut" th:field="*{dateDebutEncheres}" required />
+			</div>
+			<div>
+				<label for="dateFin">Fin de l'enchère</label>
+				<input type="date" name="dateFin" th:field="*{dateFinEncheres}" required />
+			</div>
 
-        <form th:object="${article}" th:action="@{/vendre}" method="post">
-            <div>
-                <label for="nom">Article</label>
-                <input type="text" name="nomArticle" th:field="*{nomArticle}" required />
-            </div>
-            <div>
-                <label for="description">Description</label>
-                <input type="text" name="description" th:field="*{description}" required />
-            </div>
-            <div>
-                <label for="categorie">Catégorie</label>
-                <select name="noCategorie" id="selectCategorie" th:field="*{categorie}" required>
-                    <option th:each="c : ${listCategories}" th:text="${c.libelle}" th:value="${c.noCategorie}"></option>
-                </select>
-            </div>
-            <div>
-                <label for="prix">Mise à prix</label>
-                <input type="number" name="prix" min="0" th:field="*{miseAPrix}" required />
-            </div>
-            <div>
-                <label for="dateDebut">Début de l'enchère</label>
-                <input type="date" name="dateDebut" th:field="*{dateDebutEncheres}" required />
-            </div>
-            <div>
-                <label for="dateFin">Fin de l'enchère</label>
-                <input type="date" name="dateFin" th:field="*{dateFinEncheres}" required />
-            </div>
+			<div id="retraitform">
+				<h3>Retrait</h3>
+				<div>
+					<label for="rue">Rue</label>
+					<input type="text" name="rue" />
+				</div>
+				<div>
+					<label for="codePostal">Code Postal</label>
+					<input type="text" name="codePostal" />
+				</div>
+				<div>
+					<label for="ville">Ville</label>
+					<input type="text" name="ville" />
+				</div>
+			</div>
 
-            <div id="retraitform">
-                <h3>Retrait</h3>
-                <div>
-                    <label for="rue">Rue</label>
-                    <input type="text" name="rue" />
-                </div>
-                <div>
-                    <label for="codePostal">Code Postal</label>
-                    <input type="text" name="codePostal" />
-                </div>
-                <div>
-                    <label for="ville">Ville</label>
-                    <input type="text" name="ville" />
-                </div>
-            </div>
+			<div>
+				<button type="submit">Enregistrer</button>
+				<button type="reset">Annuler</button>
+			</div>
 
-            <div>
-                <button type="submit">Enregistrer</button>
-                <button type="reset">Annuler</button>
-            </div>
-
-        </form>
-    </section>
+		</form>
+	</section>
 
 </body>
 

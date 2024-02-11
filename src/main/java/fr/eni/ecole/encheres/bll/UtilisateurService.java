@@ -23,5 +23,6 @@ public interface UtilisateurService {
 	// liste des utilisateurs sans l'utilisateur connecté (pour admin)
 	List<Utilisateur> findUtilisateurs(Utilisateur utilisateurConnecte);
 	
-	void desactiverUtilisateur (int noUtilisateur);
+	void statutUtilisateur (int noUtilisateur, int statut);
+	
 }
