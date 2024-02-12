@@ -107,7 +107,7 @@ public class EncheresDAOImpl implements EncheresDAO {
 	@Override
 	public void deleteByNoUtilisateur(int noUtilisateur) {
 		MapSqlParameterSource map = new MapSqlParameterSource();
-		map.addValue("noUtlisateur", noUtilisateur);
+		map.addValue("noUtilisateur", noUtilisateur);
 
 		List<Enchere> encheres = this.jdbcTemplate.query(FIND_ENCHERE_BY_NOUTILISATEUR, map, new EnchereRowMapper());
 
@@ -146,6 +146,14 @@ public class EncheresDAOImpl implements EncheresDAO {
 			return enchere;
 
 		}
+
+	}
+
+	// affichage de l'enchère la plus haute en cours
+
+	@Override
+	public void getHighestEnchere(int noArticle) {
+		// TODO Auto-generated method stub
 
 	}
 }

@@ -12,4 +12,5 @@ public interface EncheresService {
 
 	public void deleteByNoUtilisateur(int noUtilisateur);
 
+	public void getHighestEnchere(int noArticle);
 }

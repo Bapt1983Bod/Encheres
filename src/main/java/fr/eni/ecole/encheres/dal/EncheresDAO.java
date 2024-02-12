@@ -11,4 +11,6 @@ public interface EncheresDAO {
 	public void deleteByIdArticle(int noArticle);
 
 	public void deleteByNoUtilisateur(int noUtilisateur);
+
+	public void getHighestEnchere(int noArticle);
 }

@@ -37,4 +37,9 @@ public class EncheresServiceImpl implements EncheresService {
 		encheresDAO.deleteByIdUtilisateurAndIdArticle(noArticle, utilisateur);
 	}
 
+	@Override
+	public void getHighestEnchere(int noArticle) {
+		encheresDAO.getHighestEnchere(noArticle);
+	}
+
 }

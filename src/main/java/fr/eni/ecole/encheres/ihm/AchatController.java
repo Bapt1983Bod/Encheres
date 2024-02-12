@@ -45,4 +45,5 @@ public class AchatController {
 		return "redirect:/acheter?noArticle=" + noArticle;
 
 	}
+
 }
