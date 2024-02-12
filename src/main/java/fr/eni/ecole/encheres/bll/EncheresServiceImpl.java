@@ -14,7 +14,8 @@ public class EncheresServiceImpl implements EncheresService {
 		this.encheresDAO = encheresDAO;
 	}
 
-	// Vérifier si vente ouverte avant d'insérer l'enchère (comparer date du jour avec date de début et date de fin de la vente
+	// Vérifier si vente ouverte avant d'insérer l'enchère (comparer date du jour
+	// avec date de début et date de fin de la vente
 	@Override
 	public void encherir(int noArticle, long montantEnchere, Utilisateur utilisateur) {
 		encheresDAO.encherir(noArticle, montantEnchere, utilisateur);

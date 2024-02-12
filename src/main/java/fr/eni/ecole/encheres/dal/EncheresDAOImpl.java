@@ -36,43 +36,37 @@ public class EncheresDAOImpl implements EncheresDAO {
 
 		// Insertion de l'enchère
 		MapSqlParameterSource parameters = new MapSqlParameterSource()
-				.addValue("noUtilisateur", utilisateur.getNoUtilisateur())
-				.addValue("noArticle", noArticle)
+				.addValue("noUtilisateur", utilisateur.getNoUtilisateur()).addValue("noArticle", noArticle)
 				.addValue("montantEnchere", montantEnchere);
 
 		this.jdbcTemplate.update(INSERT_ENCHERE, parameters);
 
 		// Mise à jour du crédit utilisateur (déduction du montant de l'enchère)
-		MapSqlParameterSource creditParameters = new MapSqlParameterSource()
-				.addValue("montantEnchere", montantEnchere)
-				.addValue("credit", utilisateur.getCredit())
-				.addValue("noUtilisateur", utilisateur.getNoUtilisateur());
+		MapSqlParameterSource creditParameters = new MapSqlParameterSource().addValue("montantEnchere", montantEnchere)
+				.addValue("credit", utilisateur.getCredit()).addValue("noUtilisateur", utilisateur.getNoUtilisateur());
 
 		this.jdbcTemplate.update(UPDATE_CREDIT, creditParameters);
 	}
 
-	
 	// Suppression d'une enchère en fonction de l'article et de l'utilisateur
 	@Override
 	public void deleteByIdUtilisateurAndIdArticle(int noArticle, Utilisateur utilisateur) {
 		MapSqlParameterSource map = new MapSqlParameterSource();
 		map.addValue("noArticle", noArticle);
 		map.addValue("noUtilisateur", utilisateur.getNoUtilisateur());
-		
+
 		// Récupération du montant de l'enchère
-		int montantEnchere = this.jdbcTemplate.queryForObject(FIND_ENCHERE_BY_NOARTICLE_AND_NOUTILISTEUR, map, Enchere.class).getMontantEnchere();
-		
+		int montantEnchere = this.jdbcTemplate
+				.queryForObject(FIND_ENCHERE_BY_NOARTICLE_AND_NOUTILISTEUR, map, Enchere.class).getMontantEnchere();
+
 		// Re-crédit du compte de l'utilisateur
-		MapSqlParameterSource creditParameters = new MapSqlParameterSource()
-				.addValue("montantEnchere", montantEnchere)
-				.addValue("credit", utilisateur.getCredit())
-				.addValue("noUtilisateur", utilisateur.getNoUtilisateur());
+		MapSqlParameterSource creditParameters = new MapSqlParameterSource().addValue("montantEnchere", montantEnchere)
+				.addValue("credit", utilisateur.getCredit()).addValue("noUtilisateur", utilisateur.getNoUtilisateur());
 		this.jdbcTemplate.update(RESTORE_CREDIT, creditParameters);
-		
+
 		// Suppression de l'enchère
 		this.jdbcTemplate.update(DELETE_ENCHERE, map);
-		
-		
-		
+
 	}
+
 }
