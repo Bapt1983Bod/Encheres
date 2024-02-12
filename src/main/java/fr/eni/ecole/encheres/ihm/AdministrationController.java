@@ -68,7 +68,7 @@ public class AdministrationController {
 		}
 
 //		// suppression des enchères de l'utilisateur désactivé sur les autres articles
-//		encheresService.deleteByNoUtilisateur(noUtilisateur);
+		encheresService.deleteByNoUtilisateur(noUtilisateur);
 			
 //		// désactivation de l'utilisateur
 		utilisateurService.statutUtilisateur(noUtilisateur, statut);
