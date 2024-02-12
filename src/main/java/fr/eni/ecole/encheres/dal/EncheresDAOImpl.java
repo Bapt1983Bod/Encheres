@@ -111,7 +111,7 @@ public class EncheresDAOImpl implements EncheresDAO {
 		MapSqlParameterSource map = new MapSqlParameterSource();
 		map.addValue("noUtilisateur", noUtilisateur);
 
-		List<Enchere> encheres = this.jdbcTemplate.query(FIND_ENCHERE_BY_NOUTILISATEUR, map, new EnchereRowMapper());
+		List<Enchere> encheres = this.jdbcTemplate.query(FIND_ENCHERE_BY_NOUTILISATEUR, map, new EnchereRowMapper2());
 
 		if (!encheres.isEmpty()) {
 			for (Enchere enchere : encheres) {
@@ -127,7 +127,18 @@ public class EncheresDAOImpl implements EncheresDAO {
 
 			} // Suppression de l'enchère
 			this.jdbcTemplate.update(DELETE_ENCHERE, map);
+		}
 
+	}
+
+	@Override
+	public Enchere getHighestEnchere(int noArticle) {
+		MapSqlParameterSource params = new MapSqlParameterSource().addValue("noArticle", noArticle);
+
+		try {
+			return jdbcTemplate.queryForObject(GET_HIGHEST_ENCHERE, params, new EnchereRowMapper());
+		} catch (EmptyResultDataAccessException e) {
+			return null;
 		}
 
 	}
@@ -150,14 +161,20 @@ public class EncheresDAOImpl implements EncheresDAO {
 
 	}
 
-	@Override
-	public Enchere getHighestEnchere(int noArticle) {
-		MapSqlParameterSource params = new MapSqlParameterSource().addValue("noArticle", noArticle);
+	class EnchereRowMapper2 implements RowMapper<Enchere> {
 
-		try {
-			return jdbcTemplate.queryForObject(GET_HIGHEST_ENCHERE, params, new EnchereRowMapper());
-		} catch (EmptyResultDataAccessException e) {
-			return null;
+		@Override
+		public Enchere mapRow(ResultSet rs, int rowNum) throws SQLException {
+			Utilisateur utilisateur = new Utilisateur(rs.getInt("no_utilisateur"));
+			Enchere enchere = new Enchere(rs.getDate("date_enchere").toLocalDate().atStartOfDay(),
+					rs.getInt("montant_enchere"));
+
+			enchere.setUtilisateur(utilisateur);
+
+			return enchere;
+
 		}
+
 	}
+
 }
