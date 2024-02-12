@@ -56,7 +56,7 @@
 								<input type="text" name="noUtilisateur" th:value="${u.noUtilisateur}" hidden />
 								<button type="submit">Passage en MEMBRE</button>
 							</form>
-							<form th:action="@{/suppressionAdmin}" method="post">
+							<form th:if="${u.administrateur == (-1)}" th:action="@{/suppressionAdmin}" method="post">
 								<input type="text" th:name="pseudoUtilisateur" th:value="${u.pseudo}" hidden />
 								<button type="submit">Supprimer Compte</button>
 							</form>
