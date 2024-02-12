@@ -14,5 +14,9 @@ public interface ArticlesDAO {
 	public int createArticle(int idVendeur, ArticleVendu article);
 
 	ArticleVendu findArticleByNoArticle(int noArticle);
+	
+	public List<ArticleVendu> findByNoUtilisateur (int noUtilisateur);
+	
+	public void deleteByNoUtilisateur (int noUtilisateur);
 
 }

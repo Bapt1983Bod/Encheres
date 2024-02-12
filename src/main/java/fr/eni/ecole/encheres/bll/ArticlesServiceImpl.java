@@ -49,4 +49,15 @@ public class ArticlesServiceImpl implements ArticlesService {
 		return articlesDAO.findArticleByNoArticle(noArticle);
 	}
 
+	@Override
+	public List<ArticleVendu> findByNoUtilisateur(int noUtilisateur) {
+		return articlesDAO.findByNoUtilisateur(noUtilisateur);
+	}
+
+	@Override
+	public void deleteByNoUtilisateur(int noUtilisateur) {
+		articlesDAO.deleteByNoUtilisateur(noUtilisateur);
+		
+	}
+
 }

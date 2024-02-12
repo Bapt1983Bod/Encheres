@@ -8,16 +8,26 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import fr.eni.ecole.encheres.bll.ArticlesService;
+import fr.eni.ecole.encheres.bll.EncheresService;
+import fr.eni.ecole.encheres.bll.RetraitService;
 import fr.eni.ecole.encheres.bll.UtilisateurService;
+import fr.eni.ecole.encheres.bo.ArticleVendu;
 import fr.eni.ecole.encheres.bo.Utilisateur;
 
 @Controller
 public class AdministrationController {
 
 	UtilisateurService utilisateurService;
+	ArticlesService articlesService;
+	RetraitService retraitService;
+	EncheresService encheresService;
 
-	public AdministrationController(UtilisateurService utilisateurService) {
+	public AdministrationController(UtilisateurService utilisateurService, ArticlesService articlesService, RetraitService retraitService,EncheresService encheresService ) {
 		this.utilisateurService = utilisateurService;
+		this.articlesService = articlesService;
+		this.retraitService = retraitService;
+		this.encheresService = encheresService;
 	}
 
 	// Affichage de la page d'administration des comptes
@@ -37,6 +47,17 @@ public class AdministrationController {
 	@PostMapping("/desactivation")
 	public String desactivationCompteUtilisateur(@RequestParam("noUtilisateur") int noUtilisateur) {
 		int statut = (-1);
+		List<ArticleVendu> listArticleUtilisateur = articlesService.findByNoUtilisateur(noUtilisateur);
+		System.out.println("liste des articles : "+listArticleUtilisateur);
+		Utilisateur utilisateur = utilisateurService.findById(noUtilisateur);
+	
+		if (!listArticleUtilisateur.isEmpty()) {
+		for (ArticleVendu article : listArticleUtilisateur) {
+			retraitService.deleteRetrait(article.getNoArticle());
+		//	encheresService.deleteByIdUtilisateurAndIdArticle(article.getNoArticle());
+		}
+		}
+		articlesService.deleteByNoUtilisateur(noUtilisateur);
 		utilisateurService.statutUtilisateur(noUtilisateur, statut);
 		return "redirect:/administration";
 	}

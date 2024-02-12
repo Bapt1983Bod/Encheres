@@ -75,6 +75,11 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		utilisateurDAO.statutUtilisateur(noUtilisateur, statut);
 	}
 
+	@Override
+	public Utilisateur findById(int noUtilisateur) {
+		return utilisateurDAO.findById(noUtilisateur).get();
+	}
+
 	
 
 }

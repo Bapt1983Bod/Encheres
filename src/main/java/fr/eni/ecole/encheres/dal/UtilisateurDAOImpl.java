@@ -22,6 +22,7 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 
 	private static final String INSERT = "INSERT INTO UTILISATEURS (pseudo, nom, prenom, email, telephone, rue, code_postal, ville, mot_de_passe, credit, administrateur) VALUES (:pseudo, :nom, :prenom, :email, :telephone, :rue, :codePostal, :ville, :motDePasse, :credit, :administrateur)";
 	private static final String SELECT_BY_PSEUDO = "SELECT * FROM UTILISATEURS WHERE pseudo = :pseudo";
+	private static final String SELECT_BY_ID = "SELECT * FROM UTILISATEURS WHERE no_utilisateur = :noUtilisateur";
 	private static final String SELECT_BY_EMAIL = "SELECT * FROM UTILISATEURS WHERE email = :email";
 	private static final String UPDATE = "UPDATE UTILISATEURS SET nom = :nom, prenom = :prenom, email = :email, telephone = :telephone, rue = :rue, code_postal = :codePostal, ville = :ville, mot_de_passe = :mdp WHERE pseudo = :pseudo";
 	private static final String DELETE = "DELETE FROM UTILISATEURS WHERE pseudo = :pseudo";
@@ -184,6 +185,35 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 		
 		this.namedParameterJdbcTemplate.update(STATUT,map);
 		
+	}
+
+	@Override
+	public Optional<Utilisateur> findById(int noUtilisateur) {
+		MapSqlParameterSource params = new MapSqlParameterSource().addValue("noUtilisateur", noUtilisateur);
+
+		try {
+			Utilisateur utilisateur = namedParameterJdbcTemplate.queryForObject(SELECT_BY_ID, params,
+					(rs, rowNum) -> {
+						Utilisateur user = new Utilisateur();
+						user.setNoUtilisateur(rs.getInt("no_utilisateur"));
+						user.setPseudo(rs.getString("pseudo"));
+						user.setNom(rs.getString("nom"));
+						user.setPrenom(rs.getString("prenom"));
+						user.setEmail(rs.getString("email"));
+						user.setTelephone(rs.getString("telephone"));
+						user.setRue(rs.getString("rue"));
+						user.setCodePostal(rs.getString("code_postal"));
+						user.setVille(rs.getString("ville"));
+						user.setMotDePasse(rs.getString("mot_de_passe"));
+						user.setCredit(rs.getInt("credit"));
+						user.setAdministrateur(rs.getInt("administrateur"));
+						return user;
+					});
+			
+			return Optional.ofNullable(utilisateur);
+		} catch (EmptyResultDataAccessException e) {
+			return Optional.empty();
+		}
 	}
 
 

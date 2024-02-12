@@ -14,5 +14,9 @@ public interface ArticlesService {
 	public int createArticle(Utilisateur vendeur, ArticleVendu article);
 
 	ArticleVendu findArticleByNoArticle(int noArticle);
+	
+	public List<ArticleVendu> findByNoUtilisateur (int noUtilisateur);
+	
+	public void deleteByNoUtilisateur (int noUtilisateur);
 
 }

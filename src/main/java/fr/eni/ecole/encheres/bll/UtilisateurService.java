@@ -11,6 +11,8 @@ public interface UtilisateurService {
 	Utilisateur creerUtilisateur(Utilisateur utilisateur) throws BusinessException;
 
 	Utilisateur findByPseudo(String pseudo);
+	
+	Utilisateur findById (int noUtilisateur);
 
 	Utilisateur getUtilisateurConnecte();
 

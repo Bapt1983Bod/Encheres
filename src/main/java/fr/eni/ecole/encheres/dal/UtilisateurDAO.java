@@ -12,6 +12,8 @@ public interface UtilisateurDAO {
 	Optional<Utilisateur> findByPseudo(String pseudo);
 
 	Optional<Utilisateur> findByEmail(String email);
+	
+	Optional<Utilisateur> findById(int noUtilisateur);
 
 	void modifierUtilisateur(Utilisateur utilisateur);
 
