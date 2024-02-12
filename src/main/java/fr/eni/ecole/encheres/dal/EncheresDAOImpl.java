@@ -27,6 +27,8 @@ public class EncheresDAOImpl implements EncheresDAO {
 	private static final String FIND_ENCHERE_BY_NOARTICLE = "SELECT * FROM ENCHERES WHERE no_article = :noArticle";
 	private static final String FIND_ENCHERE_BY_NOUTILISATEUR = "SELECT * FROM ENCHERES WHERE no_utilisateur = :noUtilisateur";
 	private static final String GET_HIGHEST_ENCHERE = "SELECT TOP 1 * FROM ENCHERES WHERE no_article = :noArticle ORDER BY montant_enchere DESC";
+	private static final String DELETE_ENCHERE_BY_NOARTICLE = "DELETE FROM ENCHERES WHERE no_article = :noArticle";
+	private static final String DELETE_ENCHERE_BY_NOUTILISATEUR = "DELETE FROM ENCHERES WHERE no_utilisateur = :noUtilisateur";
 
 	private final NamedParameterJdbcTemplate jdbcTemplate;
 
@@ -101,7 +103,7 @@ public class EncheresDAOImpl implements EncheresDAO {
 				this.jdbcTemplate.update(RESTORE_CREDIT, creditParameters);
 
 			} // Suppression de l'enchère
-			this.jdbcTemplate.update(DELETE_ENCHERE, map);
+			this.jdbcTemplate.update(DELETE_ENCHERE_BY_NOARTICLE, map);
 
 		}
 	}
@@ -126,7 +128,7 @@ public class EncheresDAOImpl implements EncheresDAO {
 				this.jdbcTemplate.update(RESTORE_CREDIT, creditParameters);
 
 			} // Suppression de l'enchère
-			this.jdbcTemplate.update(DELETE_ENCHERE, map);
+			this.jdbcTemplate.update(DELETE_ENCHERE_BY_NOUTILISATEUR, map);
 		}
 
 	}
@@ -142,38 +144,37 @@ public class EncheresDAOImpl implements EncheresDAO {
 		}
 
 	}
+}
 
-	class EnchereRowMapper implements RowMapper<Enchere> {
+class EnchereRowMapper implements RowMapper<Enchere> {
 
-		@Override
-		public Enchere mapRow(ResultSet rs, int rowNum) throws SQLException {
-			Utilisateur utilisateur = new Utilisateur(rs.getInt("no_utilisateur"));
-			ArticleVendu article = new ArticleVendu(rs.getInt("no_article"));
-			Enchere enchere = new Enchere(rs.getDate("date_enchere").toLocalDate().atStartOfDay(),
-					rs.getInt("montant_enchere"));
+	@Override
+	public Enchere mapRow(ResultSet rs, int rowNum) throws SQLException {
+		Utilisateur utilisateur = new Utilisateur(rs.getInt("no_utilisateur"));
+		ArticleVendu article = new ArticleVendu(rs.getInt("no_article"));
+		Enchere enchere = new Enchere(rs.getDate("date_enchere").toLocalDate().atStartOfDay(),
+				rs.getInt("montant_enchere"));
 
-			enchere.setUtilisateur(utilisateur);
-			enchere.setArticleVendu(article);
+		enchere.setUtilisateur(utilisateur);
+		enchere.setArticleVendu(article);
 
-			return enchere;
-
-		}
+		return enchere;
 
 	}
 
-	class EnchereRowMapper2 implements RowMapper<Enchere> {
+}
 
-		@Override
-		public Enchere mapRow(ResultSet rs, int rowNum) throws SQLException {
-			Utilisateur utilisateur = new Utilisateur(rs.getInt("no_utilisateur"));
-			Enchere enchere = new Enchere(rs.getDate("date_enchere").toLocalDate().atStartOfDay(),
-					rs.getInt("montant_enchere"));
+class EnchereRowMapper2 implements RowMapper<Enchere> {
 
-			enchere.setUtilisateur(utilisateur);
+	@Override
+	public Enchere mapRow(ResultSet rs, int rowNum) throws SQLException {
+		Utilisateur utilisateur = new Utilisateur(rs.getInt("no_utilisateur"));
+		Enchere enchere = new Enchere(rs.getDate("date_enchere").toLocalDate().atStartOfDay(),
+				rs.getInt("montant_enchere"));
 
-			return enchere;
+		enchere.setUtilisateur(utilisateur);
 
-		}
+		return enchere;
 
 	}
 

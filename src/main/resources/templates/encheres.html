@@ -18,7 +18,10 @@
 			<li><span>Fin des enchères :</span> <span th:text="${article.dateFinEncheres}"></span></li>
 			<li><span>Mise à prix :</span> <span th:text="${article.miseAPrix}"></span></li>
 			
-			    <li><span>Enchère la plus haute :</span> <span th:text="${highestEnchere.montantEnchere}"></span></li>
+		<li th:if="${highestEnchere != null}">
+    <span>Enchère la plus haute :</span> 
+    <span th:text="${highestEnchere.montantEnchere}"></span>
+	</li>
 
 			
 		</ul>
