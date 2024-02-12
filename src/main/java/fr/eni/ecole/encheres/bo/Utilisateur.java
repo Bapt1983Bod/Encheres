@@ -13,6 +13,10 @@ public class Utilisateur implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	/**
+	 * @param noUtilisateur
+	 */
+
 	private int noUtilisateur;
 	@NotBlank
 	@Pattern(regexp = "^[a-zA-Z0-9]+$", message = "Le pseudo ne doit contenir que des caractères alphanumériques")
@@ -75,6 +79,11 @@ public class Utilisateur implements Serializable {
 		this.administrateur = administrateur;
 		this.listArticleVendu = listArticleVendu;
 		this.listEncheres = listEncheres;
+	}
+
+	public Utilisateur(int noUtilisateur) {
+		super();
+		this.noUtilisateur = noUtilisateur;
 	}
 
 	public int getNoUtilisateur() {

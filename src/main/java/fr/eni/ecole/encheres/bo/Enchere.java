@@ -15,9 +15,9 @@ public class Enchere implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	@NotNull(message = "La date d'enchère ne peut pas être nulle")
-    @DateTimeFormat(pattern = "yyyy-MM-dd") // Format de la date
+	@DateTimeFormat(pattern = "yyyy-MM-dd") // Format de la date
 	private LocalDateTime dateEnchere;
-	@Min (value = 0)
+	@Min(value = 0)
 	private int montantEnchere;
 	private Utilisateur utilisateur;
 	private ArticleVendu articleVendu;
@@ -30,6 +30,12 @@ public class Enchere implements Serializable {
 		this.montantEnchere = montantEnchere;
 		this.utilisateur = utilisateur;
 		this.articleVendu = articleVendu;
+	}
+
+	public Enchere(LocalDateTime dateEnchere, int montantEnchere) {
+		super();
+		this.dateEnchere = dateEnchere;
+		this.montantEnchere = montantEnchere;
 	}
 
 	public LocalDateTime getDateEnchere() {

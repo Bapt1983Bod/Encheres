@@ -8,4 +8,8 @@ public interface EncheresService {
 
 	public void deleteByIdUtilisateurAndIdArticle(int noArticle, Utilisateur utilisateur);
 
+	public void deleteByIdArticle(int noArticle);
+
+	public void deleteByNoUtilisateur(int noUtilisateur);
+
 }

@@ -1,11 +1,17 @@
 package fr.eni.ecole.encheres.dal;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
+
 import javax.sql.DataSource;
 
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import fr.eni.ecole.encheres.bo.ArticleVendu;
 import fr.eni.ecole.encheres.bo.Enchere;
 import fr.eni.ecole.encheres.bo.Utilisateur;
 
@@ -16,7 +22,9 @@ public class EncheresDAOImpl implements EncheresDAO {
 	private static final String UPDATE_CREDIT = "UPDATE UTILISATEURS SET credit = :credit - :montantEnchere WHERE no_utilisateur = :noUtilisateur";
 	private static final String DELETE_ENCHERE = "DELETE FROM ENCHERES WHERE no_article = :noArticle AND no_utilisateur = :noUtilisateur";
 	private static final String FIND_ENCHERE_BY_NOARTICLE_AND_NOUTILISTEUR = "SELECT * FROM ENCHERES WHERE no_article = :noArticle AND no_utilisateur = :noUtilisateur";
-	private static final String RESTORE_CREDIT = "UPDATE UTILISATEURS SET credit = :credit + :montantEnchere WHERE no_utilisateur = :noUtilisateur";
+	private static final String RESTORE_CREDIT = "UPDATE UTILISATEURS SET credit = credit + :montantEnchere WHERE no_utilisateur = :noUtilisateur";
+	private static final String FIND_ENCHERE_BY_NOARTICLE = "SELECT * FROM ENCHERES WHERE no_article = :noArticle";
+	private static final String FIND_ENCHERE_BY_NOUTILISATEUR = "SELECT * FROM ENCHERES WHERE no_utilisateur = :noUtilisateur";
 
 	private final NamedParameterJdbcTemplate jdbcTemplate;
 
@@ -57,7 +65,8 @@ public class EncheresDAOImpl implements EncheresDAO {
 
 		// Récupération du montant de l'enchère
 		int montantEnchere = this.jdbcTemplate
-				.queryForObject(FIND_ENCHERE_BY_NOARTICLE_AND_NOUTILISTEUR, map, Enchere.class).getMontantEnchere();
+				.queryForObject(FIND_ENCHERE_BY_NOARTICLE_AND_NOUTILISTEUR, map, new EnchereRowMapper())
+				.getMontantEnchere();
 
 		// Re-crédit du compte de l'utilisateur
 		MapSqlParameterSource creditParameters = new MapSqlParameterSource().addValue("montantEnchere", montantEnchere)
@@ -69,4 +78,74 @@ public class EncheresDAOImpl implements EncheresDAO {
 
 	}
 
+	public void deleteByIdArticle(int noArticle) {
+
+		MapSqlParameterSource map = new MapSqlParameterSource();
+		map.addValue("noArticle", noArticle);
+
+		// Vérification si l'utilisateur a enchéri sur cet article
+		List<Enchere> encheres = this.jdbcTemplate.query(FIND_ENCHERE_BY_NOARTICLE, map, new EnchereRowMapper());
+
+		if (!encheres.isEmpty()) {
+			for (Enchere enchere : encheres) {
+				System.out.println(enchere);
+				// Remboursement du montant de l'enchère à l'utilisateur
+				int montantEnchere = enchere.getMontantEnchere();
+				Utilisateur utilisateur = enchere.getUtilisateur();
+
+				MapSqlParameterSource creditParameters = new MapSqlParameterSource()
+						.addValue("montantEnchere", montantEnchere)
+						.addValue("noUtilisateur", utilisateur.getNoUtilisateur());
+				this.jdbcTemplate.update(RESTORE_CREDIT, creditParameters);
+
+				// Suppression de l'enchère
+				this.jdbcTemplate.update(DELETE_ENCHERE, map);
+			}
+		}
+	}
+
+	@Override
+	public void deleteByNoUtilisateur(int noUtilisateur) {
+		MapSqlParameterSource map = new MapSqlParameterSource();
+		map.addValue("noUtlisateur", noUtilisateur);
+
+		List<Enchere> encheres = this.jdbcTemplate.query(FIND_ENCHERE_BY_NOUTILISATEUR, map, new EnchereRowMapper());
+
+		if (!encheres.isEmpty()) {
+			for (Enchere enchere : encheres) {
+				System.out.println(enchere);
+				// Remboursement du montant de l'enchère à l'utilisateur
+				int montantEnchere = enchere.getMontantEnchere();
+				Utilisateur utilisateur = enchere.getUtilisateur();
+
+				MapSqlParameterSource creditParameters = new MapSqlParameterSource()
+						.addValue("montantEnchere", montantEnchere)
+						.addValue("noUtilisateur", utilisateur.getNoUtilisateur());
+				this.jdbcTemplate.update(RESTORE_CREDIT, creditParameters);
+
+				// Suppression de l'enchère
+				this.jdbcTemplate.update(DELETE_ENCHERE, map);
+
+			}
+
+		}
+	}
+
+	class EnchereRowMapper implements RowMapper<Enchere> {
+
+		@Override
+		public Enchere mapRow(ResultSet rs, int rowNum) throws SQLException {
+			Utilisateur utilisateur = new Utilisateur(rs.getInt("no_utilisateur"));
+			ArticleVendu article = new ArticleVendu(rs.getInt("no_article"));
+			Enchere enchere = new Enchere(rs.getDate("date_enchere").toLocalDate().atStartOfDay(),
+					rs.getInt("montant_enchere"));
+
+			enchere.setUtilisateur(utilisateur);
+			enchere.setArticleVendu(article);
+
+			return enchere;
+
+		}
+
+	}
 }

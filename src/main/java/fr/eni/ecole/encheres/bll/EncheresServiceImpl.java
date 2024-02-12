@@ -22,6 +22,17 @@ public class EncheresServiceImpl implements EncheresService {
 	}
 
 	@Override
+	public void deleteByIdArticle(int noArticle) {
+		encheresDAO.deleteByIdArticle(noArticle);
+	}
+
+	@Override
+	public void deleteByNoUtilisateur(int noUtilisateur) {
+		encheresDAO.deleteByNoUtilisateur(noUtilisateur);
+
+	}
+
+	@Override
 	public void deleteByIdUtilisateurAndIdArticle(int noArticle, Utilisateur utilisateur) {
 		encheresDAO.deleteByIdUtilisateurAndIdArticle(noArticle, utilisateur);
 	}

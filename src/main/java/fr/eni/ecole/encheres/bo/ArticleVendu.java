@@ -18,7 +18,7 @@ public class ArticleVendu implements Serializable {
 	 *
 	 */
 	private static final long serialVersionUID = 1L;
-	@Min (value = 1)
+	@Min(value = 1)
 	private int noArticle;
 	@NotBlank(message = "Le nom de l'article ne peut pas être vide")
 	@Pattern(regexp = "^[a-zA-Z-' ]+$", message = "Le nom de l'article ne doit contenir que des lettres, des tirets (-) et des apostrophes (')")
@@ -27,10 +27,10 @@ public class ArticleVendu implements Serializable {
 	@Pattern(regexp = "^[a-zA-Z-' ]+$", message = "La description de l'article ne doit contenir que des lettres, des tirets (-) et des apostrophes (')")
 	private String description;
 	@NotNull(message = "La date de début des enchères ne peut pas être nulle")
-    @DateTimeFormat(pattern = "yyyy-MM-dd") // Format de la date
+	@DateTimeFormat(pattern = "yyyy-MM-dd") // Format de la date
 	private Date dateDebutEncheres;
 	@NotNull(message = "La date de fin des enchères ne peut pas être nulle")
-    @DateTimeFormat(pattern = "yyyy-MM-dd") // Format de la date
+	@DateTimeFormat(pattern = "yyyy-MM-dd") // Format de la date
 	private Date dateFinEncheres;
 	@Min(value = 0)
 	private int miseAPrix;
@@ -98,6 +98,11 @@ public class ArticleVendu implements Serializable {
 		this.acheteur = acheteur;
 		this.vendeur = vendeur;
 		this.categorie = categorie;
+	}
+
+	public ArticleVendu(@Min(1) int noArticle) {
+		super();
+		this.noArticle = noArticle;
 	}
 
 	public int getNoArticle() {
