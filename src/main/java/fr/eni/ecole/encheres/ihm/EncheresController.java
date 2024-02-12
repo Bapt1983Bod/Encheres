@@ -37,7 +37,7 @@ public class EncheresController {
 	}
 
 	// affichage de la page d'accueil
-	@GetMapping({ "/", "/accueil", "/login" })
+	@GetMapping({ "/", "/accueil", "/login", "/accueilLogo" })
 	public String accueil(Model modele) {
 		// Récupération de la liste des articles
 		List<ArticleVendu> listArticles = articlesService.findAll();

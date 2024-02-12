@@ -158,6 +158,18 @@ li {
 	margin-bottom: 5px;
 }
 
+.titre {
+	display: flex;
+}
+
+.logo {
+	width: 100px;
+}
+
+#logo {
+	width: 100%;
+}
+
 @media screen and (max-width: 1024px) {
     /* pour les écrans de taille moyenne (tablette) */
     .container {

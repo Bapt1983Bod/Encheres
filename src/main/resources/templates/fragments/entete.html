@@ -1,8 +1,14 @@
 <header xmlns:th="http:\\www.thymeleaf.org" th:fragment="frag-entete(titre)">
-	<h1 th:text="${titre}">titre page</h1>
 
+
+	<div class="titre">
+		<div class="logo" sec:authorize="!isAuthenticated()"><img src="/img/logo2.png" alt="logo site" id="logo"/></div>
+		<div class="logo" sec:authorize="isAuthenticated()"><a href="/accueil"><img src="/img/logo2.png" alt="logo site" id="logo"/></a></div>
+		<div><h1 th:text="${titre}">titre page</h1></div>
+		
+	</div>
 	<ul>
-		Utilisateur connecté : 
+		Utilisateur connecté :
 		<li sec:authentication="name"></li>
 	</ul>
 

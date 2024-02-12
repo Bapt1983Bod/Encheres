@@ -56,8 +56,9 @@ public class SecurityConfig {
 				.requestMatchers(HttpMethod.POST, "/desactivation").hasRole("ADMIN")
 				.requestMatchers(HttpMethod.POST, "/activation").hasRole("ADMIN")
 				.requestMatchers(HttpMethod.POST, "/admin").hasRole("ADMIN")
-				.requestMatchers("/css/*")
-				.permitAll().anyRequest().denyAll());
+				.requestMatchers("/css/*").permitAll()
+				.requestMatchers("/img/*").permitAll()
+				.anyRequest().denyAll());
 
 		// Paramétrage de la page de login
 		http.formLogin(form -> {
