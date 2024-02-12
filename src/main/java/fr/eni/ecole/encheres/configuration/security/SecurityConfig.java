@@ -38,7 +38,8 @@ public class SecurityConfig {
 	// Gestion des accès aux pages
 	@Bean
 	SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-
+		
+		
 		http.authorizeHttpRequests(auth -> auth.requestMatchers(HttpMethod.GET, "/", "/accueil").permitAll()
 				.requestMatchers(HttpMethod.GET, "/profil").hasAnyRole("ADMIN","UTILISATEUR")
 				.requestMatchers(HttpMethod.GET, "/modification-profil").hasAnyRole("ADMIN","UTILISATEUR")
