@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -25,6 +26,7 @@ public class EncheresDAOImpl implements EncheresDAO {
 	private static final String RESTORE_CREDIT = "UPDATE UTILISATEURS SET credit = credit + :montantEnchere WHERE no_utilisateur = :noUtilisateur";
 	private static final String FIND_ENCHERE_BY_NOARTICLE = "SELECT * FROM ENCHERES WHERE no_article = :noArticle";
 	private static final String FIND_ENCHERE_BY_NOUTILISATEUR = "SELECT * FROM ENCHERES WHERE no_utilisateur = :noUtilisateur";
+	private static final String GET_HIGHEST_ENCHERE = "SELECT TOP 1 * FROM ENCHERES WHERE no_article = :noArticle ORDER BY montant_enchere DESC";
 
 	private final NamedParameterJdbcTemplate jdbcTemplate;
 
@@ -98,9 +100,9 @@ public class EncheresDAOImpl implements EncheresDAO {
 						.addValue("noUtilisateur", utilisateur.getNoUtilisateur());
 				this.jdbcTemplate.update(RESTORE_CREDIT, creditParameters);
 
-				// Suppression de l'enchère
-				this.jdbcTemplate.update(DELETE_ENCHERE, map);
-			}
+			} // Suppression de l'enchère
+			this.jdbcTemplate.update(DELETE_ENCHERE, map);
+
 		}
 	}
 
@@ -123,12 +125,11 @@ public class EncheresDAOImpl implements EncheresDAO {
 						.addValue("noUtilisateur", utilisateur.getNoUtilisateur());
 				this.jdbcTemplate.update(RESTORE_CREDIT, creditParameters);
 
-				// Suppression de l'enchère
-				this.jdbcTemplate.update(DELETE_ENCHERE, map);
-
-			}
+			} // Suppression de l'enchère
+			this.jdbcTemplate.update(DELETE_ENCHERE, map);
 
 		}
+
 	}
 
 	class EnchereRowMapper implements RowMapper<Enchere> {
@@ -149,11 +150,14 @@ public class EncheresDAOImpl implements EncheresDAO {
 
 	}
 
-	// affichage de l'enchère la plus haute en cours
-
 	@Override
-	public void getHighestEnchere(int noArticle) {
-		// TODO Auto-generated method stub
+	public Enchere getHighestEnchere(int noArticle) {
+		MapSqlParameterSource params = new MapSqlParameterSource().addValue("noArticle", noArticle);
 
+		try {
+			return jdbcTemplate.queryForObject(GET_HIGHEST_ENCHERE, params, new EnchereRowMapper());
+		} catch (EmptyResultDataAccessException e) {
+			return null;
+		}
 	}
 }

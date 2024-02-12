@@ -2,6 +2,7 @@ package fr.eni.ecole.encheres.bll;
 
 import org.springframework.stereotype.Service;
 
+import fr.eni.ecole.encheres.bo.Enchere;
 import fr.eni.ecole.encheres.bo.Utilisateur;
 import fr.eni.ecole.encheres.dal.EncheresDAO;
 
@@ -38,8 +39,8 @@ public class EncheresServiceImpl implements EncheresService {
 	}
 
 	@Override
-	public void getHighestEnchere(int noArticle) {
-		encheresDAO.getHighestEnchere(noArticle);
+	public Enchere getHighestEnchere(int noArticle) {
+		return encheresDAO.getHighestEnchere(noArticle);
 	}
 
 }

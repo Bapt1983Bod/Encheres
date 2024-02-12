@@ -1,5 +1,6 @@
 package fr.eni.ecole.encheres.dal;
 
+import fr.eni.ecole.encheres.bo.Enchere;
 import fr.eni.ecole.encheres.bo.Utilisateur;
 
 public interface EncheresDAO {
@@ -12,5 +13,5 @@ public interface EncheresDAO {
 
 	public void deleteByNoUtilisateur(int noUtilisateur);
 
-	public void getHighestEnchere(int noArticle);
+	Enchere getHighestEnchere(int noArticle);
 }

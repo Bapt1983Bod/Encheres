@@ -10,6 +10,7 @@ import fr.eni.ecole.encheres.bll.ArticlesService;
 import fr.eni.ecole.encheres.bll.EncheresService;
 import fr.eni.ecole.encheres.bll.UtilisateurService;
 import fr.eni.ecole.encheres.bo.ArticleVendu;
+import fr.eni.ecole.encheres.bo.Enchere;
 import fr.eni.ecole.encheres.bo.Utilisateur;
 
 @Controller
@@ -29,8 +30,10 @@ public class AchatController {
 	@GetMapping("/acheter")
 	public String afficherDetailsVente(@RequestParam("noArticle") int noArticle, Model model) {
 		ArticleVendu articleVendu = articlesService.findArticleByNoArticle(noArticle);
+		Enchere highestEnchere = encheresService.getHighestEnchere(noArticle); // afficher l'enchere la plus haute
 
 		model.addAttribute("article", articleVendu);
+		model.addAttribute("highestEnchere", highestEnchere);
 
 		return "encheres";
 	}
