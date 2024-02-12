@@ -58,9 +58,7 @@ public class ArticlesDAOImpl implements ArticlesDAO {
 	// creation d'un article et retourne le noArticle pour création du retrait
 	@Override
 	public int createArticle(int idVendeur, ArticleVendu article) {
-		System.out.println("DAO : " + idVendeur);
-		System.out.println("DAO : " + article);
-
+		
 		MapSqlParameterSource map = new MapSqlParameterSource();
 		map.addValue("nom", article.getNomArticle());
 		map.addValue("description", article.getDescription());
@@ -92,7 +90,7 @@ public class ArticlesDAOImpl implements ArticlesDAO {
 
 	@Override
 	public List<ArticleVendu> findByNoUtilisateur(int noUtilisateur) {
-		System.out.println("noUtilisateurDAOFindBy : "+ noUtilisateur);
+		
 		MapSqlParameterSource map = new MapSqlParameterSource();
 		map.addValue("noUtilisateur", noUtilisateur);
 		

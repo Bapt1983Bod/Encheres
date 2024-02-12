@@ -11,13 +11,13 @@ public class Retrait implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	@NotBlank(message = "Le nom de l'article ne peut pas être vide")
-	@Pattern(regexp = "^[a-zA-Z0-9]+$", message = "Le nom de la rue ne doit contenir que des caractères alphanumériques")
+	//@NotBlank(message = "Le nom de l'article ne peut pas être vide")
+	//@Pattern(regexp = "^[a-zA-Z0-9]+$", message = "Le nom de la rue ne doit contenir que des caractères alphanumériques")
 	private String rue;
-	@Pattern(regexp = "\\d+", message = "Le code postal ne doit contenir que des chiffres")
+	//@Pattern(regexp = "\\d+", message = "Le code postal ne doit contenir que des chiffres")
 	private String codePostal;
-	@NotBlank(message = "Le nom de l'article ne peut pas être vide")
-	@Pattern(regexp = "^[a-zA-Z-' ]+$", message = "Le nom de la ville ne doit contenir que des lettres, des tirets (-) et des apostrophes (')")
+	//@NotBlank(message = "Le nom de l'article ne peut pas être vide")
+	//@Pattern(regexp = "^[a-zA-Z-' ]+$", message = "Le nom de la ville ne doit contenir que des lettres, des tirets (-) et des apostrophes (')")
 	private String ville;
 	private ArticleVendu articleVendu;
 

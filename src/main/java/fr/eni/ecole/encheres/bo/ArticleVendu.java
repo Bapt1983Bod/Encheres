@@ -21,20 +21,20 @@ public class ArticleVendu implements Serializable {
 	@Min(value = 1)
 	private int noArticle;
 	@NotBlank(message = "Le nom de l'article ne peut pas être vide")
-	@Pattern(regexp = "^[a-zA-Z-' ]+$", message = "Le nom de l'article ne doit contenir que des lettres, des tirets (-) et des apostrophes (')")
+//	@Pattern(regexp = "^[a-zA-Z-' ]+$", message = "Le nom de l'article ne doit contenir que des lettres, des tirets (-) et des apostrophes (')")
 	private String nomArticle;
 	@NotBlank(message = "Le nom de l'article ne peut pas être vide")
-	@Pattern(regexp = "^[a-zA-Z-' ]+$", message = "La description de l'article ne doit contenir que des lettres, des tirets (-) et des apostrophes (')")
+//	@Pattern(regexp = "^[a-zA-Z-' ]+$", message = "La description de l'article ne doit contenir que des lettres, des tirets (-) et des apostrophes (')")
 	private String description;
 	@NotNull(message = "La date de début des enchères ne peut pas être nulle")
-	@DateTimeFormat(pattern = "yyyy-MM-dd") // Format de la date
+//	@DateTimeFormat(pattern = "yyyy-MM-dd") // Format de la date
 	private Date dateDebutEncheres;
 	@NotNull(message = "La date de fin des enchères ne peut pas être nulle")
-	@DateTimeFormat(pattern = "yyyy-MM-dd") // Format de la date
+//	@DateTimeFormat(pattern = "yyyy-MM-dd") // Format de la date
 	private Date dateFinEncheres;
 	@Min(value = 0)
 	private int miseAPrix;
-	@Min(value = 0)
+//	@Min(value = 0)
 	private int prixVente;
 	private String etatVente;
 	private List<Enchere> listeEnchere;

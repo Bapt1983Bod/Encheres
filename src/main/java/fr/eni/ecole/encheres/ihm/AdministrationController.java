@@ -23,7 +23,8 @@ public class AdministrationController {
 	RetraitService retraitService;
 	EncheresService encheresService;
 
-	public AdministrationController(UtilisateurService utilisateurService, ArticlesService articlesService, RetraitService retraitService,EncheresService encheresService ) {
+	public AdministrationController(UtilisateurService utilisateurService, ArticlesService articlesService,
+			RetraitService retraitService, EncheresService encheresService) {
 		this.utilisateurService = utilisateurService;
 		this.articlesService = articlesService;
 		this.retraitService = retraitService;
@@ -47,17 +48,29 @@ public class AdministrationController {
 	@PostMapping("/desactivation")
 	public String desactivationCompteUtilisateur(@RequestParam("noUtilisateur") int noUtilisateur) {
 		int statut = (-1);
+
+		// Récupération de la liste des articles de l'utilisateurs désactivé
 		List<ArticleVendu> listArticleUtilisateur = articlesService.findByNoUtilisateur(noUtilisateur);
-		System.out.println("liste des articles : "+listArticleUtilisateur);
-		Utilisateur utilisateur = utilisateurService.findById(noUtilisateur);
-	
+
 		if (!listArticleUtilisateur.isEmpty()) {
-		for (ArticleVendu article : listArticleUtilisateur) {
-			retraitService.deleteRetrait(article.getNoArticle());
-		//	encheresService.deleteByIdUtilisateurAndIdArticle(article.getNoArticle());
+
+			for (ArticleVendu article : listArticleUtilisateur) {
+
+				// suppression des points de retrait liés aux articles de l'utilisateur
+				retraitService.deleteRetrait(article.getNoArticle());
+				// suppression des encheres sur les articles de l'utilisateur et recredit des
+				// utilisateurs ayant une enchère
+				encheresService.deleteByIdArticle(article.getNoArticle());
+			}
+
+			// suppression des articles de l'utilisateur desactiver
+			articlesService.deleteByNoUtilisateur(noUtilisateur);
 		}
-		}
-		articlesService.deleteByNoUtilisateur(noUtilisateur);
+
+//		// suppression des enchères de l'utilisateur désactivé sur les autres articles
+//		encheresService.deleteByNoUtilisateur(noUtilisateur);
+			
+//		// désactivation de l'utilisateur
 		utilisateurService.statutUtilisateur(noUtilisateur, statut);
 		return "redirect:/administration";
 	}
@@ -71,7 +84,7 @@ public class AdministrationController {
 
 	// Paaser un compte en admin
 	@PostMapping("/admin")
-	public String passageUtilisateurAdmin (@RequestParam("noUtilisateur") int noUtilisateur) {
+	public String passageUtilisateurAdmin(@RequestParam("noUtilisateur") int noUtilisateur) {
 		utilisateurService.statutUtilisateur(noUtilisateur, 1);
 		return "redirect:/administration";
 	}

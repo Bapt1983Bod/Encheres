@@ -51,18 +51,22 @@ public class VendreController {
 	}
 
 	@PostMapping("/vendre")
-	public String ajouterArticle(@Valid @ModelAttribute("article") ArticleVendu article, BindingResult bindingResult,
+	public String ajouterArticle(@ModelAttribute("article") ArticleVendu article, BindingResult bindingResult,
 			@RequestParam("rue") String rue, @RequestParam("codePostal") String codePostal,
 			@RequestParam("ville") String ville) {
-
+		
+		
 		if (bindingResult.hasErrors()) {
+			System.out.println("il y a error");
 			return "vendre";
 		} else {
 			// Récupération de l'id de l'utilisateur connecté
 			Utilisateur vendeur = utilisateurService.getUtilisateurConnecte();
+			System.out.println("vendeur : "+ vendeur);
 
 			// Création de l'article en bdd et récupération du no d'article
 			int idArticle = articlesService.createArticle(vendeur, article);
+			System.out.println("idArticle : "+ idArticle);
 
 			// création du point de retrait
 			retraitService.createRetrait(idArticle, vendeur, rue, codePostal, ville);
