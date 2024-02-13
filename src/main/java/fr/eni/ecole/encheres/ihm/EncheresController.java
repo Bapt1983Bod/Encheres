@@ -44,7 +44,7 @@ public class EncheresController {
 		// Ajout des listes au modèle
 		modele.addAttribute("listArticles", listArticles);
 		modele.addAttribute("listCategories", listCategories);
-
+		
 		return "accueil";
 	}
 

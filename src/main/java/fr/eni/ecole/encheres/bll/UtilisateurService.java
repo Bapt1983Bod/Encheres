@@ -8,7 +8,7 @@ import fr.eni.ecole.encheres.exception.BusinessException;
 
 public interface UtilisateurService {
 
-	Utilisateur creerUtilisateur(Utilisateur utilisateur) throws BusinessException;
+	void creerUtilisateur(Utilisateur utilisateur, String confirmMdp) throws BusinessException;
 
 	Utilisateur findByPseudo(String pseudo);
 	

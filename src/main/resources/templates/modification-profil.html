@@ -12,45 +12,59 @@
 
 	<section class="container">
 
-		<!-- Afficher le message d'erreur -->
-		<p th:if="${erreur}" th:text="${erreur}"></p>
 
-		<form th:action="@{/modification-profil}" method="post">
+
+		<form th:action="@{/modification-profil}" method="post" th:object="${utilisateur}" >
+			
+			<ul th:if="${#fields.hasErrors('*')}" class="error">
+				<li>ATTENTION : Veuillez vérifier vos champs</li>
+				<ul>
+					<li th:each="err : ${#fields.globalErrors()}" th:text="${err}"></li>
+				</ul>
+			</ul>
+			
+			
 			<div>
 				<label for="pseudo">Pseudo:</label>
 				<input type="text" id="pseudo" name="pseudo" th:value="${utilisateur.pseudo}" readonly>
 				<br />
 				<label for="nom">Nom:</label>
-				<input type="text" id="nom" name="nom" th:value="${utilisateur.nom}" required>
-				<br />
+				<input type="text" id="nom" name="nom" th:value="${utilisateur.nom}" th:field="*{nom}" required><br>
+				<div th:replace="~{fragments/fragment-error :: frag-error('nom')}"></div>
 				<label for="prenom">Prénom:</label>
-				<input type="text" id="prenom" name="prenom" th:value="${utilisateur.prenom}" required>
+				<input type="text" id="prenom" name="prenom" th:value="${utilisateur.prenom}" th:field="*{prenom}" required>
 				<br />
+				<div th:replace="~{fragments/fragment-error :: frag-error('prenom')}"></div>
 				<label for="email">Email:</label>
-				<input type="text" id="email" name="email" th:value="${utilisateur.email}" required>
+				<input type="text" id="email" name="email" th:value="${utilisateur.email}" th:field="*{email}" required>
 				<br />
+				<div th:replace="~{fragments/fragment-error :: frag-error('email')}"></div>
 				<label for="telephone">Téléphone:</label>
-				<input type="text" id="telephone" name="telephone" th:value="${utilisateur.telephone}" required>
+				<input type="text" id="telephone" name="telephone" th:value="${utilisateur.telephone}" th:field="*{telephone}" required>
 				<br />
+				<div th:replace="~{fragments/fragment-error :: frag-error('telephone')}"></div>
 				<label for="rue">Rue:</label>
-				<input type="text" id="rue" name="rue" th:value="${utilisateur.rue}" required>
+				<input type="text" id="rue" name="rue" th:value="${utilisateur.rue}" th:field="*{rue}" required>
 				<br />
+				<div th:replace="~{fragments/fragment-error :: frag-error('rue')}"></div>
 				<label for="codePostal">Code Postal:</label>
-				<input type="text" id="codePostal" name="codePostal" th:value="${utilisateur.codePostal}" required>
+				<input type="text" id="codePostal" name="codePostal" th:value="${utilisateur.codePostal}" th:field="*{codePostal}" required>
 				<br />
+				<div th:replace="~{fragments/fragment-error :: frag-error('codePostal')}"></div>
 				<label for="ville">Ville:</label>
-				<input type="text" id="ville" name="ville" th:value="${utilisateur.ville}" required>
+				<input type="text" id="ville" name="ville" th:value="${utilisateur.ville}" th:field="*{ville}" required>
 				<br />
+				<div th:replace="~{fragments/fragment-error :: frag-error('ville')}"></div>
 				<label for="motDePasse">Mot de passe actuel :</label>
-				<input type="password" id="motDePasse" name="motDePasse" value="********" readonly>
+				<input type="password" id="mdpactuel" name="mdpactuel" value="********" readonly>
 				<br />
 				<br />
 				<label for="motDePasse">Nouveau mot de passe :</label>
-				<input type="password" id="motDePasse" name="newPwd" value="">
+				<input type="password" id="motDePasse" name="motDePasse" value="">
 				<br />
 				<br />
 				<label for="motDePasse">Confirmation Nouveau mot de passe :</label>
-				<input type="password" id="motDePasse" name="newPwdConfirm" value="">
+				<input type="password" id="confirmNewMdp" name="newPwdConfirm" value="">
 				<br />
 			</div>
 			<div>

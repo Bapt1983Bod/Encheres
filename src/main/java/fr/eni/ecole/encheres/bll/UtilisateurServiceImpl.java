@@ -4,6 +4,7 @@ package fr.eni.ecole.encheres.bll;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.boot.autoconfigure.kafka.SslBundleSslEngineFactory;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,9 +24,22 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	}
 
 	@Override
-	public Utilisateur creerUtilisateur(Utilisateur utilisateur) throws BusinessException {
-		utilisateurDAO.creerUtilisateur(utilisateur);
-		return utilisateur;
+	public void creerUtilisateur(Utilisateur utilisateur, String confirmMdp) throws BusinessException {
+		BusinessException e = new BusinessException();
+		
+		if (utilisateurDAO.findByPseudo(utilisateur.getPseudo()).isPresent()) {
+			e.add("Ce pseudo est dèjà utilisé");
+		}
+		
+		if (!utilisateur.getMotDePasse().equals(confirmMdp)) {
+			e.add("Les mots de passe ne sont pas identiques");
+		}
+		
+		if (e.getMessages().isEmpty()) {
+			utilisateurDAO.creerUtilisateur(utilisateur);
+		} else {
+			throw e;
+		}
 	}
 
 	@Override

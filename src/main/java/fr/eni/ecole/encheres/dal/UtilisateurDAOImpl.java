@@ -42,26 +42,9 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 		this.passwordEncoder = passwordEncoder;
 	}
 
-	public void creerUtilisateur(Utilisateur utilisateur) throws BusinessException {
+	public void creerUtilisateur(Utilisateur utilisateur) {
 
-		// verifier si le pseudo ne contient que des caractères alphanumériques
-
-		if (!isValidPseudo(utilisateur.getPseudo())) {
-			throw new BusinessException("Le pseudo ne doit contenir que des caractères alphanumériques");
-		}
-
-		// verifier si pseudo déja existant dans la base
-		Optional<Utilisateur> existingUser = findByPseudo(utilisateur.getPseudo());
-		if (existingUser.isPresent()) {
-
-			throw new BusinessException("Le pseudo est déjà utilisé");
-		}
-
-		Optional<Utilisateur> existingUserMail = findByEmail(utilisateur.getEmail());
-		if (existingUserMail.isPresent()) {
-			throw new BusinessException("L'adresse mail est déja utilisée");
-		}
-
+		
 		MapSqlParameterSource map = new MapSqlParameterSource();
 		map.addValue("pseudo", utilisateur.getPseudo());
 		map.addValue("nom", utilisateur.getNom());
@@ -84,11 +67,6 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 			utilisateur.setNoUtilisateur(keyHolder.getKey().intValue());
 		}
 
-	}
-
-	private boolean isValidPseudo(String pseudo) {
-		String regex = "^[a-zA-Z0-9]+$";
-		return Pattern.matches(regex, pseudo);
 	}
 
 	@Override //

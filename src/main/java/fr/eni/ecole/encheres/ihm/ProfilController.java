@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,6 +19,7 @@ import fr.eni.ecole.encheres.bll.UtilisateurService;
 import fr.eni.ecole.encheres.bo.ArticleVendu;
 import fr.eni.ecole.encheres.bo.Utilisateur;
 import fr.eni.ecole.encheres.exception.BusinessException;
+import jakarta.validation.Valid;
 
 @Controller
 public class ProfilController {
@@ -59,15 +61,32 @@ public class ProfilController {
 	// modification du profil
 
 	@PostMapping("/modification-profil")
-	public String modifierUtilisateur(@ModelAttribute Utilisateur utilisateurModifie,
-			@RequestParam("newPwd") String pwd, @RequestParam("newPwdConfirm") String pwdConfirm, Model model) {
+	public String modifierUtilisateur(@Valid @ModelAttribute Utilisateur utilisateur,
+			BindingResult bindingResult, @RequestParam("motDePasse") String pwd,
+			@RequestParam("newPwdConfirm") String pwdConfirm, Model model) {
 
+		System.out.println("on rentre ici");
+		
 		if (pwd.equals(pwdConfirm) && pwd.length() > 0) {
-			utilisateurModifie.setMotDePasse(pwd);
-		}
+				utilisateur.setMotDePasse(pwd);
+				System.out.println("mot de passe");
+			}
+		
+		System.out.println("utilisateur modifié : "+ utilisateur);
+		
+		if (bindingResult.hasErrors()) {
+			System.out.println("erreur");
+			return "modification-profil";
+		} else {
+			// Modification du mot de passe
+			
+			
+			// Modification de l'utilisateur
+			utilisateurService.modifierUtilisateur(utilisateur);
+			System.out.println("utilisateur modifié");
 
-		utilisateurService.modifierUtilisateur(utilisateurModifie);
-		return "redirect:/profil"; // Redirige l'utilisateur vers sa page de profil après la modification
+			return "redirect:/profil"; // Redirige l'utilisateur vers sa page de profil après la modification
+		}
 	}
 
 	// suppression du profil
@@ -97,7 +116,7 @@ public class ProfilController {
 
 		// suppression des enchères de l'utilisateursur les autres articles
 		encheresService.deleteByNoUtilisateur(utilisateur.getNoUtilisateur());
-		
+
 		// suppression de l'utilisateur
 		utilisateurService.supprimerUtilisateur(utilisateur);
 		return "redirect:/logout";

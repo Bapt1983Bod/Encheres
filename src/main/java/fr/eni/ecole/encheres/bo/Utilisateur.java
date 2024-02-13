@@ -33,7 +33,7 @@ public class Utilisateur implements Serializable {
 	@Pattern(regexp = "\\d+", message = "Le code postal ne doit contenir que des chiffres")
 	private String telephone;
 	@NotBlank
-	@Pattern(regexp = "^[a-zA-Z-' ]+$", message = "Le nom de la rue ne doit contenir que des lettres, des tirets (-) et des apostrophes (')")
+	@Pattern(regexp = "^[a-zA-Z0-9-' ]+$", message = "Le nom de la rue ne doit contenir que des lettres sans accent, des chiffres, des tirets (-) et des apostrophes (')")
 	private String rue;
 	@NotBlank
 	@Pattern(regexp = "\\d+", message = "Le code postal ne doit contenir que des chiffres")
@@ -41,7 +41,8 @@ public class Utilisateur implements Serializable {
 	@NotBlank
 	@Pattern(regexp = "^[a-zA-Z-' ]+$", message = "Le nom de la ville ne doit contenir que des lettres, des tirets (-) et des apostrophes (')")
 	private String ville;
-	@NotBlank
+	//@NotBlank
+	//@Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$", message = "le mdp doit contenir au minimum 8 caractères dont 1 minuscule, 1 majuscule et 1 chiffre")
 	private String motDePasse;
 	private int credit;
 	private int administrateur;
