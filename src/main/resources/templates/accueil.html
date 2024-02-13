@@ -48,9 +48,34 @@
 						</option>
 					</select>
 				</div>
-				<div>
-					<button type="submit">Filtrer</button>
+				<div id="radioFiltre">
+					<input type="radio" id="ventes" name="filtre" value="ventes">
+					<label for="ventes">Mes Ventes</label><br>
+					<input type="radio" id="achats" name="filtre" value="achats">
+					<label for="achats">Achats</label><br>
 				</div>
+				<div id="ventesForm" style="display: none;">
+					<!-- Formulaire pour les ventes -->
+					<input type="checkbox" id="ventesEnCours" name="venteEnCours">
+					<label for="venteEnCours">Mes ventes en cours</label><br>
+					<input type="checkbox" id="ventesEnAttentes" name="venteEnAttente">
+					<label for="venteEnAttente">Mes ventes non débutées</label><br>
+					<input type="checkbox" id="ventesTerminées" name="ventesTerminées">
+					<label for="ventesTerminées">Mes ventes terminées</label><br>
+				</div>
+				<div id="achatsForm" style="display: none;">
+					<!-- Formulaire pour les achats -->
+					<input type="checkbox" id="encheresOuvertes" name="encheresOuverte">
+					<label for="encheresOuverte">Enchères ouvertes</label><br>
+					<input type="checkbox" id="encheresEncours" name="encheresEncours">
+					<label for="encheresEncours">Mes enchères en cours</label><br>
+					<input type="checkbox" id="encheresRemportees" name="encheresRemportees">
+					<label for="encheresRemportees">Mes Encheres Remportées</label><br>
+				</div>
+				
+					<div>
+						<button type="submit">Filtrer</button>
+					</div>
 			</form>
 			<div>
 				<form action="/accueil" method="get">
@@ -59,6 +84,8 @@
 			</div>
 		</div>
 	</section>
+
+
 
 	<section class="container">
 		<h2>Liste des ventes en cours</h2>
@@ -70,6 +97,21 @@
 			<button type="button"><a th:href="@{'/acheter?noArticle=' + ${a.noArticle}}">Faire une enchère</a></button>
 		</div>
 	</section>
+
+	<script>
+		// Fonction pour afficher le formulaire en fonction du bouton radio sélectionné
+		document.querySelectorAll('input[type=radio][name="filtre"]').forEach(function (radio) {
+			radio.addEventListener('change', function () {
+				if (this.value === 'ventes') {
+					document.getElementById('ventesForm').style.display = 'block';
+					document.getElementById('achatsForm').style.display = 'none';
+				} else if (this.value === 'achats') {
+					document.getElementById('achatsForm').style.display = 'block';
+					document.getElementById('ventesForm').style.display = 'none';
+				}
+			});
+		});
+	</script>
 
 </body>
 

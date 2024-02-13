@@ -58,7 +58,7 @@ public class ArticlesDAOImpl implements ArticlesDAO {
 	// creation d'un article et retourne le noArticle pour création du retrait
 	@Override
 	public int createArticle(int idVendeur, ArticleVendu article) {
-		
+
 		MapSqlParameterSource map = new MapSqlParameterSource();
 		map.addValue("nom", article.getNomArticle());
 		map.addValue("description", article.getDescription());
@@ -80,6 +80,7 @@ public class ArticlesDAOImpl implements ArticlesDAO {
 		return article.getNoArticle();
 	}
 
+	// Récupère l'article à partir de son numéro
 	@Override
 	public ArticleVendu findArticleByNoArticle(int noArticle) {
 		MapSqlParameterSource map = new MapSqlParameterSource();
@@ -88,13 +89,13 @@ public class ArticlesDAOImpl implements ArticlesDAO {
 		return this.namedParameterJdbcTemplate.queryForObject(FIND_BY_NO_ARTICLE, map, new ArticlesRowMapper2());
 	}
 
+	// Récupère les articles d'un utilisteur
 	@Override
 	public List<ArticleVendu> findByNoUtilisateur(int noUtilisateur) {
-		
+
 		MapSqlParameterSource map = new MapSqlParameterSource();
 		map.addValue("noUtilisateur", noUtilisateur);
-		
-				
+
 		return this.namedParameterJdbcTemplate.query(FIND_BY_NO_UTILISATEUR, map, new ArticlesRowMapper2());
 	}
 
@@ -102,13 +103,14 @@ public class ArticlesDAOImpl implements ArticlesDAO {
 	public void deleteByNoUtilisateur(int noUtilisateur) {
 		MapSqlParameterSource map = new MapSqlParameterSource();
 		map.addValue("noUtilisateur", noUtilisateur);
-		
+
 		this.namedParameterJdbcTemplate.update(DELETE_BY_NO_UTILISATEUR, map);
-		
+
 	}
 
 }
 
+// RowMapper Article complet avec Catégorie/Utilisateur
 class ArticlesRowMapper implements RowMapper<ArticleVendu> {
 
 	@Override
@@ -125,6 +127,7 @@ class ArticlesRowMapper implements RowMapper<ArticleVendu> {
 	}
 }
 
+// RowMapper Article simple : seulement l'article
 class ArticlesRowMapper2 implements RowMapper<ArticleVendu> {
 
 	@Override
