@@ -1,6 +1,8 @@
 package fr.eni.ecole.encheres.bll;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -57,7 +59,57 @@ public class ArticlesServiceImpl implements ArticlesService {
 	@Override
 	public void deleteByNoUtilisateur(int noUtilisateur) {
 		articlesDAO.deleteByNoUtilisateur(noUtilisateur);
-		
+
+	}
+
+	@Override
+	public List<ArticleVendu> filtreVentes(String etat, List<ArticleVendu> listNonTriee) {
+		List<ArticleVendu> listArticles = new ArrayList<ArticleVendu>();
+		long miliseconds = System.currentTimeMillis();
+		Date date = new Date(miliseconds);
+		if (etat != null) {
+			if (etat.equals("enCours")) {
+				for (ArticleVendu art : listNonTriee) {
+					if (art.getDateDebutEncheres().before(date) && art.getDateFinEncheres().after(date)) {
+						listArticles.add(art);
+					}
+				}
+			} else if (etat.equals("enAttente")) {
+				for (ArticleVendu art : listNonTriee) {
+					if (art.getDateDebutEncheres().after(date)) {
+						listArticles.add(art);
+					}
+				}
+			} else if (etat.equals("terminee")) {
+				for (ArticleVendu art : listNonTriee) {
+					if (art.getDateFinEncheres().before(date)) {
+						listArticles.add(art);
+					}
+				}
+			}
+		}
+		 else {
+			listArticles = listNonTriee;
+		}
+
+		return listArticles;
+	}
+
+	@Override
+	public List<ArticleVendu> findByNoUtilCatString(int noUtilisateur, int idCat, String string) {
+		return articlesDAO.findByNoUtilCatString(noUtilisateur, idCat, string);
+	}
+
+	@Override
+	public List<ArticleVendu> findByNoUtilString(int noUtilisateur, String string) {
+		return articlesDAO.findByNoUtilString(noUtilisateur, string);
+	}
+
+	@Override
+	public List<ArticleVendu> findByString(String string) {
+		LocalDate date = LocalDate.now();
+
+		return articlesDAO.findByString(date, string);
 	}
 
 }

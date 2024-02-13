@@ -44,10 +44,12 @@
 				<div class="input-group">
 					<label for="selectCategorie">Catégorie</label>
 					<select name="selectCategorie" id="noCategorie">
+						<option value="0">--Toutes les catégories--</option>
 						<option th:each="c : ${listCategories}" th:text="${c.libelle}" th:value="${c.noCategorie}">
 						</option>
 					</select>
 				</div>
+				
 				<div id="radioFiltre">
 					<input type="radio" id="ventes" name="filtre" value="ventes">
 					<label for="ventes">Mes Ventes</label><br>
@@ -56,11 +58,11 @@
 				</div>
 				<div id="ventesForm" style="display: none;">
 					<!-- Formulaire pour les ventes -->
-					<input type="checkbox" id="ventesEnCours" name="venteEnCours">
+					<input type="radio" id="ventesEnCours" name="vente" value="enCours">
 					<label for="venteEnCours">Mes ventes en cours</label><br>
-					<input type="checkbox" id="ventesEnAttentes" name="venteEnAttente">
+					<input type="radio" id="ventesEnAttentes" name="vente" value="enAttente">
 					<label for="venteEnAttente">Mes ventes non débutées</label><br>
-					<input type="checkbox" id="ventesTerminées" name="ventesTerminées">
+					<input type="radio" id="ventesTerminées" name="vente" value="terminee">
 					<label for="ventesTerminées">Mes ventes terminées</label><br>
 				</div>
 				<div id="achatsForm" style="display: none;">
