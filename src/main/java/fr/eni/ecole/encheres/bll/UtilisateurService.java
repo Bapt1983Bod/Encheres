@@ -27,4 +27,6 @@ public interface UtilisateurService {
 	
 	void statutUtilisateur (int noUtilisateur, int statut);
 	
+	public Boolean validePassword(String Password) throws BusinessException;
+	
 }

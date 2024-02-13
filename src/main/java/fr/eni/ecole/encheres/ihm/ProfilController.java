@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -61,31 +62,35 @@ public class ProfilController {
 	// modification du profil
 
 	@PostMapping("/modification-profil")
-	public String modifierUtilisateur(@Valid @ModelAttribute Utilisateur utilisateur,
-			BindingResult bindingResult, @RequestParam("motDePasse") String pwd,
-			@RequestParam("newPwdConfirm") String pwdConfirm, Model model) {
+	public String modifierUtilisateur(@Valid @ModelAttribute Utilisateur utilisateur, BindingResult bindingResult,
+			@RequestParam("motDePasse") String pwd, @RequestParam("newPwdConfirm") String pwdConfirm, Model model) {
 
-		System.out.println("on rentre ici");
-		
-		if (pwd.equals(pwdConfirm) && pwd.length() > 0) {
-				utilisateur.setMotDePasse(pwd);
-				System.out.println("mot de passe");
-			}
-		
-		System.out.println("utilisateur modifié : "+ utilisateur);
-		
+		System.out.println("utilisateur modifié : " + utilisateur);
+
 		if (bindingResult.hasErrors()) {
 			System.out.println("erreur");
 			return "modification-profil";
 		} else {
-			// Modification du mot de passe
-			
-			
-			// Modification de l'utilisateur
-			utilisateurService.modifierUtilisateur(utilisateur);
-			System.out.println("utilisateur modifié");
 
-			return "redirect:/profil"; // Redirige l'utilisateur vers sa page de profil après la modification
+			// Modification du mot de passe
+			try {
+				if (pwd.equals(pwdConfirm) && pwd.length() > 0 && utilisateurService.validePassword(pwd)) {
+					utilisateur.setMotDePasse(pwd);
+					System.out.println("mot de passe");
+				}
+				// Modification de l'utilisateur
+				utilisateurService.modifierUtilisateur(utilisateur);
+
+				return "redirect:/profil"; // Redirige l'utilisateur vers sa page de profil après la modification
+
+			} catch (BusinessException e) {
+				e.getMessages().forEach(m -> {
+					ObjectError error = new ObjectError("globalError", m);
+					bindingResult.addError(error);
+				});
+				return "modification-profil";
+			}
+
 		}
 	}
 

@@ -3,6 +3,8 @@ package fr.eni.ecole.encheres.bll;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.springframework.boot.autoconfigure.kafka.SslBundleSslEngineFactory;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -93,6 +95,33 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	public Utilisateur findById(int noUtilisateur) {
 		return utilisateurDAO.findById(noUtilisateur).get();
 	}
+
+	
+	// Méthode de validation password
+	@Override
+	public Boolean validePassword(String password) throws BusinessException {
+		BusinessException e = new BusinessException();
+		
+		// Vérifie si le mot de passe a au moins 8 caractères
+		// Vérifie s'il contient au moins une lettre majuscule,une minuscule, un chiffre.
+		String regex = "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)[A-Za-z\\d]{8,}$";
+
+        // Création du pattern avec l'expression régulière
+        Pattern pattern = Pattern.compile(regex);
+        
+        // Création du matcher pour vérifier le mot de passe
+        Matcher matcher = pattern.matcher(password);
+
+        if (matcher.matches()) {
+        	return true;
+        } else {
+        	e.add("le mot de passe est invalide");
+        	e.add("le mot de passe doit avoir au moins 8 caractères, une majuscule, une minuscule, un chiffre");
+        	throw e;
+        }
+        
+    }
+	
 
 	
 
