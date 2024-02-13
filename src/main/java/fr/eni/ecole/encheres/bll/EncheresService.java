@@ -14,4 +14,8 @@ public interface EncheresService {
 	public void deleteByNoUtilisateur(int noUtilisateur);
 
 	Enchere getHighestEnchere(int noArticle);
+
+	boolean aEncheriSurArticle(int noArticle, Utilisateur acheteur);
+
+	void surenchere(int noArticle, long montantEnchere, Utilisateur acheteur);
 }

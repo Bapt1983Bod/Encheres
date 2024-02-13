@@ -14,4 +14,9 @@ public interface EncheresDAO {
 	public void deleteByNoUtilisateur(int noUtilisateur);
 
 	Enchere getHighestEnchere(int noArticle);
+
+	public void surenchere(int noArticle, long montantEnchere, Utilisateur acheteur);
+
+	boolean aEncheriSurArticle(int noArticle, Utilisateur utilisateur);
+
 }

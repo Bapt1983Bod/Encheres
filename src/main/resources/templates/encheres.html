@@ -3,12 +3,12 @@
 
 <head>
 	<meta charset="UTF-8">
-	<title>Insert title here</title>
+	<title>Détails de la vente</title>
 	<link rel="stylesheet" href="/css/stylesheet.css">
 </head>
 
 <body>
-	<div th:replace="~{fragments/entete :: frag-entete('Détails de la vente')}"></div>
+	<div th:replace="~{fragments/entete :: frag-entete('Détails de la vente')}"></div>     
 
 	<section class="container">
 		<ul>
@@ -18,25 +18,43 @@
 			<li><span>Fin des enchères :</span> <span th:text="${article.dateFinEncheres}"></span></li>
 			<li><span>Mise à prix :</span> <span th:text="${article.miseAPrix}"></span></li>
 			
-		<li th:if="${highestEnchere != null}">
-    <span>Enchère la plus haute :</span> 
-    <span th:text="${highestEnchere.montantEnchere}"></span>
-	</li>
-
-			
+			<li th:if="${highestEnchere != null}">
+ 		    <span>Enchère la plus haute :</span> 
+   			<span th:text="${highestEnchere.montantEnchere}"></span>
+			</li>
 		</ul>
+		
+	<form th:if="${peutSurencherir == true}" th:action="@{/surenchere}" method="post">
+  		  <input type="hidden" name="noArticle" th:value="${article.noArticle}" />
+   		 <div>
+        <label for="montantEnchere">Surenchérir (en points) :</label>
+        <input type="number" id="montantEnchere" name="montantEnchere" required>
+  		  </div>
+   
+ 	   <div>
+        <button type="submit">Modifier mon enchère</button>
+   		 </div>
 
-		<form th:action="@{/encherir}" method="post">
-			<input type="hidden" name="noArticle" th:value="${article.noArticle}" />
-			<div>
-				<label for="montantEnchere">Montant de l'enchère (en points) :</label>
-				<input type="number" id="montantEnchere" name="montantEnchere" required>
-				<!--ajouter attribut minimum =0 -->
-			</div>
-			<div>
-				<button type="submit">Enchérir</button>
-			</div>
-		</form>
+  </form>
+
+<form th:if="${peutSurencherir == false}" th:action="@{/encherir}" method="post">
+    <input type="hidden" name="noArticle" th:value="${article.noArticle}" />
+    <div>
+        <label for="montantEnchere">Montant de l'enchère (en points) :</label>
+        <input type="number" id="montantEnchere" name="montantEnchere" required>
+        <!--ajouter attribut minimum =0 -->
+    </div>
+    <div>
+        <button type="submit">Enchérir</button>
+    </div>
+</form>
+	
+	<p th:if="${highestEnchere != null}">
+   		<span th:if="${highestEnchere.utilisateur.noUtilisateur == utilisateurConnecte.noUtilisateur}">Vous avez la meilleure enchère</span>
+	</p>
+
+
+
 	</section>
 </body>
 

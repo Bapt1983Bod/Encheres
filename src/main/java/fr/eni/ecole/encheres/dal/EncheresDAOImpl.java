@@ -20,7 +20,7 @@ import fr.eni.ecole.encheres.bo.Utilisateur;
 public class EncheresDAOImpl implements EncheresDAO {
 
 	private static final String INSERT_ENCHERE = "INSERT INTO ENCHERES (no_utilisateur, no_article, date_enchere, montant_enchere) VALUES (:noUtilisateur, :noArticle, GETDATE(), :montantEnchere)";
-	private static final String UPDATE_CREDIT = "UPDATE UTILISATEURS SET credit = :credit - :montantEnchere WHERE no_utilisateur = :noUtilisateur";
+	private static final String UPDATE_CREDIT = "UPDATE UTILISATEURS SET credit = credit - :montantEnchere WHERE no_utilisateur = :noUtilisateur";
 	private static final String DELETE_ENCHERE = "DELETE FROM ENCHERES WHERE no_article = :noArticle AND no_utilisateur = :noUtilisateur";
 	private static final String FIND_ENCHERE_BY_NOARTICLE_AND_NOUTILISTEUR = "SELECT * FROM ENCHERES WHERE no_article = :noArticle AND no_utilisateur = :noUtilisateur";
 	private static final String RESTORE_CREDIT = "UPDATE UTILISATEURS SET credit = credit + :montantEnchere WHERE no_utilisateur = :noUtilisateur";
@@ -55,7 +55,7 @@ public class EncheresDAOImpl implements EncheresDAO {
 
 		// Mise à jour du crédit utilisateur (déduction du montant de l'enchère)
 		MapSqlParameterSource creditParameters = new MapSqlParameterSource().addValue("montantEnchere", montantEnchere)
-				.addValue("credit", utilisateur.getCredit()).addValue("noUtilisateur", utilisateur.getNoUtilisateur());
+				.addValue("noUtilisateur", utilisateur.getNoUtilisateur());
 
 		this.jdbcTemplate.update(UPDATE_CREDIT, creditParameters);
 	}
@@ -82,6 +82,7 @@ public class EncheresDAOImpl implements EncheresDAO {
 
 	}
 
+	// suppression d'une enchere par no article
 	public void deleteByIdArticle(int noArticle) {
 
 		MapSqlParameterSource map = new MapSqlParameterSource();
@@ -108,6 +109,7 @@ public class EncheresDAOImpl implements EncheresDAO {
 		}
 	}
 
+	// suppression d'une enchere par NoUtilisateur
 	@Override
 	public void deleteByNoUtilisateur(int noUtilisateur) {
 		MapSqlParameterSource map = new MapSqlParameterSource();
@@ -133,6 +135,7 @@ public class EncheresDAOImpl implements EncheresDAO {
 
 	}
 
+	// récupérer l'enchere la plus elevée
 	@Override
 	public Enchere getHighestEnchere(int noArticle) {
 		MapSqlParameterSource params = new MapSqlParameterSource().addValue("noArticle", noArticle);
@@ -144,6 +147,35 @@ public class EncheresDAOImpl implements EncheresDAO {
 		}
 
 	}
+
+	// savoir si l'utilisateur à encherit ou non sur l'article
+	@Override
+	public boolean aEncheriSurArticle(int noArticle, Utilisateur utilisateur) {
+		MapSqlParameterSource params = new MapSqlParameterSource().addValue("noArticle", noArticle)
+				.addValue("noUtilisateur", utilisateur.getNoUtilisateur());
+
+		try {
+			jdbcTemplate.queryForObject(FIND_ENCHERE_BY_NOARTICLE_AND_NOUTILISTEUR, params, new EnchereRowMapper());
+			return true; // Si une enchère est trouvée pour cet article et cet utilisateur, alors il a
+							// enchéri
+		} catch (EmptyResultDataAccessException e) {
+			return false; // Sinon, il n'a pas enchéri
+		}
+	}
+
+	// permettre la surenchere
+	@Override
+	public void surenchere(int noArticle, long montantEnchere, Utilisateur acheteur) {
+		// Vérifiez d'abord si l'utilisateur a déjà enchéri sur cet article
+		if (aEncheriSurArticle(noArticle, acheteur)) {
+			// Si oui, supprimez son enchère précédente et remboursez-le
+			deleteByIdUtilisateurAndIdArticle(noArticle, acheteur);
+		}
+
+		// Enchérir avec le nouveau montant
+		encherir(noArticle, montantEnchere, acheteur);
+	}
+
 }
 
 class EnchereRowMapper implements RowMapper<Enchere> {

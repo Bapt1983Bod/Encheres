@@ -38,28 +38,25 @@ public class SecurityConfig {
 	// Gestion des accès aux pages
 	@Bean
 	SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-		
-		
+
 		http.authorizeHttpRequests(auth -> auth.requestMatchers(HttpMethod.GET, "/", "/accueil").permitAll()
-				.requestMatchers(HttpMethod.GET, "/profil").hasAnyRole("ADMIN","UTILISATEUR")
-				.requestMatchers(HttpMethod.GET, "/modification-profil").hasAnyRole("ADMIN","UTILISATEUR")
-				.requestMatchers(HttpMethod.POST, "/modification-profil").hasAnyRole("ADMIN","UTILISATEUR")
+				.requestMatchers(HttpMethod.GET, "/profil").hasAnyRole("ADMIN", "UTILISATEUR")
+				.requestMatchers(HttpMethod.GET, "/modification-profil").hasAnyRole("ADMIN", "UTILISATEUR")
+				.requestMatchers(HttpMethod.POST, "/modification-profil").hasAnyRole("ADMIN", "UTILISATEUR")
 				.requestMatchers(HttpMethod.POST, "/supprimer-compte").authenticated()
 				.requestMatchers(HttpMethod.GET, "/inscription").permitAll()
 				.requestMatchers(HttpMethod.POST, "/inscription").permitAll()
-				.requestMatchers(HttpMethod.GET, "/acheter").hasAnyRole("ADMIN","UTILISATEUR")
-				.requestMatchers(HttpMethod.POST, "/encherir").hasAnyRole("ADMIN","UTILISATEUR")
-				.requestMatchers(HttpMethod.POST, "/filtres").permitAll()
-				.requestMatchers(HttpMethod.GET, "/vendre").authenticated()
-				.requestMatchers(HttpMethod.POST, "/vendre").authenticated()
+				.requestMatchers(HttpMethod.GET, "/acheter").hasAnyRole("ADMIN", "UTILISATEUR")
+				.requestMatchers(HttpMethod.POST, "/encherir").hasAnyRole("ADMIN", "UTILISATEUR")
+				.requestMatchers(HttpMethod.POST, "/surenchere").hasAnyRole("ADMIN", "UTILISATEUR")
+				.requestMatchers(HttpMethod.POST, "/filtres").permitAll().requestMatchers(HttpMethod.GET, "/vendre")
+				.authenticated().requestMatchers(HttpMethod.POST, "/vendre").authenticated()
 				.requestMatchers(HttpMethod.GET, "/administration").hasRole("ADMIN")
 				.requestMatchers(HttpMethod.POST, "/suppressionAdmin").hasRole("ADMIN")
 				.requestMatchers(HttpMethod.POST, "/desactivation").hasRole("ADMIN")
 				.requestMatchers(HttpMethod.POST, "/activation").hasRole("ADMIN")
-				.requestMatchers(HttpMethod.POST, "/admin").hasRole("ADMIN")
-				.requestMatchers("/css/*").permitAll()
-				.requestMatchers("/img/*").permitAll()
-				.anyRequest().denyAll());
+				.requestMatchers(HttpMethod.POST, "/admin").hasRole("ADMIN").requestMatchers("/css/*").permitAll()
+				.requestMatchers("/img/*").permitAll().anyRequest().denyAll());
 
 		// Paramétrage de la page de login
 		http.formLogin(form -> {

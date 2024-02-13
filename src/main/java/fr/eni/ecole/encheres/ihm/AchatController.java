@@ -31,13 +31,22 @@ public class AchatController {
 	public String afficherDetailsVente(@RequestParam("noArticle") int noArticle, Model model) {
 		ArticleVendu articleVendu = articlesService.findArticleByNoArticle(noArticle);
 		Enchere highestEnchere = encheresService.getHighestEnchere(noArticle); // afficher l'enchere la plus haute
-
+		Utilisateur utilisateurConnecte = utilisateurService.getUtilisateurConnecte();
+		boolean peutSurencherir = false;
+		// si utilisateur connecté à déja enchéri sur l'article, retourne true et peut
+		// surenchérir
+		if (encheresService.aEncheriSurArticle(noArticle, utilisateurConnecte)) {
+			peutSurencherir = true;
+		}
 		model.addAttribute("article", articleVendu);
 		model.addAttribute("highestEnchere", highestEnchere);
+		model.addAttribute("utilisateurConnecte", utilisateurConnecte);
+		model.addAttribute("peutSurencherir", peutSurencherir);
 
 		return "encheres";
 	}
 
+	// permettre une premiere enchere sur un article
 	@PostMapping("/encherir")
 	public String encherir(@RequestParam("noArticle") int noArticle,
 			@RequestParam("montantEnchere") long montantEnchere, Model model) {
@@ -49,4 +58,18 @@ public class AchatController {
 
 	}
 
+	// permettre une surenchere après une premiere enchere sur l'article
+	@PostMapping("/surenchere")
+	public String surenchere(@RequestParam("noArticle") int noArticle,
+			@RequestParam("montantEnchere") long montantEnchere, Model model) {
+		Utilisateur acheteur = utilisateurService.getUtilisateurConnecte();
+
+		// Rembourser l'enchère précédente et la supprimer
+		encheresService.deleteByIdUtilisateurAndIdArticle(noArticle, acheteur);
+
+		// Effectuer la surenchère
+		encheresService.encherir(noArticle, montantEnchere, acheteur);
+
+		return "redirect:/acheter?noArticle=" + noArticle;
+	}
 }

@@ -43,4 +43,15 @@ public class EncheresServiceImpl implements EncheresService {
 		return encheresDAO.getHighestEnchere(noArticle);
 	}
 
+	@Override
+	public boolean aEncheriSurArticle(int noArticle, Utilisateur acheteur) {
+		return encheresDAO.aEncheriSurArticle(noArticle, acheteur);
+	}
+
+	@Override
+	public void surenchere(int noArticle, long montantEnchere, Utilisateur acheteur) {
+		encheresDAO.surenchere(noArticle, montantEnchere, acheteur);
+
+	}
+
 }
