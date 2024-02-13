@@ -39,8 +39,8 @@
 						<td th:text="${u.administrateur }"></td>
 
 						<td>
-							
-							<form th:if="${u.administrateur == (0) || u.administrateur == (1) }" th:action="@{/desactivation}" method="post">
+							<form th:if="${u.administrateur == (0) || u.administrateur == (1) }"
+								th:action="@{/desactivation}" method="post">
 								<input type="text" name="noUtilisateur" th:value="${u.noUtilisateur}" hidden />
 								<button type="submit">Désactiver Compte</button>
 							</form>
@@ -63,8 +63,57 @@
 						</td>
 					</tr>
 				</tbody>
+			</table>
 		</div>
 	</section>
+
+	<section class="container">
+		<h2>Liste des catégories</h2>
+
+		<div>
+			<table>
+				<thead>
+					<tr>
+						<th>id catégorie</th>
+						<th>Libellé</th>
+
+						<!--						<th>Actions</th>-->
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="c : ${listCategories}">
+						<td th:text="${c.noCategorie}"></td>
+						<td th:text="${c.libelle}"></td>
+
+
+						<!--						<td>-->
+						<!--							<form th:action="@{/suppressionCat}" method="post">-->
+						<!--								<input type="text" th:name="pseudoUtilisateur" th:value="${c.noCategorie}" hidden />-->
+						<!--								<button type="submit">Supprimer</button>-->
+						<!--							</form>-->
+						<!--						</td>-->
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+		<div>
+			<h2>Ajouter une catégorie</h2>
+
+			<form action="">
+				<div>
+					<label for="libelleCat"> Libellé catégorie</label>
+					<input type="text" />
+				</div>
+				<div>
+					<button type="submit">Valider</button>
+				</div>
+			</form>
+
+		</div>
+
+	</section>
+
 </body>
 
 </html>

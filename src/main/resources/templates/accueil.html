@@ -49,7 +49,7 @@
 						</option>
 					</select>
 				</div>
-				
+				<div sec:authorize="isAuthenticated()">
 				<div id="radioFiltre">
 					<input type="radio" id="ventes" name="filtre" value="ventes">
 					<label for="ventes">Mes Ventes</label><br>
@@ -74,7 +74,7 @@
 					<input type="checkbox" id="encheresRemportees" name="encheresRemportees">
 					<label for="encheresRemportees">Mes Encheres Remportées</label><br>
 				</div>
-				
+				</div>
 					<div>
 						<button type="submit">Filtrer</button>
 					</div>
@@ -90,7 +90,7 @@
 
 
 	<section class="container">
-		<h2>Liste des ventes en cours</h2>
+		<h2>Liste des ventes</h2>
 		<div th:each="a : ${listArticles}" class="article">
 			<h3 th:text="${'ARTICLE : '+a.nomArticle}"></h3>
 			<p th:text="${a.description}"></p>

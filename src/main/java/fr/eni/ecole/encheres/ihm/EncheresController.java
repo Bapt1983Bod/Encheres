@@ -4,6 +4,7 @@ package fr.eni.ecole.encheres.ihm;
 import java.util.ArrayList;
 import java.util.List;
 
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -53,10 +54,9 @@ public class EncheresController {
 			@RequestParam("selectCategorie") int idcategory,
 			@RequestParam(value = "filtre", required = false) String filtre,
 			@RequestParam(value = "vente", required = false) String vente, Model modele) {
-
-		// Récupération utilisateur connecté
-		Utilisateur utilisateur = utilisateurService.getUtilisateurConnecte();
-
+		
+		System.out.println("on passe içi");
+		
 		// Initialisation de la liste
 		List<ArticleVendu> listArticles = new ArrayList<ArticleVendu>();
 
@@ -64,6 +64,8 @@ public class EncheresController {
 		// la catégorie et du type de filtre
 		if (idcategory != 0) {
 			if (filtre != null) {
+				// Récupération utilisateur connecté
+				Utilisateur utilisateur = utilisateurService.getUtilisateurConnecte();
 				if (filtre.equals("ventes")) {
 					// récupération de toutes les ventes l'utilisateur connecté en fonction de la
 					// categorie
@@ -84,6 +86,8 @@ public class EncheresController {
 			}
 		} else if (idcategory == 0) {
 			if (filtre != null) {
+				// Récupération utilisateur connecté
+				Utilisateur utilisateur = utilisateurService.getUtilisateurConnecte();
 				if (filtre.equals("ventes")) {
 					// récupération de toutes les ventes l'utilisateur connecté
 					List<ArticleVendu> maListNonTriée = articlesService

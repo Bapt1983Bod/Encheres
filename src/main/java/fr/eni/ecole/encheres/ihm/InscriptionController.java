@@ -38,7 +38,6 @@ public class InscriptionController {
 			utilisateurService.creerUtilisateur(utilisateur);
 			return "redirect:/accueil";
 		} catch (BusinessException e) {
-
 			model.addAttribute("erreur", e.getMessages()); // ajouter le message d'erreur au modèle
 			System.out.println(model);
 			return "inscription";

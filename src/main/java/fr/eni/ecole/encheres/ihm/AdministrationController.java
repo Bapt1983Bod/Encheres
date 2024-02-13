@@ -9,10 +9,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import fr.eni.ecole.encheres.bll.ArticlesService;
+import fr.eni.ecole.encheres.bll.CategorieService;
 import fr.eni.ecole.encheres.bll.EncheresService;
 import fr.eni.ecole.encheres.bll.RetraitService;
 import fr.eni.ecole.encheres.bll.UtilisateurService;
 import fr.eni.ecole.encheres.bo.ArticleVendu;
+import fr.eni.ecole.encheres.bo.Categorie;
 import fr.eni.ecole.encheres.bo.Utilisateur;
 
 @Controller
@@ -22,13 +24,15 @@ public class AdministrationController {
 	ArticlesService articlesService;
 	RetraitService retraitService;
 	EncheresService encheresService;
+	CategorieService categorieService;
 
 	public AdministrationController(UtilisateurService utilisateurService, ArticlesService articlesService,
-			RetraitService retraitService, EncheresService encheresService) {
+			RetraitService retraitService, EncheresService encheresService, CategorieService categorieService) {
 		this.utilisateurService = utilisateurService;
 		this.articlesService = articlesService;
 		this.retraitService = retraitService;
 		this.encheresService = encheresService;
+		this.categorieService = categorieService;
 	}
 
 	// Affichage de la page d'administration des comptes
@@ -40,6 +44,10 @@ public class AdministrationController {
 		// liste des utilisateurs sans l'utilisateur connecté (pour admin)
 		List<Utilisateur> listUtilisateurs = utilisateurService.findUtilisateurs(utilisateur);
 		modele.addAttribute("listUtilisateurs", listUtilisateurs);
+		
+		// liste des catégories d'articles
+		List<Categorie> listCategories = categorieService.findAll();
+		modele.addAttribute("listCategories", listCategories);
 
 		return "administration";
 	}
