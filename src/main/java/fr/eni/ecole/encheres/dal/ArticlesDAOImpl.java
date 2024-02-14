@@ -29,7 +29,7 @@ public class ArticlesDAOImpl implements ArticlesDAO {
 	private final static String FIND_BY_NO_UTILISATEUR = "SELECT * FROM ARTICLES_VENDUS WHERE no_utilisateur = :noUtilisateur";
 	private final static String DELETE_BY_NO_UTILISATEUR = "DELETE FROM ARTICLES_VENDUS WHERE no_utilisateur = :noUtilisateur";
 
-	private final static String FIND_BY_NO_ARTICLE = "SELECT A.*, C.libelle FROM ARTICLES_VENDUS A JOIN CATEGORIES C ON A.no_categorie = C.no_categorie WHERE A.no_article = :noArticle";
+	private final static String FIND_BY_NO_ARTICLE = "SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, ARTICLES_VENDUS.no_utilisateur, ARTICLES_VENDUS.no_categorie, pseudo, nom, prenom, email, telephone, libelle FROM ARTICLES_VENDUS INNER JOIN UTILISATEURS ON ARTICLES_VENDUS.no_utilisateur = UTILISATEURS.no_utilisateur INNER JOIN CATEGORIES ON ARTICLES_VENDUS.no_categorie = CATEGORIES.no_categorie where no_article = :noArticle";
 
 	private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
@@ -91,7 +91,7 @@ public class ArticlesDAOImpl implements ArticlesDAO {
 		MapSqlParameterSource map = new MapSqlParameterSource();
 		map.addValue("noArticle", noArticle);
 
-		return this.namedParameterJdbcTemplate.queryForObject(FIND_BY_NO_ARTICLE, map, new ArticlesRowMapper2());
+		return this.namedParameterJdbcTemplate.queryForObject(FIND_BY_NO_ARTICLE, map, new ArticlesRowMapper());
 	}
 
 	// Récupère les articles d'un utilisteur
@@ -169,7 +169,7 @@ class ArticlesRowMapper implements RowMapper<ArticleVendu> {
 				rs.getString("description"), rs.getDate("date_debut_encheres"), rs.getDate("date_fin_encheres"),
 				rs.getInt("prix_initial"), rs.getInt("prix_vente"));
 		article.setCategorie(categorie);
-		article.setUtilisateurV(utilisateur);
+		article.setVendeur(utilisateur);
 		return article;
 	}
 }

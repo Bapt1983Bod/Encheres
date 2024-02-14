@@ -5,8 +5,6 @@ import java.io.Serializable;
 import java.sql.Date;
 import java.util.List;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -182,21 +180,37 @@ public class ArticleVendu implements Serializable {
 		this.lieuRetrait = lieuRetrait;
 	}
 
-	public Utilisateur getUtilsateurA() {
+//	public Utilisateur getUtilsateurA() {
+//		return acheteur;
+//	}
+
+	public Utilisateur getAcheteur() {
 		return acheteur;
 	}
 
-	public void setUtilsateurA(Utilisateur utilsateurA) {
-		this.acheteur = utilsateurA;
+	public void setAcheteur(Utilisateur acheteur) {
+		this.acheteur = acheteur;
 	}
 
-	public Utilisateur getUtilisateurV() {
+	public Utilisateur getVendeur() {
 		return vendeur;
 	}
 
-	public void setUtilisateurV(Utilisateur utilisateurV) {
-		this.vendeur = utilisateurV;
+	public void setVendeur(Utilisateur vendeur) {
+		this.vendeur = vendeur;
 	}
+//
+//	public void setUtilsateurA(Utilisateur acheteur) {
+//		this.acheteur = acheteur;
+//	}
+//
+//	public Utilisateur getUtilisateurV() {
+//		return vendeur;
+//	}
+
+//	public void setUtilisateurV(Utilisateur utilisateurV) {
+//		this.vendeur = utilisateurV;
+//	}
 
 	public Categorie getCategorie() {
 		return categorie;
