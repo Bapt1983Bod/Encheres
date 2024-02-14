@@ -66,14 +66,12 @@ public class ArticlesServiceImpl implements ArticlesService {
 	@Override
 	public List<ArticleVendu> filtreVentes(String etat, List<ArticleVendu> listNonTriee) {
 		List<ArticleVendu> listArticles = new ArrayList<ArticleVendu>();
-		
-		
+
 		long miliseconds = System.currentTimeMillis();
 		Date date = new Date(miliseconds);
-		
-		
+
 		if (etat != null) {
-			
+
 			if (etat.equals("enAttente")) {
 				for (ArticleVendu art : listNonTriee) {
 					if (art.getDateDebutEncheres().after(date)) {
@@ -88,15 +86,15 @@ public class ArticlesServiceImpl implements ArticlesService {
 						listArticles.add(art);
 					}
 				}
-			}else if (etat.equals("enCours")) {
+			} else if (etat.equals("enCours")) {
 				for (ArticleVendu art : listNonTriee) {
-						art.setEtatVente("enCours");
-						listArticles.add(art);
+					art.setEtatVente("enCours");
+					listArticles.add(art);
 				}
+			} else {
+				listArticles = listNonTriee;
+			}
 		}
-		 else {
-			listArticles = listNonTriee;
-		}}
 
 		return listArticles;
 	}
@@ -120,7 +118,7 @@ public class ArticlesServiceImpl implements ArticlesService {
 	@Override
 	public List<ArticleVendu> setEtatVente(List<ArticleVendu> listArticles) {
 		List<ArticleVendu> listEtatSet = new ArrayList<ArticleVendu>();
-		
+
 		// Obtient la date actuelle
 		Calendar calendar = Calendar.getInstance();
 		// Convertit Calendar en Date
@@ -130,9 +128,7 @@ public class ArticlesServiceImpl implements ArticlesService {
 		calendar.add(Calendar.DAY_OF_YEAR, -1);
 		// Convertit Calendar en Date
 		Date datePlusUnJour = calendar.getTime();
-		
-		
-				
+
 		for (ArticleVendu art : listArticles) {
 			if (art.getDateDebutEncheres().after(dateDuJour)) {
 				art.setEtatVente("enAttente");

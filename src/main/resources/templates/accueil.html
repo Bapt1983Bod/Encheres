@@ -67,12 +67,10 @@
 				</div>
 				<div id="achatsForm" style="display: none;">
 					<!-- Formulaire pour les achats -->
-					<input type="checkbox" id="encheresOuvertes" name="encheresOuverte">
-					<label for="encheresOuverte">Enchères ouvertes</label><br>
-					<input type="checkbox" id="encheresEncours" name="encheresEncours">
+					<input type="radio" id="encheresEncours" name="encheres" value="enCours">
 					<label for="encheresEncours">Mes enchères en cours</label><br>
-					<input type="checkbox" id="encheresRemportees" name="encheresRemportees">
-					<label for="encheresRemportees">Mes Encheres Remportées</label><br>
+					<input type="radio" id="encheresRemportees" name="encheres" value="remportees">
+					<label for="encheresRemportees">Mes encheres remportées</label><br>
 				</div>
 				</div>
 					<div>
@@ -97,7 +95,7 @@
 			<p th:text="${'Début des enchères : '+a.dateDebutEncheres +'  Fin des enchères : '+a.dateFinEncheres}"></p>
 			<p th:text="${'Mise à prix : ' + a.miseAPrix +' euros'}"></p>
 			<p th:text="${'Catégorie : ' + a.categorie.libelle}"></p>
-			<button th:if="${a.etatVente == 'enCours'}" sec:authorize="isAuthenticated()" type="button"><a th:href="@{'/acheter?noArticle=' + ${a.noArticle}}">Faire une enchère</a></button>
+			<button th:if="${a.etatVente == 'enCours'}" sec:authorize="isAuthenticated()" type="button"><a th:href="@{'/acheter?noArticle=' + ${a.noArticle}}">Détails de la vente</a></button>
 			<button th:if="${a.etatVente == 'enAttente'}" sec:authorize="isAuthenticated()" type="button"><a th:href="@{'/modificationArticle?noArticle=' + ${a.noArticle}}">Modifier mon article</a></button>
 		</div>
 	</section>

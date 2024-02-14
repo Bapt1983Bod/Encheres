@@ -77,8 +77,7 @@ public class EncheresController {
 					// terminée)
 					listArticles = articlesService.filtreVentes(vente, maListNonTriée);
 				} else if (filtre.equals("achats")) {
-					// Recuperation en fonction de l'état de l'enchère (ouverte, en cours,
-					// remportéé)
+					// Récupération de la liste complete des articles ou l'utilisateur connecté à une enchère en fonction de la categorie
 //		        listArticles = articlesService.findByCatAndStringAndTypeVente(id, string, "achats");
 				}
 			} else {

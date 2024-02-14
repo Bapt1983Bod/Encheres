@@ -23,7 +23,7 @@ public interface ArticlesDAO {
 	
 	// Recherche des articles d'un acheteur en fonction d'une chaine de caractères
 	public List<ArticleVendu> findByNoUtilString (int noUtilisateur, String string);
-
+	
 	public int createArticle(int idVendeur, ArticleVendu article);
 
 	ArticleVendu findArticleByNoArticle(int noArticle);
