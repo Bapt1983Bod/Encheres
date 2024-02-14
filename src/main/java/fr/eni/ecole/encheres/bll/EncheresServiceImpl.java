@@ -1,5 +1,7 @@
 package fr.eni.ecole.encheres.bll;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import fr.eni.ecole.encheres.bo.Enchere;
@@ -52,6 +54,11 @@ public class EncheresServiceImpl implements EncheresService {
 	public void surenchere(int noArticle, long montantEnchere, Utilisateur acheteur) {
 		encheresDAO.surenchere(noArticle, montantEnchere, acheteur);
 
+	}
+
+	@Override
+	public List<Enchere> findAll() {
+		return encheresDAO.findAll();
 	}
 
 }

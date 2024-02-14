@@ -30,7 +30,9 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 	// liste des utilisateurs sans l'utilisateur connecté (pour admin)
 	private static final String FIND_UTILISATEURS = "SELECT * FROM UTILISATEURS WHERE no_utilisateur != :noUtilisateur";
 	// desactivation utilisateur
-	private static final String STATUT ="UPDATE UTILISATEURS SET  administrateur = :statut WHERE no_utilisateur = :noUtilisateur";
+	private static final String STATUT = "UPDATE UTILISATEURS SET  administrateur = :statut WHERE no_utilisateur = :noUtilisateur";
+	private static final String UPDATE_CREDIT = "UPDATE UTILISATEURS SET credit = credit - :montantEnchere WHERE no_utilisateur = :noUtilisateur";
+	private static final String RESTORE_CREDIT = "UPDATE UTILISATEURS SET credit = credit + :montantEnchere WHERE no_utilisateur = :noUtilisateur";
 
 	private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
@@ -44,7 +46,6 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 
 	public void creerUtilisateur(Utilisateur utilisateur) {
 
-		
 		MapSqlParameterSource map = new MapSqlParameterSource();
 		map.addValue("pseudo", utilisateur.getPseudo());
 		map.addValue("nom", utilisateur.getNom());
@@ -58,7 +59,6 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 		map.addValue("credit", utilisateur.getCredit());
 		map.addValue("administrateur", utilisateur.getAdministrateur());
 
-		
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 		this.namedParameterJdbcTemplate.update(INSERT, map, keyHolder);
 
@@ -91,7 +91,7 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 						user.setAdministrateur(rs.getInt("administrateur"));
 						return user;
 					});
-			
+
 			return Optional.ofNullable(utilisateur);
 		} catch (EmptyResultDataAccessException e) {
 			return Optional.empty();
@@ -117,7 +117,7 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 
 	@Override
 	public void modifierUtilisateur(Utilisateur utilisateur) {
-		
+
 		MapSqlParameterSource params = new MapSqlParameterSource();
 		params.addValue("nom", utilisateur.getNom());
 		params.addValue("prenom", utilisateur.getPrenom());
@@ -127,7 +127,7 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 		params.addValue("codePostal", utilisateur.getCodePostal());
 		params.addValue("ville", utilisateur.getVille());
 		params.addValue("pseudo", utilisateur.getPseudo());
-		params.addValue("mdp",passwordEncoder.encode(utilisateur.getMotDePasse()) );
+		params.addValue("mdp", passwordEncoder.encode(utilisateur.getMotDePasse()));
 
 		namedParameterJdbcTemplate.update(UPDATE, params);
 
@@ -149,20 +149,22 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 	public List<Utilisateur> findUtilisateurs(Utilisateur utilisateurConnecte) {
 		MapSqlParameterSource map = new MapSqlParameterSource();
 		map.addValue("noUtilisateur", utilisateurConnecte.getNoUtilisateur());
-		
-		return this.namedParameterJdbcTemplate.query(FIND_UTILISATEURS,map,  new BeanPropertyRowMapper<>(Utilisateur.class));
+
+		return this.namedParameterJdbcTemplate.query(FIND_UTILISATEURS, map,
+				new BeanPropertyRowMapper<>(Utilisateur.class));
 	}
 
-	// modification du statut d'un utilisateur (désactivation, activation, passage en admin)
+	// modification du statut d'un utilisateur (désactivation, activation, passage
+	// en admin)
 	@Override
 	public void statutUtilisateur(int noUtilisateur, int statut) {
-		System.out.println("DAO STATUT : "+ statut);
+		System.out.println("DAO STATUT : " + statut);
 		MapSqlParameterSource map = new MapSqlParameterSource();
 		map.addValue("noUtilisateur", noUtilisateur);
-		map.addValue("statut", statut );
-		
-		this.namedParameterJdbcTemplate.update(STATUT,map);
-		
+		map.addValue("statut", statut);
+
+		this.namedParameterJdbcTemplate.update(STATUT, map);
+
 	}
 
 	@Override
@@ -170,29 +172,46 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 		MapSqlParameterSource params = new MapSqlParameterSource().addValue("noUtilisateur", noUtilisateur);
 
 		try {
-			Utilisateur utilisateur = namedParameterJdbcTemplate.queryForObject(SELECT_BY_ID, params,
-					(rs, rowNum) -> {
-						Utilisateur user = new Utilisateur();
-						user.setNoUtilisateur(rs.getInt("no_utilisateur"));
-						user.setPseudo(rs.getString("pseudo"));
-						user.setNom(rs.getString("nom"));
-						user.setPrenom(rs.getString("prenom"));
-						user.setEmail(rs.getString("email"));
-						user.setTelephone(rs.getString("telephone"));
-						user.setRue(rs.getString("rue"));
-						user.setCodePostal(rs.getString("code_postal"));
-						user.setVille(rs.getString("ville"));
-						user.setMotDePasse(rs.getString("mot_de_passe"));
-						user.setCredit(rs.getInt("credit"));
-						user.setAdministrateur(rs.getInt("administrateur"));
-						return user;
-					});
-			
+			Utilisateur utilisateur = namedParameterJdbcTemplate.queryForObject(SELECT_BY_ID, params, (rs, rowNum) -> {
+				Utilisateur user = new Utilisateur();
+				user.setNoUtilisateur(rs.getInt("no_utilisateur"));
+				user.setPseudo(rs.getString("pseudo"));
+				user.setNom(rs.getString("nom"));
+				user.setPrenom(rs.getString("prenom"));
+				user.setEmail(rs.getString("email"));
+				user.setTelephone(rs.getString("telephone"));
+				user.setRue(rs.getString("rue"));
+				user.setCodePostal(rs.getString("code_postal"));
+				user.setVille(rs.getString("ville"));
+				user.setMotDePasse(rs.getString("mot_de_passe"));
+				user.setCredit(rs.getInt("credit"));
+				user.setAdministrateur(rs.getInt("administrateur"));
+				return user;
+			});
+
 			return Optional.ofNullable(utilisateur);
 		} catch (EmptyResultDataAccessException e) {
 			return Optional.empty();
 		}
 	}
 
+	@Override
+	public void updateCredit(Utilisateur utilisateur, long montantEnchere) {
+		MapSqlParameterSource map = new MapSqlParameterSource();
+		map.addValue("montantEnchere", montantEnchere);
+		map.addValue("noUtilisateur", utilisateur.getNoUtilisateur());
+
+		this.namedParameterJdbcTemplate.update(UPDATE_CREDIT, map);
+	}
+
+	@Override
+	public void restoreCredit(Utilisateur utilisateur, long montantEnchere) {
+		MapSqlParameterSource map = new MapSqlParameterSource();
+		map.addValue("montantEnchere", montantEnchere);
+		map.addValue("credit", utilisateur.getCredit());
+		map.addValue("noUtilisateur", utilisateur.getNoUtilisateur());
+		
+		this.namedParameterJdbcTemplate.update(RESTORE_CREDIT, map);
+	}
 
 }

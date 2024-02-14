@@ -26,6 +26,10 @@ public interface UtilisateurDAO {
 	
 	void statutUtilisateur (int noUtilisateur ,  int statut);
 	
+	// Retire le montant de l'enchère sur le compte utilisateur
+	public void updateCredit (Utilisateur utilisateur, long montantEnchere);
 	
+	// Recredite l'utilisateur du montant de l'enchère annulée
+	public void restoreCredit (Utilisateur utilisateur, long montantEnchere);
 
 }
