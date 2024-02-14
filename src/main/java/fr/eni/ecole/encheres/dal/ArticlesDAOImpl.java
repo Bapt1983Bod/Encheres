@@ -25,9 +25,11 @@ public class ArticlesDAOImpl implements ArticlesDAO {
 	private final static String FIND_BY_UTIL_CAT_STRING = "SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, ARTICLES_VENDUS.no_utilisateur, ARTICLES_VENDUS.no_categorie, pseudo, nom, prenom, email, telephone, libelle FROM ARTICLES_VENDUS INNER JOIN UTILISATEURS ON ARTICLES_VENDUS.no_utilisateur = UTILISATEURS.no_utilisateur INNER JOIN CATEGORIES ON ARTICLES_VENDUS.no_categorie = CATEGORIES.no_categorie where UTILISATEURS.no_utilisateur = :noUtilisateur and nom_article like :string and ARTICLES_VENDUS.no_categorie= :id;";;
 	private final static String FIND_BY_UTIL_STRING = "SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, ARTICLES_VENDUS.no_utilisateur, ARTICLES_VENDUS.no_categorie, pseudo, nom, prenom, email, telephone, libelle FROM ARTICLES_VENDUS INNER JOIN UTILISATEURS ON ARTICLES_VENDUS.no_utilisateur = UTILISATEURS.no_utilisateur INNER JOIN CATEGORIES ON ARTICLES_VENDUS.no_categorie = CATEGORIES.no_categorie where UTILISATEURS.no_utilisateur = :noUtilisateur and nom_article like :string;";;
 	private final static String CREATE_ARTICLE = "INSERT INTO ARTICLES_VENDUS (nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie) values (:nom,:description, :dateDebut, :dateFin, :prix, null, :idUtilisateur, :idCategorie)";
-	private final static String FIND_BY_NO_ARTICLE = "SELECT * FROM ARTICLES_VENDUS WHERE no_article = :noArticle";
+//	private final static String FIND_BY_NO_ARTICLE = "SELECT * FROM ARTICLES_VENDUS WHERE no_article = :noArticle";
 	private final static String FIND_BY_NO_UTILISATEUR = "SELECT * FROM ARTICLES_VENDUS WHERE no_utilisateur = :noUtilisateur";
 	private final static String DELETE_BY_NO_UTILISATEUR = "DELETE FROM ARTICLES_VENDUS WHERE no_utilisateur = :noUtilisateur";
+
+	private final static String FIND_BY_NO_ARTICLE = "SELECT A.*, C.libelle FROM ARTICLES_VENDUS A JOIN CATEGORIES C ON A.no_categorie = C.no_categorie WHERE A.no_article = :noArticle";
 
 	private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
@@ -154,22 +156,23 @@ public class ArticlesDAOImpl implements ArticlesDAO {
 	}
 
 }
-	// RowMapper Article complet avec Catégorie/Utilisateur
-	class ArticlesRowMapper implements RowMapper<ArticleVendu> {
 
-		@Override
-		public ArticleVendu mapRow(ResultSet rs, int rowNum) throws SQLException {
-			Utilisateur utilisateur = new Utilisateur(rs.getInt("no_utilisateur"), rs.getString("pseudo"),
-					rs.getString("nom"), rs.getString("prenom"), rs.getString("email"), rs.getString("telephone"));
-			Categorie categorie = new Categorie(rs.getInt("no_categorie"), rs.getString("libelle"));
-			ArticleVendu article = new ArticleVendu(rs.getInt("no_article"), rs.getString("nom_article"),
-					rs.getString("description"), rs.getDate("date_debut_encheres"), rs.getDate("date_fin_encheres"),
-					rs.getInt("prix_initial"), rs.getInt("prix_vente"));
-			article.setCategorie(categorie);
-			article.setUtilisateurV(utilisateur);
-			return article;
-		}
+// RowMapper Article complet avec Catégorie/Utilisateur
+class ArticlesRowMapper implements RowMapper<ArticleVendu> {
+
+	@Override
+	public ArticleVendu mapRow(ResultSet rs, int rowNum) throws SQLException {
+		Utilisateur utilisateur = new Utilisateur(rs.getInt("no_utilisateur"), rs.getString("pseudo"),
+				rs.getString("nom"), rs.getString("prenom"), rs.getString("email"), rs.getString("telephone"));
+		Categorie categorie = new Categorie(rs.getInt("no_categorie"), rs.getString("libelle"));
+		ArticleVendu article = new ArticleVendu(rs.getInt("no_article"), rs.getString("nom_article"),
+				rs.getString("description"), rs.getDate("date_debut_encheres"), rs.getDate("date_fin_encheres"),
+				rs.getInt("prix_initial"), rs.getInt("prix_vente"));
+		article.setCategorie(categorie);
+		article.setUtilisateurV(utilisateur);
+		return article;
 	}
+}
 
 // RowMapper Article simple : seulement l'article
 class ArticlesRowMapper2 implements RowMapper<ArticleVendu> {
