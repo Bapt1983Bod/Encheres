@@ -55,7 +55,7 @@
 </form>
 	
 	<p th:if="${highestEnchere != null}">
-   		<span th:if="${highestEnchere.utilisateur.noUtilisateur == utilisateurConnecte.noUtilisateur}">Vous avez la meilleure enchère</span>
+   		<span th:if="${highestEnchere?.utilisateur?.noUtilisateur == utilisateurConnecte.noUtilisateur}">Vous avez la meilleure enchère</span>
 	</p>
 
 

@@ -223,8 +223,13 @@ public class EncheresDAOImpl implements EncheresDAO {
 		params.addValue("noArticle", noArticle);
 		params.addValue("noUtilisateur", utilisateur.getNoUtilisateur());
 		
-		Enchere enchere = jdbcTemplate.queryForObject(FIND_ENCHERE_BY_NOARTICLE_AND_NOUTILISTEUR, params, new EnchereRowMapper());
-		return enchere;
+		try {
+	        Enchere enchere = jdbcTemplate.queryForObject(FIND_ENCHERE_BY_NOARTICLE_AND_NOUTILISTEUR, params, new EnchereRowMapper());
+	        return enchere;
+	    } catch (EmptyResultDataAccessException e) {
+	        // Aucune enchère trouvée, retourner null 
+	        return null;
+	    }
 	}
 
 }
