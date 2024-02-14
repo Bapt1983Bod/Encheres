@@ -24,11 +24,11 @@ public class EncheresDAOImpl implements EncheresDAO {
 //	private static final String UPDATE_CREDIT = "UPDATE UTILISATEURS SET credit = credit - :montantEnchere WHERE no_utilisateur = :noUtilisateur";
 	private static final String DELETE_ENCHERE = "DELETE FROM ENCHERES WHERE no_article = :noArticle AND no_utilisateur = :noUtilisateur";
 	private static final String FIND_ENCHERE_BY_NOARTICLE_AND_NOUTILISTEUR = "SELECT * FROM ENCHERES WHERE no_article = :noArticle AND no_utilisateur = :noUtilisateur";
-	private static final String RESTORE_CREDIT = "UPDATE UTILISATEURS SET credit = credit + :montantEnchere WHERE no_utilisateur = :noUtilisateur";
+//	private static final String RESTORE_CREDIT = "UPDATE UTILISATEURS SET credit = credit + :montantEnchere WHERE no_utilisateur = :noUtilisateur";
 	private static final String FIND_ENCHERE_BY_NOARTICLE = "SELECT * FROM ENCHERES WHERE no_article = :noArticle";
 	private static final String FIND_ENCHERE_BY_NOUTILISATEUR = "SELECT * FROM ENCHERES WHERE no_utilisateur = :noUtilisateur";
 	private static final String FIND_ALL ="SELECT * FROM ENCHERES";
-	private static final String GET_HIGHEST_ENCHERE = "SELECT TOP 1 * FROM ENCHERES WHERE no_article = :noArticle ORDER BY montant_enchere DESC";
+//	private static final String GET_HIGHEST_ENCHERE = "SELECT TOP 1 * FROM ENCHERES WHERE no_article = :noArticle ORDER BY montant_enchere DESC";
 	private static final String DELETE_ENCHERE_BY_NOARTICLE = "DELETE FROM ENCHERES WHERE no_article = :noArticle";
 	private static final String DELETE_ENCHERE_BY_NOUTILISATEUR = "DELETE FROM ENCHERES WHERE no_utilisateur = :noUtilisateur";
 
