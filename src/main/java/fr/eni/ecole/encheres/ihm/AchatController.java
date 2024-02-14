@@ -27,12 +27,14 @@ public class AchatController {
 		this.utilisateurService = utilisateurService;
 	}
 
+	// affichage du détail de la vente d'un article
 	@GetMapping("/acheter")
 	public String afficherDetailsVente(@RequestParam("noArticle") int noArticle, Model model) {
 		ArticleVendu articleVendu = articlesService.findArticleByNoArticle(noArticle);
 		Enchere highestEnchere = encheresService.getHighestEnchere(noArticle); // afficher l'enchere la plus haute
 		Utilisateur utilisateurConnecte = utilisateurService.getUtilisateurConnecte();
 		boolean peutSurencherir = false;
+
 		// si utilisateur connecté à déja enchéri sur l'article, retourne true et peut
 		// surenchérir
 		if (encheresService.aEncheriSurArticle(noArticle, utilisateurConnecte)) {
@@ -72,4 +74,5 @@ public class AchatController {
 
 		return "redirect:/acheter?noArticle=" + noArticle;
 	}
+
 }

@@ -18,4 +18,5 @@ public interface EncheresService {
 	boolean aEncheriSurArticle(int noArticle, Utilisateur acheteur);
 
 	void surenchere(int noArticle, long montantEnchere, Utilisateur acheteur);
+
 }
