@@ -157,7 +157,7 @@ public class EncheresDAOImpl implements EncheresDAO {
 
 	@Override
 	public List<Enchere> findAll() {
-		return this.jdbcTemplate.query(FIND_ALL, new BeanPropertyRowMapper<>(Enchere.class));
+		return this.jdbcTemplate.query(FIND_ALL, new EnchereRowMapper());
 	}
 
 	@Override

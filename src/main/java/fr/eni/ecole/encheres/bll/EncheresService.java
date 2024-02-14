@@ -2,6 +2,7 @@ package fr.eni.ecole.encheres.bll;
 
 import java.util.List;
 
+import fr.eni.ecole.encheres.bo.ArticleVendu;
 import fr.eni.ecole.encheres.bo.Enchere;
 import fr.eni.ecole.encheres.bo.Utilisateur;
 
@@ -23,5 +24,9 @@ public interface EncheresService {
 	
 	// Renvoi la liste de toutes les enchères
 		public List<Enchere> findAll();
-
+	
+	// Liste des enchères d'un utilisateur en cours
+	public List<ArticleVendu> listEnchUtilisateurEnCours(Utilisateur utilisateur);
+	
+	
 }

@@ -19,16 +19,15 @@ import fr.eni.ecole.encheres.bo.Utilisateur;
 @Repository
 public class ArticlesDAOImpl implements ArticlesDAO {
 
-	private final static String FIND_ALL = "SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, ARTICLES_VENDUS.no_utilisateur, ARTICLES_VENDUS.no_categorie, pseudo, nom, prenom, email, telephone, libelle FROM ARTICLES_VENDUS INNER JOIN UTILISATEURS ON ARTICLES_VENDUS.no_utilisateur = UTILISATEURS.no_utilisateur INNER JOIN CATEGORIES ON ARTICLES_VENDUS.no_categorie = CATEGORIES.no_categorie where date_fin_encheres >= :dateDuJour AND date_debut_encheres <= :dateDuJour;";
+	private final static String FIND_ALL ="SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, ARTICLES_VENDUS.no_utilisateur, ARTICLES_VENDUS.no_categorie, pseudo, nom, prenom, email, telephone, libelle FROM ARTICLES_VENDUS INNER JOIN UTILISATEURS ON ARTICLES_VENDUS.no_utilisateur = UTILISATEURS.no_utilisateur INNER JOIN CATEGORIES ON ARTICLES_VENDUS.no_categorie = CATEGORIES.no_categorie";
+	private final static String FIND_ALL_EN_COURS = "SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, ARTICLES_VENDUS.no_utilisateur, ARTICLES_VENDUS.no_categorie, pseudo, nom, prenom, email, telephone, libelle FROM ARTICLES_VENDUS INNER JOIN UTILISATEURS ON ARTICLES_VENDUS.no_utilisateur = UTILISATEURS.no_utilisateur INNER JOIN CATEGORIES ON ARTICLES_VENDUS.no_categorie = CATEGORIES.no_categorie where date_fin_encheres >= :dateDuJour AND date_debut_encheres <= :dateDuJour;";
 	private final static String FIND_BY_CATEGORIE_AND_STRING = "SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, ARTICLES_VENDUS.no_utilisateur, ARTICLES_VENDUS.no_categorie, pseudo, nom, prenom, email, telephone, libelle FROM ARTICLES_VENDUS INNER JOIN UTILISATEURS ON ARTICLES_VENDUS.no_utilisateur = UTILISATEURS.no_utilisateur INNER JOIN CATEGORIES ON ARTICLES_VENDUS.no_categorie = CATEGORIES.no_categorie where date_debut_encheres <= :dateDuJour and date_fin_encheres >= :dateDuJour and nom_article like :string and ARTICLES_VENDUS.no_categorie= :id;";
 	private final static String FIND_BY_STRING = "SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, ARTICLES_VENDUS.no_utilisateur, ARTICLES_VENDUS.no_categorie, pseudo, nom, prenom, email, telephone, libelle FROM ARTICLES_VENDUS INNER JOIN UTILISATEURS ON ARTICLES_VENDUS.no_utilisateur = UTILISATEURS.no_utilisateur INNER JOIN CATEGORIES ON ARTICLES_VENDUS.no_categorie = CATEGORIES.no_categorie where date_debut_encheres <= :dateDuJour and date_fin_encheres >= :dateDuJour and nom_article like :string;";
 	private final static String FIND_BY_UTIL_CAT_STRING = "SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, ARTICLES_VENDUS.no_utilisateur, ARTICLES_VENDUS.no_categorie, pseudo, nom, prenom, email, telephone, libelle FROM ARTICLES_VENDUS INNER JOIN UTILISATEURS ON ARTICLES_VENDUS.no_utilisateur = UTILISATEURS.no_utilisateur INNER JOIN CATEGORIES ON ARTICLES_VENDUS.no_categorie = CATEGORIES.no_categorie where UTILISATEURS.no_utilisateur = :noUtilisateur and nom_article like :string and ARTICLES_VENDUS.no_categorie= :id;";;
 	private final static String FIND_BY_UTIL_STRING = "SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, ARTICLES_VENDUS.no_utilisateur, ARTICLES_VENDUS.no_categorie, pseudo, nom, prenom, email, telephone, libelle FROM ARTICLES_VENDUS INNER JOIN UTILISATEURS ON ARTICLES_VENDUS.no_utilisateur = UTILISATEURS.no_utilisateur INNER JOIN CATEGORIES ON ARTICLES_VENDUS.no_categorie = CATEGORIES.no_categorie where UTILISATEURS.no_utilisateur = :noUtilisateur and nom_article like :string;";;
 	private final static String CREATE_ARTICLE = "INSERT INTO ARTICLES_VENDUS (nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie) values (:nom,:description, :dateDebut, :dateFin, :prix, null, :idUtilisateur, :idCategorie)";
-//	private final static String FIND_BY_NO_ARTICLE = "SELECT * FROM ARTICLES_VENDUS WHERE no_article = :noArticle";
 	private final static String FIND_BY_NO_UTILISATEUR = "SELECT * FROM ARTICLES_VENDUS WHERE no_utilisateur = :noUtilisateur";
 	private final static String DELETE_BY_NO_UTILISATEUR = "DELETE FROM ARTICLES_VENDUS WHERE no_utilisateur = :noUtilisateur";
-
 	private final static String FIND_BY_NO_ARTICLE = "SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, ARTICLES_VENDUS.no_utilisateur, ARTICLES_VENDUS.no_categorie, pseudo, nom, prenom, email, telephone, libelle FROM ARTICLES_VENDUS INNER JOIN UTILISATEURS ON ARTICLES_VENDUS.no_utilisateur = UTILISATEURS.no_utilisateur INNER JOIN CATEGORIES ON ARTICLES_VENDUS.no_categorie = CATEGORIES.no_categorie where no_article = :noArticle";
 
 	private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
@@ -36,12 +35,20 @@ public class ArticlesDAOImpl implements ArticlesDAO {
 	public ArticlesDAOImpl(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
 		this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
 	}
+	
+	@Override
+	public List<ArticleVendu> findAll() {
+		List<ArticleVendu> listArticles = this.namedParameterJdbcTemplate.query(FIND_ALL, new ArticlesRowMapper());
+		return listArticles;
+	}
 
 	// Récupère l'ensemble des articles dans la bbd dont la vente est en cours
-	public List<ArticleVendu> findAll(LocalDate date) {
+	public List<ArticleVendu> findAllEnCours() {
+		LocalDate date = LocalDate.now();
+		
 		MapSqlParameterSource map = new MapSqlParameterSource();
 		map.addValue("dateDuJour", date);
-		List<ArticleVendu> listArticles = this.namedParameterJdbcTemplate.query(FIND_ALL, map, new ArticlesRowMapper());
+		List<ArticleVendu> listArticles = this.namedParameterJdbcTemplate.query(FIND_ALL_EN_COURS, map, new ArticlesRowMapper());
 		return listArticles;
 	}
 
@@ -154,6 +161,7 @@ public class ArticlesDAOImpl implements ArticlesDAO {
 
 		return this.namedParameterJdbcTemplate.query(FIND_BY_STRING, map, new ArticlesRowMapper());
 	}
+
 
 }
 

@@ -23,10 +23,8 @@ public class ArticlesServiceImpl implements ArticlesService {
 
 	// Récupère la liste des articles en vente à la date du jour
 	@Override
-	public List<ArticleVendu> findAll() {
-		LocalDate date = LocalDate.now();
-
-		return articlesDAO.findAll(date);
+	public List<ArticleVendu> findAllEnCours() {
+		return articlesDAO.findAllEnCours();
 	}
 
 	// Récupère la liste des articles dans la bdd dont la vente est en cours en
