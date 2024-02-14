@@ -7,7 +7,7 @@ import fr.eni.ecole.encheres.bo.Utilisateur;
 
 public interface ArticlesService {
 
-	public List<ArticleVendu> findAll();
+	public List<ArticleVendu> findAllEnCours();
 	
 	// Recherche des articles en fonction d'une chaine de caractères dont la vente est active
 	public List<ArticleVendu> findByString (String string);

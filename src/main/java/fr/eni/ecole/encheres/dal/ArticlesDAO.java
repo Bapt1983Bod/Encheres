@@ -6,8 +6,10 @@ import java.util.List;
 import fr.eni.ecole.encheres.bo.ArticleVendu;
 
 public interface ArticlesDAO {
+	
+	public List<ArticleVendu> findAll();
 
-	public List<ArticleVendu> findAll(LocalDate date);
+	public List<ArticleVendu> findAllEnCours();
 	
 	// Recherche des articles en fonction d'une chaine de caractères dont la vente est active
 	public List<ArticleVendu> findByString (LocalDate date, String string);

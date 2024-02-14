@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import fr.eni.ecole.encheres.bll.ArticlesService;
 import fr.eni.ecole.encheres.bll.CategorieService;
+import fr.eni.ecole.encheres.bll.EncheresService;
 import fr.eni.ecole.encheres.bll.UtilisateurService;
 import fr.eni.ecole.encheres.bo.ArticleVendu;
 import fr.eni.ecole.encheres.bo.Categorie;
@@ -24,20 +25,21 @@ public class EncheresController {
 	private ArticlesService articlesService;
 	private CategorieService categorieService;
 	private UtilisateurService utilisateurService;
+	private EncheresService encheresService;
 
 	public EncheresController(ArticlesService articlesService, CategorieService categorieService,
-			UtilisateurService utilisateurService) {
+			UtilisateurService utilisateurService, EncheresService encheresService) {
 		this.utilisateurService = utilisateurService;
 		this.articlesService = articlesService;
 		this.categorieService = categorieService;
-
+		this.encheresService = encheresService;
 	}
 
 	// affichage de la page d'accueil
 	@GetMapping({ "/", "/accueil", "/login", "/accueilLogo" })
 	public String accueil(Model modele) {
 		// Récupération de la liste des articles
-		List<ArticleVendu> listArticles = articlesService.findAll();
+		List<ArticleVendu> listArticles = articlesService.findAllEnCours();
 		listArticles = articlesService.setEtatVente(listArticles);
 		// Récupération de la liste des catégories
 		List<Categorie> listCategories = categorieService.findAll();
@@ -54,7 +56,9 @@ public class EncheresController {
 	public String accueilFiltre(@RequestParam("textFilter") String string,
 			@RequestParam("selectCategorie") int idcategory,
 			@RequestParam(value = "filtre", required = false) String filtre,
-			@RequestParam(value = "vente", required = false) String vente, Model modele) {
+			@RequestParam(value = "vente", required = false) String vente, 
+			@RequestParam(value = "encheres", required = false) String encheres,
+			Model modele) {
 		
 		System.out.println("on passe içi");
 		
@@ -96,7 +100,10 @@ public class EncheresController {
 					// terminée)
 					listArticles = articlesService.filtreVentes(vente, maListNonTriée);
 				} else if (filtre.equals("achats")) {
-					// Recuperation en fonction de l'état de l'enchère (ouverte, en cours, remportéé)
+					// Recuperation en fonction de l'état de l'enchère (en cours, remportéé)
+						if (encheres.equals("enCours")) {
+							listArticles = encheresService.listEnchUtilisateurEnCours(utilisateur);
+						}
 //		        listArticles = articlesService.findByCatAndStringAndTypeVente(id, string, "achats");
 				}
 			} else {
