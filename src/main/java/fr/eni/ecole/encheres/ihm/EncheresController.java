@@ -38,9 +38,10 @@ public class EncheresController {
 	public String accueil(Model modele) {
 		// Récupération de la liste des articles
 		List<ArticleVendu> listArticles = articlesService.findAll();
+		listArticles = articlesService.setEtatVente(listArticles);
 		// Récupération de la liste des catégories
 		List<Categorie> listCategories = categorieService.findAll();
-
+		
 		// Ajout des listes au modèle
 		modele.addAttribute("listArticles", listArticles);
 		modele.addAttribute("listCategories", listCategories);

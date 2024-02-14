@@ -49,14 +49,19 @@ public class SecurityConfig {
 				.requestMatchers(HttpMethod.GET, "/acheter").hasAnyRole("ADMIN", "UTILISATEUR")
 				.requestMatchers(HttpMethod.POST, "/encherir").hasAnyRole("ADMIN", "UTILISATEUR")
 				.requestMatchers(HttpMethod.POST, "/surenchere").hasAnyRole("ADMIN", "UTILISATEUR")
-				.requestMatchers(HttpMethod.POST, "/filtres").permitAll().requestMatchers(HttpMethod.GET, "/vendre")
-				.authenticated().requestMatchers(HttpMethod.POST, "/vendre").authenticated()
+				.requestMatchers(HttpMethod.POST, "/filtres").permitAll()
+				.requestMatchers(HttpMethod.GET, "/vendre").authenticated()
+				.requestMatchers(HttpMethod.POST, "/vendre").authenticated()
+				.requestMatchers(HttpMethod.GET, "/modificationArticle").authenticated()
+				.requestMatchers(HttpMethod.POST, "/modificationArticle").authenticated()
 				.requestMatchers(HttpMethod.GET, "/administration").hasRole("ADMIN")
 				.requestMatchers(HttpMethod.POST, "/suppressionAdmin").hasRole("ADMIN")
 				.requestMatchers(HttpMethod.POST, "/desactivation").hasRole("ADMIN")
 				.requestMatchers(HttpMethod.POST, "/activation").hasRole("ADMIN")
-				.requestMatchers(HttpMethod.POST, "/admin").hasRole("ADMIN").requestMatchers("/css/*").permitAll()
-				.requestMatchers("/img/*").permitAll().anyRequest().denyAll());
+				.requestMatchers(HttpMethod.POST, "/admin").hasRole("ADMIN")
+				.requestMatchers("/css/*").permitAll()
+				.requestMatchers("/img/*").permitAll()
+				.anyRequest().denyAll());
 
 		// Paramétrage de la page de login
 		http.formLogin(form -> {

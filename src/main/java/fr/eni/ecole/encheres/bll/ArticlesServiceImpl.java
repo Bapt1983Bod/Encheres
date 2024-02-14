@@ -2,6 +2,7 @@ package fr.eni.ecole.encheres.bll;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -65,32 +66,37 @@ public class ArticlesServiceImpl implements ArticlesService {
 	@Override
 	public List<ArticleVendu> filtreVentes(String etat, List<ArticleVendu> listNonTriee) {
 		List<ArticleVendu> listArticles = new ArrayList<ArticleVendu>();
+		
+		
 		long miliseconds = System.currentTimeMillis();
 		Date date = new Date(miliseconds);
+		
+		
 		if (etat != null) {
-			if (etat.equals("enCours")) {
-				for (ArticleVendu art : listNonTriee) {
-					if (art.getDateDebutEncheres().before(date) && art.getDateFinEncheres().after(date)) {
-						listArticles.add(art);
-					}
-				}
-			} else if (etat.equals("enAttente")) {
+			
+			if (etat.equals("enAttente")) {
 				for (ArticleVendu art : listNonTriee) {
 					if (art.getDateDebutEncheres().after(date)) {
+						art.setEtatVente("enAttente");
 						listArticles.add(art);
 					}
 				}
 			} else if (etat.equals("terminee")) {
 				for (ArticleVendu art : listNonTriee) {
 					if (art.getDateFinEncheres().before(date)) {
+						art.setEtatVente("terminee");
 						listArticles.add(art);
 					}
 				}
-			}
+			}else if (etat.equals("enCours")) {
+				for (ArticleVendu art : listNonTriee) {
+						art.setEtatVente("enCours");
+						listArticles.add(art);
+				}
 		}
 		 else {
 			listArticles = listNonTriee;
-		}
+		}}
 
 		return listArticles;
 	}
@@ -108,8 +114,38 @@ public class ArticlesServiceImpl implements ArticlesService {
 	@Override
 	public List<ArticleVendu> findByString(String string) {
 		LocalDate date = LocalDate.now();
-
 		return articlesDAO.findByString(date, string);
+	}
+
+	@Override
+	public List<ArticleVendu> setEtatVente(List<ArticleVendu> listArticles) {
+		List<ArticleVendu> listEtatSet = new ArrayList<ArticleVendu>();
+		
+		// Obtient la date actuelle
+		Calendar calendar = Calendar.getInstance();
+		// Convertit Calendar en Date
+		Date dateDuJour = calendar.getTime();
+
+		// Ajoute un jour à la date actuelle
+		calendar.add(Calendar.DAY_OF_YEAR, -1);
+		// Convertit Calendar en Date
+		Date datePlusUnJour = calendar.getTime();
+		
+		
+				
+		for (ArticleVendu art : listArticles) {
+			if (art.getDateDebutEncheres().after(dateDuJour)) {
+				art.setEtatVente("enAttente");
+				listEtatSet.add(art);
+			} else if (art.getDateFinEncheres().before(datePlusUnJour)) {
+				art.setEtatVente("terminee");
+				listEtatSet.add(art);
+			} else {
+				art.setEtatVente("enCours");
+				listEtatSet.add(art);
+			}
+		}
+		return listEtatSet;
 	}
 
 }

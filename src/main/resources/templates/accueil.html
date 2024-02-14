@@ -96,7 +96,9 @@
 			<p th:text="${a.description}"></p>
 			<p th:text="${'Début des enchères : '+a.dateDebutEncheres +'  Fin des enchères : '+a.dateFinEncheres}"></p>
 			<p th:text="${'Mise à prix : ' + a.miseAPrix +' euros'}"></p>
-			<button type="button"><a th:href="@{'/acheter?noArticle=' + ${a.noArticle}}">Faire une enchère</a></button>
+			<p th:text="${'Catégorie : ' + a.categorie.libelle}"></p>
+			<button th:if="${a.etatVente == 'enCours'}" sec:authorize="isAuthenticated()" type="button"><a th:href="@{'/acheter?noArticle=' + ${a.noArticle}}">Faire une enchère</a></button>
+			<button th:if="${a.etatVente == 'enAttente'}" sec:authorize="isAuthenticated()" type="button"><a th:href="@{'/modificationArticle?noArticle=' + ${a.noArticle}}">Modifier mon article</a></button>
 		</div>
 	</section>
 

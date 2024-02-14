@@ -33,7 +33,7 @@ public class VendreController {
 		this.articlesService = articlesService;
 		this.retraitService = retraitService;
 		this.categorieService = categorieService;
-		
+
 	}
 
 	@GetMapping("/vendre")
@@ -41,8 +41,6 @@ public class VendreController {
 		// Création d'un article vide
 		ArticleVendu article = new ArticleVendu();
 		modele.addAttribute("article", article);
-
-		System.out.println("id utilisateur : " + utilisateurService.getUtilisateurConnecte());
 
 		// Récupération de la liste des catégories
 		List<Categorie> listCategories = categorieService.findAll();
@@ -54,25 +52,28 @@ public class VendreController {
 	public String ajouterArticle(@ModelAttribute("article") ArticleVendu article, BindingResult bindingResult,
 			@RequestParam("rue") String rue, @RequestParam("codePostal") String codePostal,
 			@RequestParam("ville") String ville) {
-		
-		
+
 		if (bindingResult.hasErrors()) {
-			System.out.println("il y a error");
+
 			return "vendre";
 		} else {
 			// Récupération de l'id de l'utilisateur connecté
 			Utilisateur vendeur = utilisateurService.getUtilisateurConnecte();
-			System.out.println("vendeur : "+ vendeur);
 
 			// Création de l'article en bdd et récupération du no d'article
 			int idArticle = articlesService.createArticle(vendeur, article);
-			System.out.println("idArticle : "+ idArticle);
 
 			// création du point de retrait
 			retraitService.createRetrait(idArticle, vendeur, rue, codePostal, ville);
 
 			return "redirect:/vendre";
 		}
+
+	}
+
+	@GetMapping("/modificationArticle")
+	public String modificationArticle(@RequestParam("noArticle") int noArticle) {
+		return "modification-article";
 
 	}
 
