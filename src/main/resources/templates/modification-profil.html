@@ -16,12 +16,7 @@
 
 		<form th:action="@{/modification-profil}" method="post" th:object="${utilisateur}" >
 			
-			<ul th:if="${#fields.hasErrors('*')}" class="error">
-				<li>ATTENTION : Veuillez vérifier vos champs</li>
-				<ul>
-					<li th:each="err : ${#fields.globalErrors()}" th:text="${err}"></li>
-				</ul>
-			</ul>
+			
 			
 			
 			<div>
@@ -59,6 +54,12 @@
 				<input type="password" id="mdpactuel" name="mdpactuel" value="********" readonly>
 				<br />
 				<br />
+				<ul th:if="${#fields.hasErrors('*')}" class="error">
+				
+				<ul>
+					<li th:each="err : ${#fields.globalErrors()}" th:text="${err}"></li>
+				</ul>
+			</ul>
 				<label for="motDePasse">Nouveau mot de passe :</label>
 				<input type="password" id="motDePasse" name="motDePasse" value="">
 				<br />

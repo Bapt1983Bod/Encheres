@@ -74,7 +74,7 @@ public class ProfilController {
 
 			// Modification du mot de passe
 			try {
-				if (pwd.equals(pwdConfirm) && pwd.length() > 0 && utilisateurService.validePassword(pwd)) {
+				if (pwd.length() > 0 && utilisateurService.validePassword(pwd, pwdConfirm)) {
 					utilisateur.setMotDePasse(pwd);
 					System.out.println("mot de passe");
 				}

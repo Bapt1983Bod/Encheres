@@ -17,10 +17,12 @@
 				<div>
 					<label for="nom">Article</label>
 					<input type="text" name="nomArticle" th:field="*{nomArticle}" required />
+					<div th:replace="~{fragments/fragment-error :: frag-error('nomArticle')}"></div>
 				</div>
 				<div>
 					<label for="description">Description</label>
 					<input type="text" name="description" th:field="*{description}" required />
+					<div th:replace="~{fragments/fragment-error :: frag-error('description')}"></div>
 				</div>
 				<div>
 					<label for="categorie">Catégorie</label>
@@ -32,14 +34,17 @@
 				<div>
 					<label for="prix">Mise à prix</label>
 					<input type="number" name="prix" min="0" th:field="*{miseAPrix}" required />
+					<div th:replace="~{fragments/fragment-error :: frag-error('miseAPrix')}"></div>
 				</div>
 				<div>
 					<label for="dateDebut">Début de l'enchère</label>
 					<input type="date" name="dateDebut" th:field="*{dateDebutEncheres}" required />
+					<div th:replace="~{fragments/fragment-error :: frag-error('dateDebutEncheres')}"></div>
 				</div>
 				<div>
 					<label for="dateFin">Fin de l'enchère</label>
 					<input type="date" name="dateFin" th:field="*{dateFinEncheres}" required />
+					<div th:replace="~{fragments/fragment-error :: frag-error('dateFinEncheres')}"></div>
 				</div>
 
 				<div id="retraitform">

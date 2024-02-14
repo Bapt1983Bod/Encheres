@@ -22,24 +22,25 @@ public class Utilisateur implements Serializable {
 	@Pattern(regexp = "^[a-zA-Z0-9]+$", message = "Le pseudo ne doit contenir que des caractères alphanumériques")
 	private String pseudo;
 	@NotBlank
-	@Pattern(regexp = "^[a-zA-Z-' ]+$", message = "Le nom ne doit contenir que des lettres, des tirets (-) et des apostrophes (')")
+	@Pattern(regexp = "^[a-zA-Z-' àÀâÂäÄçÇéÉèÈêÊëËîÎïÏôÔöÖùÙûÛüÜ]+$", message = "Le nom ne doit contenir que des lettres, des tirets (-) et des apostrophes (')")
 	private String nom;
 	@NotBlank
-	@Pattern(regexp = "^[a-zA-Z-' ]+$", message = "Le nom ne doit contenir que des lettres, des tirets (-) et des apostrophes (')")
+	@Pattern(regexp = "^[a-zA-Z-' àÀâÂäÄçÇéÉèÈêÊëËîÎïÏôÔöÖùÙûÛüÜ]+$", message = "Le nom ne doit contenir que des lettres, des tirets (-) et des apostrophes (')")
 	private String prenom;
 	@NotBlank
+	@Pattern(regexp = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$", message ="Format email non valide")
 	private String email;
 	@NotBlank
 	@Pattern(regexp = "\\d+", message = "Le code postal ne doit contenir que des chiffres")
 	private String telephone;
 	@NotBlank
-	@Pattern(regexp = "^[a-zA-Z0-9-' ]+$", message = "Le nom de la rue ne doit contenir que des lettres sans accent, des chiffres, des tirets (-) et des apostrophes (')")
+	@Pattern(regexp = "^[a-zA-Z0-9-' àÀâÂäÄçÇéÉèÈêÊëËîÎïÏôÔöÖùÙûÛüÜ]+$", message = "Le nom de la rue ne doit contenir que des lettres, des chiffres, des tirets (-) et des apostrophes (')")
 	private String rue;
 	@NotBlank
 	@Pattern(regexp = "\\d+", message = "Le code postal ne doit contenir que des chiffres")
 	private String codePostal;
 	@NotBlank
-	@Pattern(regexp = "^[a-zA-Z-' ]+$", message = "Le nom de la ville ne doit contenir que des lettres, des tirets (-) et des apostrophes (')")
+	@Pattern(regexp = "^[a-zA-Z0-9-' àÀâÂäÄçÇéÉèÈêÊëËîÎïÏôÔöÖùÙûÛüÜ]+$", message = "Le nom de la ville ne doit contenir que des lettres, des tirets (-) et des apostrophes (')")
 	private String ville;
 	
 	private String motDePasse;

@@ -10,22 +10,16 @@
 <body>
 	<div th:replace="~{fragments/entete :: frag-entete('Formulaire d\'inscription')}"></div>
 
-	
+
 
 	<section class="container">
 
 		<form th:action="@{/inscription}" th:object="${utilisateur}" method="post">
-			
-			<!-- block affichage des erreurs -->
-		<ul th:if="${#fields.hasErrors('*')}" class="error">
-				<li>ATTENTION : Veuillez vérifier vos champs</li>
-				<ul>
-					<li th:each="err : ${#fields.globalErrors()}" th:text="${err}"></li>
-				</ul>
-			</ul>
-			
+
+
+
 			<label for="pseudo">Pseudo:</label>
-			<input type="text" id="pseudo" name="pseudo" th:field="*{pseudo}"  required><br>
+			<input type="text" id="pseudo" name="pseudo" th:field="*{pseudo}" required><br>
 			<div th:replace="~{fragments/fragment-error :: frag-error('pseudo')}"></div>
 
 			<label for="nom">Nom:</label>
@@ -55,6 +49,14 @@
 			<label for="ville">Ville:</label>
 			<input type="text" id="ville" name="ville" th:field="*{ville}"><br>
 			<div th:replace="~{fragments/fragment-error :: frag-error('ville')}"></div>
+
+			<!-- block affichage des erreurs -->
+			<ul th:if="${#fields.hasErrors('*')}" class="error">
+				<li>ATTENTION : Veuillez vérifier vos champs</li>
+				<ul>
+					<li th:each="err : ${#fields.globalErrors()}" th:text="${err}"></li>
+				</ul>
+			</ul>
 
 			<label for="motDePasse">Mot de passe:</label>
 			<input type="password" id="motDePasse" name="motDePasse" th:field="*{motDePasse}" required><br>

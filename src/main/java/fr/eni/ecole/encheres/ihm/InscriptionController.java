@@ -40,8 +40,11 @@ public class InscriptionController {
 			return "inscription";
 		} else {
 			try {
+				utilisateurService.validePassword(utilisateur.getMotDePasse(), confirmMdp); 
 				utilisateurService.creerUtilisateur(utilisateur, confirmMdp);
+				
 				return "redirect:/accueil";
+				
 			} catch (BusinessException e) {
 				e.getMessages().forEach(erreur -> {
 					ObjectError objectError = new ObjectError("globalError", erreur); // nom globalError obligatoire, ne peut pas être modifié.

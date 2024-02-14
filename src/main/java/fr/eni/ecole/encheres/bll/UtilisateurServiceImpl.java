@@ -25,6 +25,9 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		this.utilisateurDAO = utilisateurDAO;
 	}
 
+	/*
+	 * Création d'un utilisateur
+	 */
 	@Override
 	public void creerUtilisateur(Utilisateur utilisateur, String confirmMdp) throws BusinessException {
 		BusinessException e = new BusinessException();
@@ -44,6 +47,9 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		}
 	}
 
+	/*
+	 * Recherche utilisateur par son pseudo
+	 */
 	@Override
 	public Utilisateur findByPseudo(String pseudo) {
 		Optional<Utilisateur> utilisateurOptional = utilisateurDAO.findByPseudo(pseudo);
@@ -51,6 +57,9 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		return utilisateur;
 	}
 
+	/*
+	 * Methode de récupération des informations du l'utilisateur connecté
+	 */
 	@Override
 	public Utilisateur getUtilisateurConnecte() {
 		System.out.println("méthode getIdUtilisateur");
@@ -64,11 +73,17 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		return null;
 	}
 
+	/*
+	 * Méthode de modification du profil
+	 */
 	@Override
 	public void modifierUtilisateur(Utilisateur utilisateur) {
 		utilisateurDAO.modifierUtilisateur(utilisateur);
 	}
 
+	/*
+	 * 
+	 */
 	@Override
 	public void supprimerUtilisateur(Utilisateur utilisateur) {
 		utilisateurDAO.supprimerUtilisateur(utilisateur);
@@ -97,9 +112,11 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 	}
 
 	
-	// Méthode de validation password
+	/*
+	 * Méthode de validation password (vérification regex/password identique au passwordConfirm)
+	 */
 	@Override
-	public Boolean validePassword(String password) throws BusinessException {
+	public Boolean validePassword(String password, String pwdConfirm) throws BusinessException {
 		BusinessException e = new BusinessException();
 		
 		// Vérifie si le mot de passe a au moins 8 caractères
@@ -112,11 +129,20 @@ public class UtilisateurServiceImpl implements UtilisateurService {
         // Création du matcher pour vérifier le mot de passe
         Matcher matcher = pattern.matcher(password);
 
-        if (matcher.matches()) {
-        	return true;
-        } else {
+        // Vérification validité password par rapport au regex
+        if (!matcher.matches()) {
         	e.add("le mot de passe est invalide");
         	e.add("le mot de passe doit avoir au moins 8 caractères, une majuscule, une minuscule, un chiffre");
+        } 
+        // Vérification que les deux mdp sont identiques
+        if (!(password.equals(pwdConfirm))) {
+        	e.add("les mots de passe ne sont pas identiques");
+        } 
+        
+        // Retourne true si aucun message d'erreur
+        if (e.getMessages().isEmpty()) {
+        	return true;
+        } else {
         	throw e;
         }
         
