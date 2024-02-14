@@ -23,7 +23,7 @@
 
 			
 			
-			<li th:if="${highestEnchere != null}">
+			<li th:if="${highestEnchere.montantEnchere > 0}">
  		    <span>Enchère la plus haute :</span> 
    			<span th:text="${highestEnchere.montantEnchere}"></span>
 			</li>
