@@ -16,6 +16,7 @@ import fr.eni.ecole.encheres.bll.RetraitService;
 import fr.eni.ecole.encheres.bll.UtilisateurService;
 import fr.eni.ecole.encheres.bo.ArticleVendu;
 import fr.eni.ecole.encheres.bo.Categorie;
+import fr.eni.ecole.encheres.bo.Retrait;
 import fr.eni.ecole.encheres.bo.Utilisateur;
 import jakarta.validation.Valid;
 
@@ -72,7 +73,22 @@ public class VendreController {
 	}
 
 	@GetMapping("/modificationArticle")
-	public String modificationArticle(@RequestParam("noArticle") int noArticle) {
+	public String modificationArticle(@RequestParam("noArticle") int noArticle, Model modele) {
+		// Récupération de l'article vendu
+		ArticleVendu article = articlesService.findArticleByNoArticle(noArticle);
+		// Récupération de la liste des catégories
+		List<Categorie> listCategories = categorieService.findAll();
+		// Récupération du retrait lié à l'article
+		Retrait retrait = retraitService.readRetrait(noArticle);
+		System.out.println(retrait);
+		
+		article.setLieuRetrait(retrait);
+		System.out.println(article);
+		
+				
+		modele.addAttribute("article", article);
+		modele.addAttribute("listCategories", listCategories);
+		
 		return "modification-article";
 
 	}

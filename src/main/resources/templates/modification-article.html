@@ -11,69 +11,64 @@
 	<div th:replace="~{fragments/entete :: frag-entete('Modification du profil')}"></div>
 
 	<section class="container">
+		<div class="article">
+			<form th:object="${article}" th:action="@{/modifierArticle}" method="post">
+				<div>
+					<label for="nom">Article</label>
+					<input type="text" name="nomArticle" th:field="*{nomArticle}" required />
+					<div th:replace="~{fragments/fragment-error :: frag-error('nomArticle')}"></div>
+				</div>
+				<div>
+					<label for="description">Description</label>
+					<input type="text" name="description" th:field="*{description}" required />
+					<div th:replace="~{fragments/fragment-error :: frag-error('description')}"></div>
+				</div>
+				<div>
+					<label for="categorie">Catégorie</label>
+					<select name="noCategorie" id="selectCategorie" th:field="*{categorie}" required>
+						<option th:each="c : ${listCategories}" th:text="${c.libelle}" th:value="${c.noCategorie}">
+						</option>
+					</select>
+				</div>
+				<div>
+					<label for="prix">Mise à prix</label>
+					<input type="number" name="prix" min="0" th:field="*{miseAPrix}" required />
+					<div th:replace="~{fragments/fragment-error :: frag-error('miseAPrix')}"></div>
+				</div>
+				<div>
+					<label for="dateDebut">Début de l'enchère</label>
+					<input type="date" name="dateDebut" th:field="*{dateDebutEncheres}" required />
+					<div th:replace="~{fragments/fragment-error :: frag-error('dateDebutEncheres')}"></div>
+				</div>
+				<div>
+					<label for="dateFin">Fin de l'enchère</label>
+					<input type="date" name="dateFin" th:field="*{dateFinEncheres}" required />
+					<div th:replace="~{fragments/fragment-error :: frag-error('dateFinEncheres')}"></div>
+				</div>
 
+				<div id="retraitform">
+					<h3>Retrait</h3>
+					<div>
+						<label for="rue">Rue</label>
+						<input type="text" name="rue" th:field="*{lieuRetrait.rue}" required/>
+					</div>
+					<div>
+						<label for="codePostal">Code Postal</label>
+						<input type="text" name="codePostal" th:field="*{lieuRetrait.codePostal}" required/>
+					</div>
+					<div>
+						<label for="ville">Ville</label>
+						<input type="text" name="ville" th:field="*{lieuRetrait.ville}" required/>
+					</div>
+				</div>
 
+				<div>
+					<button type="submit">Enregistrer</button>
+					<button type="reset">Annuler</button>
+				</div>
 
-<!--		<form th:action="@{/modificationArticle}" method="post" th:object="${utilisateur}" >-->
-			
-			
-			
-			
-<!--			<div>-->
-<!--				<label for="pseudo">Pseudo:</label>-->
-<!--				<input type="text" id="pseudo" name="pseudo" th:value="${utilisateur.pseudo}" readonly>-->
-<!--				<br />-->
-<!--				<label for="nom">Nom:</label>-->
-<!--				<input type="text" id="nom" name="nom" th:value="${utilisateur.nom}" th:field="*{nom}" required><br>-->
-<!--				<div th:replace="~{fragments/fragment-error :: frag-error('nom')}"></div>-->
-<!--				<label for="prenom">Prénom:</label>-->
-<!--				<input type="text" id="prenom" name="prenom" th:value="${utilisateur.prenom}" th:field="*{prenom}" required>-->
-<!--				<br />-->
-<!--				<div th:replace="~{fragments/fragment-error :: frag-error('prenom')}"></div>-->
-<!--				<label for="email">Email:</label>-->
-<!--				<input type="text" id="email" name="email" th:value="${utilisateur.email}" th:field="*{email}" required>-->
-<!--				<br />-->
-<!--				<div th:replace="~{fragments/fragment-error :: frag-error('email')}"></div>-->
-<!--				<label for="telephone">Téléphone:</label>-->
-<!--				<input type="text" id="telephone" name="telephone" th:value="${utilisateur.telephone}" th:field="*{telephone}" required>-->
-<!--				<br />-->
-<!--				<div th:replace="~{fragments/fragment-error :: frag-error('telephone')}"></div>-->
-<!--				<label for="rue">Rue:</label>-->
-<!--				<input type="text" id="rue" name="rue" th:value="${utilisateur.rue}" th:field="*{rue}" required>-->
-<!--				<br />-->
-<!--				<div th:replace="~{fragments/fragment-error :: frag-error('rue')}"></div>-->
-<!--				<label for="codePostal">Code Postal:</label>-->
-<!--				<input type="text" id="codePostal" name="codePostal" th:value="${utilisateur.codePostal}" th:field="*{codePostal}" required>-->
-<!--				<br />-->
-<!--				<div th:replace="~{fragments/fragment-error :: frag-error('codePostal')}"></div>-->
-<!--				<label for="ville">Ville:</label>-->
-<!--				<input type="text" id="ville" name="ville" th:value="${utilisateur.ville}" th:field="*{ville}" required>-->
-<!--				<br />-->
-<!--				<div th:replace="~{fragments/fragment-error :: frag-error('ville')}"></div>-->
-<!--				<label for="motDePasse">Mot de passe actuel :</label>-->
-<!--				<input type="password" id="mdpactuel" name="mdpactuel" value="********" readonly>-->
-<!--				<br />-->
-<!--				<br />-->
-<!--				<ul th:if="${#fields.hasErrors('*')}" class="error">-->
-				
-<!--				<ul>-->
-<!--					<li th:each="err : ${#fields.globalErrors()}" th:text="${err}"></li>-->
-<!--				</ul>-->
-<!--			</ul>-->
-<!--				<label for="motDePasse">Nouveau mot de passe :</label>-->
-<!--				<input type="password" id="motDePasse" name="motDePasse" value="">-->
-<!--				<br />-->
-<!--				<br />-->
-<!--				<label for="motDePasse">Confirmation Nouveau mot de passe :</label>-->
-<!--				<input type="password" id="confirmNewMdp" name="newPwdConfirm" value="">-->
-<!--				<br />-->
-<!--			</div>-->
-<!--			<div>-->
-<!--				<button type="submit">Enregistrer</button>-->
-<!--			</div>-->
-<!--		</form>-->
-
-<!--		</div>-->
+			</form>
+		</div>
 	</section>
 </body>
 

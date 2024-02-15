@@ -32,8 +32,7 @@ public class RetraitServiceImpl implements RetraitService {
 
 	@Override
 	public Retrait readRetrait(int idArticle) {
-		// TODO Auto-generated method stub
-		return null;
+		return retraitDAO.readRetrait(idArticle);
 	}
 
 	@Override

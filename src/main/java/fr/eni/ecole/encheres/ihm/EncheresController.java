@@ -53,8 +53,6 @@ public class EncheresController {
 		// Récupération de la liste des catégories
 		List<Categorie> listCategories = categorieService.findAll();
 		
-		
-		
 		// Ajout des listes au modèle
 		modele.addAttribute("listArticles", listAafficher);
 		modele.addAttribute("listCategories", listCategories);
