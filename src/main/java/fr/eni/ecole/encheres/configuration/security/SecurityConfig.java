@@ -63,7 +63,7 @@ public class SecurityConfig {
 				.requestMatchers("/css/*").permitAll()
 				.requestMatchers("/img/*").permitAll()
 				.anyRequest().denyAll());
-
+		
 		// Paramétrage de la page de login
 		http.formLogin(form -> {
 			form.loginPage("/login").permitAll();
@@ -79,6 +79,10 @@ public class SecurityConfig {
 										// d'une deconnection
 				.permitAll() // détermine qui a accès à la deconnection
 		);
+		
+		// Parametrage de l'expiratio  de session
+		
+
 
 		return http.build();
 	}

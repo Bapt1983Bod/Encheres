@@ -51,7 +51,7 @@ public class VendreController {
 	}
 
 	@PostMapping("/vendre")
-	public String ajouterArticle(@ModelAttribute("article") ArticleVendu article, BindingResult bindingResult,
+	public String ajouterArticle(@Valid @ModelAttribute("article") ArticleVendu article, BindingResult bindingResult,
 			@RequestParam("rue") String rue, @RequestParam("codePostal") String codePostal,
 			@RequestParam("ville") String ville) {
 
@@ -93,7 +93,7 @@ public class VendreController {
 	}
 
 	@PostMapping("/modificationArticle")
-	public String modifierArticle(@ModelAttribute("article") ArticleVendu article, BindingResult bindingResult) {
+	public String modifierArticle(@Valid @ModelAttribute("article") ArticleVendu article, BindingResult bindingResult) {
 
 		if (bindingResult.hasErrors()) {
 			return "modification-article";
