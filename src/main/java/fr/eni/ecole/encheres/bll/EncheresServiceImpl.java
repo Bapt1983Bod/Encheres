@@ -179,6 +179,9 @@ public class EncheresServiceImpl implements EncheresService {
 		for (ArticleVendu art : articlesClosed) {
 			Enchere e =  getHighestEnchere(art.getNoArticle());
 			List<Enchere> encheres = new ArrayList<Enchere>();
+			Utilisateur acheteur = utilisateurDAO.findById(e.getUtilisateur().getNoUtilisateur()).get();
+			art.setAcheteur(acheteur);
+			art.setPrixVente(e.getMontantEnchere());
 			encheres.add(e);
 			art.setListeEnchere(encheres);
 		}
