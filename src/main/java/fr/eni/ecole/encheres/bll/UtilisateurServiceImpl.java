@@ -65,12 +65,16 @@ public class UtilisateurServiceImpl implements UtilisateurService {
 		System.out.println("méthode getIdUtilisateur");
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
 		System.out.println("user: " + username);
-		Utilisateur utilisateur = utilisateurDAO.findByPseudo(username).get();
-		if (utilisateur != null) {
-			System.out.println("utilisateur" + utilisateur);
-			return utilisateur;
-		}
-		return null;
+		
+		Optional<Utilisateur> utilisateurOptional = utilisateurDAO.findByPseudo(username);
+	    
+	    if (utilisateurOptional.isPresent()) {
+	        Utilisateur utilisateur = utilisateurOptional.get();
+	        return utilisateur;
+	    } else {
+	        // Gérer le cas où aucun utilisateur n'est trouvé avec le nom d'utilisateur donné
+	        return null; // ou lancer une exception appropriée
+	    }
 	}
 
 	/*
