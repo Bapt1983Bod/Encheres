@@ -10,6 +10,6 @@ public interface CategorieDAO {
 
 	public Categorie findById(int id);
 
-	public int ajouterCategorie(Categorie categorie);
+	public void ajouterCategorie(String libelle);
 
 }

@@ -28,8 +28,9 @@ public class CategorieServiceImpl implements CategorieService {
 	}
 
 	@Override
-	public void ajouterCategorie(Categorie categorie) {
-		categorieDAO.ajouterCategorie(categorie);
+	public void ajouterCategorie(String libelle) {
+		categorieDAO.ajouterCategorie(libelle);
+
 	}
 
 }

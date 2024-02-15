@@ -112,10 +112,10 @@
 
 <!--		</div>-->
 
-		<form th:action="@{/categories}" method="post" th:object="${categorie}">
+		<form th:action="@{/categories}" method="post">
 		    <div>
 		        <label for="libelleCat">Libellé catégorie</label>
-		        <input type="text" name="libelle" th:field="*{libelle}" />
+		        <input type="text" name="libelle" />
 		    </div>
 		    <div>
 		        <button type="submit">Valider</button>

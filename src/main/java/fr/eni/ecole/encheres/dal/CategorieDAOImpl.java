@@ -39,11 +39,10 @@ public class CategorieDAOImpl implements CategorieDAO {
 
 	// methode pour ajouter une categorie
 	@Override
-	public int ajouterCategorie(Categorie categorie) {
+	public void ajouterCategorie(String libelle) {
 		MapSqlParameterSource params = new MapSqlParameterSource();
-		params.addValue("noCategorie", categorie.getNoCategorie());
-		params.addValue("libelle", categorie.getLibelle());
+		params.addValue("libelle", libelle);
 
-		return namedParameterJdbcTemplate.update(CREATE_CATEGORY, params);
+		this.namedParameterJdbcTemplate.update(CREATE_CATEGORY, params);
 	}
 }

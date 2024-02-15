@@ -107,11 +107,10 @@ public class AdministrationController {
 	}
 
 	@PostMapping("/categories")
-	public String ajouterCategorie(@RequestParam Categorie categorie) {
+	public String ajouterCategorie(@RequestParam("libelle") String libelle) {
 		// Ajouter la nouvelle catégorie
-		categorieService.ajouterCategorie(categorie);
+		categorieService.ajouterCategorie(libelle);
 
-		// Retourner une réponse indiquant que la catégorie a été ajoutée avec succès
 		return "redirect:/administration";
 	}
 }

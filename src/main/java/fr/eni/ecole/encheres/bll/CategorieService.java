@@ -10,5 +10,5 @@ public interface CategorieService {
 
 	public Categorie findById(int id);
 
-	public void ajouterCategorie(Categorie categorie);
+	public void ajouterCategorie(String libelle);
 }
