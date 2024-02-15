@@ -1,5 +1,7 @@
 package fr.eni.ecole.encheres.ihm;
 
+import java.util.Date;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,6 +37,15 @@ public class AchatController {
 		Utilisateur utilisateurConnecte = utilisateurService.getUtilisateurConnecte();
 		boolean peutSurencherir = false;
 
+		ArticleVendu articleRemporte = articlesService.setEtatVente(articleVendu);
+		boolean aRemporteLaVente = false;
+
+		if (articleRemporte.getEtatVente().equals("terminee")
+				&& articleRemporte.getDateFinEncheres().before(new Date())) {
+
+			aRemporteLaVente = true;
+		}
+
 		// si utilisateur connecté à déja enchéri sur l'article, retourne true et peut
 		// surenchérir
 		if (encheresService.aEncheriSurArticle(noArticle, utilisateurConnecte)) {
@@ -44,6 +55,7 @@ public class AchatController {
 		model.addAttribute("highestEnchere", highestEnchere);
 		model.addAttribute("utilisateurConnecte", utilisateurConnecte);
 		model.addAttribute("peutSurencherir", peutSurencherir);
+		model.addAttribute("aRemporteLaVente", aRemporteLaVente);
 
 		return "encheres";
 	}
