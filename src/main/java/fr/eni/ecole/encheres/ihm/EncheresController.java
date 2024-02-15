@@ -40,7 +40,9 @@ public class EncheresController {
 	public String accueil(Model modele) {
 		// Récupération de la liste des articles
 		List<ArticleVendu> listArticles = articlesService.findAllEnCours();
-		listArticles = articlesService.setEtatVente(listArticles);
+		for (ArticleVendu art : listArticles) {
+			articlesService.setEtatVente(art);
+		}
 		// Récupération de la liste des catégories
 		List<Categorie> listCategories = categorieService.findAll();
 		

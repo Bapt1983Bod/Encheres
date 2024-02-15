@@ -114,9 +114,8 @@ public class ArticlesServiceImpl implements ArticlesService {
 	}
 
 	@Override
-	public List<ArticleVendu> setEtatVente(List<ArticleVendu> listArticles) {
-		List<ArticleVendu> listEtatSet = new ArrayList<ArticleVendu>();
-
+	public ArticleVendu setEtatVente(ArticleVendu art) {
+		
 		// Obtient la date actuelle
 		Calendar calendar = Calendar.getInstance();
 		// Convertit Calendar en Date
@@ -127,19 +126,16 @@ public class ArticlesServiceImpl implements ArticlesService {
 		// Convertit Calendar en Date
 		Date datePlusUnJour = calendar.getTime();
 
-		for (ArticleVendu art : listArticles) {
+		
 			if (art.getDateDebutEncheres().after(dateDuJour)) {
 				art.setEtatVente("enAttente");
-				listEtatSet.add(art);
 			} else if (art.getDateFinEncheres().before(datePlusUnJour)) {
 				art.setEtatVente("terminee");
-				listEtatSet.add(art);
 			} else {
 				art.setEtatVente("enCours");
-				listEtatSet.add(art);
 			}
-		}
-		return listEtatSet;
+		
+		return art;
 	}
 
 }

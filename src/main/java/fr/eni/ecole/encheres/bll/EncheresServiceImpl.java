@@ -147,11 +147,13 @@ public class EncheresServiceImpl implements EncheresService {
 		for (ArticleVendu art : articles) {
 			for (Enchere e : listEnchereUtil) {
 				if (e.getArticleVendu().getNoArticle() == art.getNoArticle()) {
+					articlesService.setEtatVente(art);
 					articlesUtiliEncher.add(art);
+					
 				}
 			}
 		}
-		return articlesService.setEtatVente(articlesUtiliEncher);
+		return articlesUtiliEncher;
 	}
 
 	@Override
@@ -179,8 +181,10 @@ public class EncheresServiceImpl implements EncheresService {
 		for (ArticleVendu art : articlesClosed) {
 			Enchere e =  getHighestEnchere(art.getNoArticle());
 			List<Enchere> encheres = new ArrayList<Enchere>();
-			Utilisateur acheteur = utilisateurDAO.findById(e.getUtilisateur().getNoUtilisateur()).get();
+			if (e.getUtilisateur() != null) {
+				Utilisateur acheteur = utilisateurDAO.findById(e.getUtilisateur().getNoUtilisateur()).get();
 			art.setAcheteur(acheteur);
+			}
 			art.setPrixVente(e.getMontantEnchere());
 			encheres.add(e);
 			art.setListeEnchere(encheres);

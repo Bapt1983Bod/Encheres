@@ -32,6 +32,6 @@ public interface ArticlesService {
 	
 	public List<ArticleVendu> filtreVentes (String etat, List<ArticleVendu> listNonTriee);
 	
-	public List<ArticleVendu> setEtatVente (List<ArticleVendu> listArticles);
+	public ArticleVendu setEtatVente (ArticleVendu art);
 
 }
