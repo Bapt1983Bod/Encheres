@@ -97,20 +97,31 @@
 			</table>
 		</div>
 
-		<div>
-			<h2>Ajouter une catégorie</h2>
+<!--		<div>-->
+<!--			<h2>Ajouter une catégorie</h2>-->
 
-			<form action="">
-				<div>
-					<label for="libelleCat"> Libellé catégorie</label>
-					<input type="text" />
-				</div>
-				<div>
-					<button type="submit">Valider</button>
-				</div>
-			</form>
+<!--			<form action="">-->
+<!--				<div>-->
+<!--					<label for="libelleCat"> Libellé catégorie</label>-->
+<!--					<input type="text" />-->
+<!--				</div>-->
+<!--				<div>-->
+<!--					<button type="submit">Valider</button>-->
+<!--				</div>-->
+<!--			</form>-->
 
-		</div>
+<!--		</div>-->
+
+		<form th:action="@{/categories}" method="post" th:object="${categorie}">
+		    <div>
+		        <label for="libelleCat">Libellé catégorie</label>
+		        <input type="text" name="libelle" th:field="*{libelle}" />
+		    </div>
+		    <div>
+		        <button type="submit">Valider</button>
+		    </div>
+		</form>
+
 
 	</section>
 

@@ -11,9 +11,10 @@ import fr.eni.ecole.encheres.bo.Categorie;
 
 @Repository
 public class CategorieDAOImpl implements CategorieDAO {
-	
+
 	private final static String FIND_ALL = "SELECT * FROM CATEGORIES";
 	private final static String FIND_BY_ID = "SELECT * FROM CATEGORIES where no_categorie = :id";
+	private final static String CREATE_CATEGORY = "INSERT INTO CATEGORIES (libelle) VALUES (:libelle)";
 
 	private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
@@ -24,7 +25,7 @@ public class CategorieDAOImpl implements CategorieDAO {
 	// Récupére depuis le bdd l'ensemble des catégories existantes
 	@Override
 	public List<Categorie> findAll() {
-		
+
 		return this.namedParameterJdbcTemplate.query(FIND_ALL, new BeanPropertyRowMapper<>(Categorie.class));
 	}
 
@@ -32,7 +33,17 @@ public class CategorieDAOImpl implements CategorieDAO {
 	public Categorie findById(int id) {
 		MapSqlParameterSource map = new MapSqlParameterSource();
 		map.addValue("id", id);
-		return this.namedParameterJdbcTemplate.queryForObject(FIND_BY_ID, map, new BeanPropertyRowMapper<>(Categorie.class));
+		return this.namedParameterJdbcTemplate.queryForObject(FIND_BY_ID, map,
+				new BeanPropertyRowMapper<>(Categorie.class));
 	}
 
+	// methode pour ajouter une categorie
+	@Override
+	public int ajouterCategorie(Categorie categorie) {
+		MapSqlParameterSource params = new MapSqlParameterSource();
+		params.addValue("noCategorie", categorie.getNoCategorie());
+		params.addValue("libelle", categorie.getLibelle());
+
+		return namedParameterJdbcTemplate.update(CREATE_CATEGORY, params);
+	}
 }

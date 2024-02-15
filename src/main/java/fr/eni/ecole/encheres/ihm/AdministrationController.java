@@ -44,7 +44,7 @@ public class AdministrationController {
 		// liste des utilisateurs sans l'utilisateur connecté (pour admin)
 		List<Utilisateur> listUtilisateurs = utilisateurService.findUtilisateurs(utilisateur);
 		modele.addAttribute("listUtilisateurs", listUtilisateurs);
-		
+
 		// liste des catégories d'articles
 		List<Categorie> listCategories = categorieService.findAll();
 		modele.addAttribute("listCategories", listCategories);
@@ -77,7 +77,7 @@ public class AdministrationController {
 
 //		// suppression des enchères de l'utilisateur désactivé sur les autres articles
 		encheresService.deleteByNoUtilisateur(noUtilisateur);
-			
+
 //		// désactivation de l'utilisateur
 		utilisateurService.statutUtilisateur(noUtilisateur, statut);
 		return "redirect:/administration";
@@ -103,6 +103,15 @@ public class AdministrationController {
 		Utilisateur utilisateur = utilisateurService.findByPseudo(pseudo);
 		utilisateurService.supprimerUtilisateur(utilisateur);
 
+		return "redirect:/administration";
+	}
+
+	@PostMapping("/categories")
+	public String ajouterCategorie(@RequestParam Categorie categorie) {
+		// Ajouter la nouvelle catégorie
+		categorieService.ajouterCategorie(categorie);
+
+		// Retourner une réponse indiquant que la catégorie a été ajoutée avec succès
 		return "redirect:/administration";
 	}
 }

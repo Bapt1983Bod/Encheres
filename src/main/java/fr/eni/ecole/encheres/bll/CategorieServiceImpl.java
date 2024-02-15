@@ -9,7 +9,7 @@ import fr.eni.ecole.encheres.dal.CategorieDAO;
 
 @Service
 public class CategorieServiceImpl implements CategorieService {
-	
+
 	private CategorieDAO categorieDAO;
 
 	public CategorieServiceImpl(CategorieDAO categorieDAO) {
@@ -26,7 +26,10 @@ public class CategorieServiceImpl implements CategorieService {
 	public Categorie findById(int id) {
 		return categorieDAO.findById(id);
 	}
-	
-	
+
+	@Override
+	public void ajouterCategorie(Categorie categorie) {
+		categorieDAO.ajouterCategorie(categorie);
+	}
 
 }
