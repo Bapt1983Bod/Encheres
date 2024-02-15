@@ -65,11 +65,10 @@
 
 				<div>
 					<button type="submit">Enregistrer</button>
-<!--					<button ><a href="/accueil">Annuler</a></button>-->
-				</div>
-				<div>
 					
+				<button ><a href="/accueil">Annuler</a></button>
 				</div>
+				
 			</form>
 				<div>
 					<form th:object="${article}" th:action="@{/supprimerArticle}" method="post">
