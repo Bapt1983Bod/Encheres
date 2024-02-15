@@ -21,12 +21,17 @@ public interface EncheresService {
 	boolean aEncheriSurArticle(int noArticle, Utilisateur acheteur);
 
 	void surenchere(int noArticle, long montantEnchere, Utilisateur acheteur);
-	
+
 	// Renvoi la liste de toutes les enchères
-		public List<Enchere> findAll();
-	
+	public List<Enchere> findAll();
+
 	// Liste des enchères d'un utilisateur en cours
 	public List<ArticleVendu> listEnchUtilisateurEnCours(Utilisateur utilisateur);
-	
-	
+
+	// Renvoi des ecnchères les plus hautes
+	public List<ArticleVendu> listEnchPlusHaute();
+
+	// Renvoi des ecnchères les plus hautes
+	public List<ArticleVendu> listEnchPlusHauteUtilisateur(Utilisateur utilisateur);
+
 }

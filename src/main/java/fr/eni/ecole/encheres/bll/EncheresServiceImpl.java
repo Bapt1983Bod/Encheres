@@ -1,6 +1,8 @@
 package fr.eni.ecole.encheres.bll;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -20,7 +22,8 @@ public class EncheresServiceImpl implements EncheresService {
 	private ArticlesDAO articlesDAO;
 	private ArticlesService articlesService;
 
-	public EncheresServiceImpl(EncheresDAO encheresDAO, UtilisateurDAO utilisateurDAO, ArticlesDAO articlesDAO, ArticlesService articlesService) {
+	public EncheresServiceImpl(EncheresDAO encheresDAO, UtilisateurDAO utilisateurDAO, ArticlesDAO articlesDAO,
+			ArticlesService articlesService) {
 		this.encheresDAO = encheresDAO;
 		this.utilisateurDAO = utilisateurDAO;
 		this.articlesDAO = articlesDAO;
@@ -127,7 +130,7 @@ public class EncheresServiceImpl implements EncheresService {
 
 	// Liste des enchères d'un utilisateur en cours
 	@Override
-	public List<ArticleVendu> listEnchUtilisateurEnCours (Utilisateur utilisateur) {
+	public List<ArticleVendu> listEnchUtilisateurEnCours(Utilisateur utilisateur) {
 		List<Enchere> listEnchereUtil = new ArrayList<Enchere>();
 		List<Enchere> encheres = encheresDAO.findAll();
 
@@ -149,6 +152,54 @@ public class EncheresServiceImpl implements EncheresService {
 			}
 		}
 		return articlesService.setEtatVente(articlesUtiliEncher);
+	}
+
+	@Override
+	public List<ArticleVendu> listEnchPlusHaute () {
+		// Liste de toutes les enchères
+		List<ArticleVendu> articles = articlesDAO.findAll();
+		// Liste des enchères terminées
+		List<ArticleVendu> articlesClosed = new ArrayList<ArticleVendu>();
+
+		// Obtient la date actuelle
+		Calendar calendar = Calendar.getInstance();
+		// Ajoute un jour à la date actuelle
+		calendar.add(Calendar.DAY_OF_YEAR, -1);
+		// Convertit Calendar en Date
+		Date date = calendar.getTime();
+
+		for (ArticleVendu art : articles) {
+			if (art.getDateFinEncheres().before(date)) {
+				art.setEtatVente("terminee");
+				articlesClosed.add(art);
+			}
+		}
+		
+		// Récupération de l'enchère la plus haute et intégration dans l'article
+		for (ArticleVendu art : articlesClosed) {
+			Enchere e =  getHighestEnchere(art.getNoArticle());
+			List<Enchere> encheres = new ArrayList<Enchere>();
+			encheres.add(e);
+			art.setListeEnchere(encheres);
+		}
+		return articlesClosed;
+	}
+
+	@Override
+	public List<ArticleVendu> listEnchPlusHauteUtilisateur(Utilisateur utilisateur) {
+		List<ArticleVendu> articlesClosed = listEnchPlusHaute();
+		
+		List<ArticleVendu> articlesRemportesUtilisateur = new ArrayList<ArticleVendu>();
+		
+		for (ArticleVendu art : articlesClosed) {
+			for (Enchere e : art.getListeEnchere()) {
+				if (e.getUtilisateur() != null && e.getUtilisateur().getNoUtilisateur() == (utilisateur.getNoUtilisateur())) {
+					articlesRemportesUtilisateur.add(art);
+				}
+			}
+		}
+		
+		return articlesRemportesUtilisateur;
 	}
 
 }

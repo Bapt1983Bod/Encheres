@@ -81,8 +81,12 @@ public class EncheresController {
 					// terminée)
 					listArticles = articlesService.filtreVentes(vente, maListNonTriée);
 				} else if (filtre.equals("achats")) {
-					// Récupération de la liste complete des articles ou l'utilisateur connecté à une enchère en fonction de la categorie
-//		        listArticles = articlesService.findByCatAndStringAndTypeVente(id, string, "achats");
+					// Recuperation en fonction de l'état de l'enchère (en cours, remportéé)
+					if (encheres.equals("enCours")) {
+						listArticles = encheresService.listEnchUtilisateurEnCours(utilisateur);
+					}else if (encheres.equals("remportees")) {
+						listArticles = encheresService.listEnchPlusHauteUtilisateur(utilisateur);
+					}
 				}
 			} else {
 				// Si aucun filtre n'est sélectionné, récupérez tous les articles
@@ -103,8 +107,9 @@ public class EncheresController {
 					// Recuperation en fonction de l'état de l'enchère (en cours, remportéé)
 						if (encheres.equals("enCours")) {
 							listArticles = encheresService.listEnchUtilisateurEnCours(utilisateur);
+						}else if (encheres.equals("remportees")) {
+							listArticles = encheresService.listEnchPlusHauteUtilisateur(utilisateur);
 						}
-//		        listArticles = articlesService.findByCatAndStringAndTypeVente(id, string, "achats");
 				}
 			} else {
 				listArticles = articlesService.findByString(string);
