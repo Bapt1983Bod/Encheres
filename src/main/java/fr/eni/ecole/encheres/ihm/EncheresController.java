@@ -38,16 +38,25 @@ public class EncheresController {
 	// affichage de la page d'accueil
 	@GetMapping({ "/", "/accueil", "/login", "/accueilLogo" })
 	public String accueil(Model modele) {
+				
 		// Récupération de la liste des articles
 		List<ArticleVendu> listArticles = articlesService.findAllEnCours();
+		List<ArticleVendu> listAafficher = new ArrayList<ArticleVendu>();
 		for (ArticleVendu art : listArticles) {
 			articlesService.setEtatVente(art);
+			if (utilisateurService.getUtilisateurConnecte() != null) {
+				if (art.getVendeur().getNoUtilisateur() != utilisateurService.getUtilisateurConnecte().getNoUtilisateur()) {
+					listAafficher.add(art);
+				}
+			}
 		}
 		// Récupération de la liste des catégories
 		List<Categorie> listCategories = categorieService.findAll();
 		
+		
+		
 		// Ajout des listes au modèle
-		modele.addAttribute("listArticles", listArticles);
+		modele.addAttribute("listArticles", listAafficher);
 		modele.addAttribute("listCategories", listCategories);
 		
 		return "accueil";
