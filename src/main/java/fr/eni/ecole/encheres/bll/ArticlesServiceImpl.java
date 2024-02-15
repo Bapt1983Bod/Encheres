@@ -138,4 +138,10 @@ public class ArticlesServiceImpl implements ArticlesService {
 		return art;
 	}
 
+	@Override
+	public void deleteByNoArticle(int noArticle) {
+		articlesDAO.deleteByNoArticle(noArticle);
+		
+	}
+
 }

@@ -54,6 +54,7 @@ public class SecurityConfig {
 				.requestMatchers(HttpMethod.POST, "/vendre").authenticated()
 				.requestMatchers(HttpMethod.GET, "/modificationArticle").authenticated()
 				.requestMatchers(HttpMethod.POST, "/modificationArticle").authenticated()
+				.requestMatchers(HttpMethod.POST, "/supprimerArticle").authenticated()
 				.requestMatchers(HttpMethod.GET, "/administration").hasRole("ADMIN")
 				.requestMatchers(HttpMethod.POST, "/suppressionAdmin").hasRole("ADMIN")
 				.requestMatchers(HttpMethod.POST, "/desactivation").hasRole("ADMIN")

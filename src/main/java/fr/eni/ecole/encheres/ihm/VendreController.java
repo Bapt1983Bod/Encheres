@@ -3,6 +3,7 @@ package fr.eni.ecole.encheres.ihm;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -67,7 +68,7 @@ public class VendreController {
 			// création du point de retrait
 			retraitService.createRetrait(idArticle, vendeur, rue, codePostal, ville);
 
-			return "redirect:/vendre";
+			return "redirect:/accueil";
 		}
 
 	}
@@ -81,16 +82,48 @@ public class VendreController {
 		// Récupération du retrait lié à l'article
 		Retrait retrait = retraitService.readRetrait(noArticle);
 		System.out.println(retrait);
-		
+
 		article.setLieuRetrait(retrait);
 		System.out.println(article);
-		
-				
+
 		modele.addAttribute("article", article);
 		modele.addAttribute("listCategories", listCategories);
-		
-		return "modification-article";
 
+		return "modification-article";
 	}
 
+	@PostMapping("/modificationArticle")
+	public String modifierArticle(@ModelAttribute("article") ArticleVendu article, BindingResult bindingResult) {
+
+		if (bindingResult.hasErrors()) {
+			return "modification-article";
+		} else {
+
+			// suppression du retrait
+			retraitService.deleteRetrait(article.getNoArticle());
+
+			// suppression de l'article
+			articlesService.deleteByNoArticle(article.getNoArticle());
+
+			// creation du nouvel article
+			int noArticle = articlesService.createArticle(utilisateurService.getUtilisateurConnecte(), article);
+
+			// création du nouveau retrait
+			retraitService.createRetrait(noArticle, utilisateurService.getUtilisateurConnecte(),
+					article.getLieuRetrait().getRue(), article.getLieuRetrait().getCodePostal(),
+					article.getLieuRetrait().getVille());
+		}
+		return "redirect:/accueil";
+	}
+
+	@PostMapping("/supprimerArticle")
+	public String supprimerArticle(@ModelAttribute("article") ArticleVendu article) {
+		// suppression du retrait
+		retraitService.deleteRetrait(article.getNoArticle());
+
+		// suppression de l'article
+		articlesService.deleteByNoArticle(article.getNoArticle());
+		
+		return "modification-article";
+	}
 }

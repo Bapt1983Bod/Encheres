@@ -33,5 +33,7 @@ public interface ArticlesService {
 	public List<ArticleVendu> filtreVentes (String etat, List<ArticleVendu> listNonTriee);
 	
 	public ArticleVendu setEtatVente (ArticleVendu art);
+	
+	public void deleteByNoArticle (int noArticle);
 
 }

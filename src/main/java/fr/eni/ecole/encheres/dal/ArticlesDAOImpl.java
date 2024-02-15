@@ -28,6 +28,7 @@ public class ArticlesDAOImpl implements ArticlesDAO {
 	private final static String CREATE_ARTICLE = "INSERT INTO ARTICLES_VENDUS (nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, no_utilisateur, no_categorie) values (:nom,:description, :dateDebut, :dateFin, :prix, null, :idUtilisateur, :idCategorie)";
 	private final static String FIND_BY_NO_UTILISATEUR = "SELECT * FROM ARTICLES_VENDUS WHERE no_utilisateur = :noUtilisateur";
 	private final static String DELETE_BY_NO_UTILISATEUR = "DELETE FROM ARTICLES_VENDUS WHERE no_utilisateur = :noUtilisateur";
+	private final static String DELETE_BY_NO_ARTICLE = "DELETE FROM ARTICLES_VENDUS WHERE no_article = :noArticle";
 	private final static String FIND_BY_NO_ARTICLE = "SELECT no_article, nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, prix_vente, ARTICLES_VENDUS.no_utilisateur, ARTICLES_VENDUS.no_categorie, pseudo, nom, prenom, email, telephone, libelle FROM ARTICLES_VENDUS INNER JOIN UTILISATEURS ON ARTICLES_VENDUS.no_utilisateur = UTILISATEURS.no_utilisateur INNER JOIN CATEGORIES ON ARTICLES_VENDUS.no_categorie = CATEGORIES.no_categorie where no_article = :noArticle";
 
 	private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
@@ -160,6 +161,15 @@ public class ArticlesDAOImpl implements ArticlesDAO {
 		map.addValue("string", stringSQL);
 
 		return this.namedParameterJdbcTemplate.query(FIND_BY_STRING, map, new ArticlesRowMapper());
+	}
+
+	@Override
+	public void deleteByNoArticle(int noArticle) {
+		MapSqlParameterSource map = new MapSqlParameterSource();
+		map.addValue("noArticle", noArticle);
+
+		this.namedParameterJdbcTemplate.update(DELETE_BY_NO_ARTICLE, map);
+	
 	}
 
 

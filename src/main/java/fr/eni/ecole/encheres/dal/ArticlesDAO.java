@@ -31,5 +31,7 @@ public interface ArticlesDAO {
 	ArticleVendu findArticleByNoArticle(int noArticle);
 	
 	public void deleteByNoUtilisateur (int noUtilisateur);
+	
+	public void deleteByNoArticle (int noArticle);
 
 }

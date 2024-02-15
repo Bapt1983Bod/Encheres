@@ -12,7 +12,8 @@
 
 	<section class="container">
 		<div class="article">
-			<form th:object="${article}" th:action="@{/modifierArticle}" method="post">
+			<form th:object="${article}" th:action="@{/modificationArticle}" method="post">
+				<input type="text" name="noArticle" th:field="*{noArticle}" required hidden/>
 				<div>
 					<label for="nom">Article</label>
 					<input type="text" name="nomArticle" th:field="*{nomArticle}" required />
@@ -65,10 +66,17 @@
 				<div>
 					<button type="submit">Enregistrer</button>
 <!--					<button ><a href="/accueil">Annuler</a></button>-->
+				</div>
+				<div>
 					
 				</div>
-
 			</form>
+				<div>
+					<form th:object="${article}" th:action="@{/supprimerArticle}" method="post">
+						<input type="text" name="noArticle" th:field="*{noArticle}" required hidden/>
+						<button type="submit">Supprimer</button>
+					</form>
+				</div>
 		</div>
 	</section>
 </body>
