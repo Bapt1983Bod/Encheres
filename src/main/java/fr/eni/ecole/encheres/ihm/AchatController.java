@@ -10,9 +10,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import fr.eni.ecole.encheres.bll.ArticlesService;
 import fr.eni.ecole.encheres.bll.EncheresService;
+import fr.eni.ecole.encheres.bll.RetraitService;
 import fr.eni.ecole.encheres.bll.UtilisateurService;
 import fr.eni.ecole.encheres.bo.ArticleVendu;
 import fr.eni.ecole.encheres.bo.Enchere;
+import fr.eni.ecole.encheres.bo.Retrait;
 import fr.eni.ecole.encheres.bo.Utilisateur;
 
 @Controller
@@ -21,12 +23,14 @@ public class AchatController {
 	private ArticlesService articlesService;
 	private EncheresService encheresService;
 	private UtilisateurService utilisateurService;
+	private RetraitService retraitService;
 
 	public AchatController(ArticlesService articlesService, EncheresService encheresService,
-			UtilisateurService utilisateurService) {
+			UtilisateurService utilisateurService, RetraitService retraitService) {
 		this.articlesService = articlesService;
 		this.encheresService = encheresService;
 		this.utilisateurService = utilisateurService;
+		this.retraitService = retraitService;
 	}
 
 	// affichage du détail de la vente d'un article
@@ -35,6 +39,7 @@ public class AchatController {
 		ArticleVendu articleVendu = articlesService.findArticleByNoArticle(noArticle);
 		Enchere highestEnchere = encheresService.getHighestEnchere(noArticle); // afficher l'enchere la plus haute
 		Utilisateur utilisateurConnecte = utilisateurService.getUtilisateurConnecte();
+		Retrait retrait = retraitService.readRetrait(articleVendu.getNoArticle());
 		boolean peutSurencherir = false;
 
 		ArticleVendu articleRemporte = articlesService.setEtatVente(articleVendu);
@@ -56,6 +61,7 @@ public class AchatController {
 		model.addAttribute("utilisateurConnecte", utilisateurConnecte);
 		model.addAttribute("peutSurencherir", peutSurencherir);
 		model.addAttribute("aRemporteLaVente", aRemporteLaVente);
+		model.addAttribute("retrait", retrait);
 
 		return "encheres";
 	}

@@ -16,7 +16,7 @@ public class ArticleVendu implements Serializable {
 	 *
 	 */
 	private static final long serialVersionUID = 1L;
-	@Min(value = 1)
+	
 	private int noArticle;
 	@NotBlank(message = "Le nom de l'article ne peut pas être vide")
 	@Pattern(regexp = "^[a-zA-Z-' àÀâÂäÄçÇéÉèÈêÊëËîÎïÏôÔöÖùÙûÛüÜ]+$", message = "Le nom ne doit contenir que des lettres, des tirets (-) et des apostrophes (')")

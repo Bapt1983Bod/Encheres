@@ -48,6 +48,8 @@ public class EncheresController {
 				if (art.getVendeur().getNoUtilisateur() != utilisateurService.getUtilisateurConnecte().getNoUtilisateur()) {
 					listAafficher.add(art);
 				}
+			} else {
+				listAafficher.add(art);
 			}
 		}
 		// Récupération de la liste des catégories
@@ -68,9 +70,7 @@ public class EncheresController {
 			@RequestParam(value = "vente", required = false) String vente, 
 			@RequestParam(value = "encheres", required = false) String encheres,
 			Model modele) {
-		
-		System.out.println("on passe içi");
-		
+				
 		// Initialisation de la liste
 		List<ArticleVendu> listArticles = new ArrayList<ArticleVendu>();
 

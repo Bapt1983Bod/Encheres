@@ -124,6 +124,6 @@ public class VendreController {
 		// suppression de l'article
 		articlesService.deleteByNoArticle(article.getNoArticle());
 		
-		return "modification-article";
+		return "redirect:/accueil";
 	}
 }

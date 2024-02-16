@@ -92,6 +92,8 @@ public class ArticlesServiceImpl implements ArticlesService {
 			} else {
 				listArticles = listNonTriee;
 			}
+		} else {
+			listArticles = listNonTriee;
 		}
 
 		return listArticles;

@@ -23,10 +23,9 @@
 			<li><span>Fin des enchères :</span> <span th:text="${article.dateFinEncheres}"></span></li>
 			<li><span>Mise à prix :</span> <span th:text="${article.miseAPrix}"></span></li>
 			<li><span>Categorie :</span> <span th:text="${article.categorie.libelle}"></span></li>
-			<li><span>Vendeur :</span> <span th:text="${article.vendeur.nom}"></span></li>
+			<li><span>Vendeur :</span> <span th:text="${article.vendeur.nom +' '+ article.vendeur.prenom}"></span></li>
+			<li><span>Adresse de retrait :</span> <span th:text="${retrait.rue +' '+retrait.codePostal+' '+retrait.ville}"></span></li>
 
-			
-			
 			<li th:if="${highestEnchere.montantEnchere > 0}">
  		    <span>Enchère la plus haute :</span> 
    			<span th:text="${highestEnchere.montantEnchere}"></span>
@@ -35,7 +34,7 @@
 		
 		
 
-	<form th:if="${peutSurencherir == true && !aRemporteLaVente}" th:action="@{/surenchere}" method="post">
+	<form th:if="${peutSurencherir == true && !aRemporteLaVente && article.vendeur.noUtilisateur != utilisateurConnecte.noUtilisateur}" th:action="@{/surenchere}" method="post">
 	  		  <input type="hidden" name="noArticle" th:value="${article.noArticle}" />
 	   		 <div>
 	        <label for="montantEnchere">Surenchérir (en points) :</label>
