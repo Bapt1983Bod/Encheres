@@ -68,7 +68,6 @@ public class ProfilController {
 		System.out.println("utilisateur modifié : " + utilisateur);
 
 		if (bindingResult.hasErrors()) {
-			System.out.println("erreur");
 			return "modification-profil";
 		} else {
 
@@ -76,7 +75,6 @@ public class ProfilController {
 			try {
 				if (pwd.length() > 0 && utilisateurService.validePassword(pwd, pwdConfirm)) {
 					utilisateur.setMotDePasse(pwd);
-					System.out.println("mot de passe");
 				}
 				// Modification de l'utilisateur
 				utilisateurService.modifierUtilisateur(utilisateur);
